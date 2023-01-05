@@ -1,1 +1,37 @@
-<p>header works!</p>
+<nav class=" bg-blue w-full p-2 md:flex md:items-center md:justify-between">
+  <div class="flex justify-between items-center">
+    <span>
+      <img class="h-9 sm:h-9 lg:h-10 xl:h-12" src="https://notehub0.s3.ap-south-1.amazonaws.com/icons/iconText.png">
+    </span>
+    <span class="text-2xl md:hidden block text-white mx-3 ">
+      <i class="fa-solid fa-bars " (click)="menuBar()"></i>
+    </span>
+  </div>
+  <ul
+    class="md:flex md:items-center z-[1] md:z-auto md:static absolute bg-blue w-full left-0 md:w-auto md:py-0 py-5 md:pl-0 pl-4 md:opacity-100 opacity-0 top-[-400]"
+    [ngClass]="{'top-[80]':status==='open','opacity-100':status==='open'}">
+    <li class="mx-5 my-6 md:my-0">
+      <a href="" class="text-white">HOME</a>
+    </li>
+    <li class="mx-5 my-6 md:my-0 dropdown">
+      <a href="" class="text-white dropbtn">WORKSPACE</a>
+      <ul class="dropdown-content mt-3">
+        <li>
+          <a href="">Project Workspace</a>
+        </li>
+        <li>
+          <a href="">User Workspace</a>
+        </li>
+      </ul>
+    </li>
+    <li class="mx-5 my-6 md:my-0">
+      <a href="" class="text-white">SUPPORT</a>
+    </li>
+    <li class="mx-5 my-6 md:my-0">
+      <a href="" class="text-white">FEEDBACK</a>
+    </li>
+    <button class="bg-white text-black rounded px-6 py-2 mx-4">
+      Get Start
+    </button>
+  </ul>
+</nav>
