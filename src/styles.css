@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+/* ------------------------ */
+/* Importing Fonts */
+/* ------------------------ */
+
+@font-face {
+  font-family: Jaldi-Regular;
+  src: url(./assets/fonts/Jaldi/Jaldi-Regular.ttf);
+}
+
+@font-face {
+  font-family: JosefinSans-Bold;
+  src: url(./assets/fonts/Josefin_Sans/JosefinSans-Bold.ttf);
+}
+
+@font-face {
+  font-family: JosefinSans-Light;
+  src: url(./assets/fonts/Josefin_Sans/JosefinSans-Light.ttf);
+}
+
+@font-face {
+  font-family: JosefinSans-Regular;
+  src: url(./assets/fonts/Josefin_Sans/JosefinSans-Regular.ttf);
+}
+
+@font-face {
+  font-family: JosefinSans-SemiBold;
+  src: url(./assets/fonts/Josefin_Sans/JosefinSans-SemiBold.ttf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ------------------------ */
+/* GENERAL STYLES */
+/* ------------------------ */
+body {
+  font-family: Jaldi-Regular;
+}
