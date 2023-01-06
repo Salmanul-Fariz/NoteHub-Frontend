@@ -8,6 +8,12 @@ i:hover {
   cursor: pointer;
 }
 
+.dropbtn {
+  color: white;
+  padding: 16px;
+  border: none;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
