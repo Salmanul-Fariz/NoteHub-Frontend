@@ -1,0 +1,65 @@
+<div id="particles-js"></div>
+<section class=" bg-blue py-20 flex justify-center content-center h-auto">
+  <div style="z-index: 1;" class="signinBar py-8 px-9 w-10/12 md:w-7/12 lg:w-5/12">
+    <div class="flex justify-center w-full">
+      <h2 class="text-center">Sign Up</h2>
+    </div>
+
+    <form class="mt-6" [formGroup]="signupForm" (ngSubmit)="submit(signupForm.value)">
+      <div class="block mt-4">
+        <label for="userName">Username</label>
+        <input type="text" formControlName="userName" placeholder="Enter your username"
+          class="w-full mt-2 h-10 md:h-11 authInput" (input)="checkUserExit($event)">
+        <small class="block text-sm pt-2"
+          *ngIf="!signupForm.get('userName')!.valid && signupForm.get('userName')!.touched ">
+          <span *ngIf="signupForm.get('userName').errors['required']">Field is required !</span>
+          <span *ngIf="signupForm.get('userName').errors['minlength']">Must contain 4 letters !</span>
+        </small>
+        <small *ngIf="signupForm.get('userName')!.valid && isUsernameExist" class="block text-sm pt-2">
+          <span>Username already exist !</span>
+        </small>
+      </div>
+      <div class="block mt-4">
+        <label for="email">Email</label>
+        <input type="email" formControlName="email" placeholder="Enter your email"
+          class="w-full mt-2 h-10 md:h-11 authInput">
+        <small class="block text-sm pt-2" *ngIf="!signupForm.get('email')!.valid && signupForm.get('email')!.touched ">
+          <span *ngIf="signupForm.get('email').errors['required']">Field is required !</span>
+          <span spanName *ngIf="signupForm.get('email').errors['email']">Enter Valid email !</span>
+        </small>
+        <small *ngIf="authEmailFail && signupForm.valid">Enter Valid email !</small>
+        <small *ngIf="authEmailExist && signupForm.valid">Email already Exist !</small>
+      </div>
+      <div class="block mt-4">
+        <label for="userName">Password</label>
+        <input type="password" formControlName="password" placeholder="●●●●● "
+          class="w-full mt-2 h-10 md:h-11 authInput">
+        <small class="block text-sm pt-2"
+          *ngIf="!signupForm.get('password')!.valid && signupForm.get('password')!.touched ">
+          <span *ngIf="signupForm.get('password').errors['required']">Field is required !</span>
+          <span *ngIf="signupForm.get('password').errors['minlength']">Enter Strong Password !</span>
+        </small>
+      </div>
+
+      <div class="orLine">
+        <p>OR</p>
+      </div>
+
+      <div class="signinGoogleBar flex justify-center w-full">
+        <img class="googleLogo" src="https://notehub0.s3.ap-south-1.amazonaws.com/resorces/google_PNG19644.png" alt="">
+      </div>
+      <div *ngIf="isLoading" class="spinner">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+      <div *ngIf="isLoading" class="overlay"></div>
+
+      <button [disabled]="!signupForm.valid" class="w-full bg-blue py-4 mt-7">Sign Up</button>
+    </form>
+
+    <div class="mt-5">
+      <p>Have an account ? <a href=""><u> Sign In now </u></a></p>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
