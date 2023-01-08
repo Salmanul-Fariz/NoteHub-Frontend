@@ -29,8 +29,6 @@ export class AuthenticationService {
   }
 
   isAuthenticated() {
-    const a = localStorage.getItem('jwt');
-    console.log(a);
-    return a;
+    return localStorage.getItem('jwt');
   }
 }

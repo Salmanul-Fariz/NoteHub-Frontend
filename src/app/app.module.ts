@@ -10,8 +10,9 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { AuthenticationGuard } from './auth-guard.service';
+import { VerifyEmailGuard } from './guards/verifyEmail-guard.service';
 import { AppRoutingModule } from './app-routing.module';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
     SignupComponent,
     SigninComponent,
     LoadingSpinnerComponent,
+    VerifyEmailComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,7 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [AuthenticationGuard],
+  providers: [VerifyEmailGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

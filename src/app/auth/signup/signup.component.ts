@@ -73,7 +73,7 @@ export class SignupComponent implements OnInit {
         // Register Success
         localStorage.setItem('jwt', response.data.token);
 
-        this.router.navigate(['']);
+        this.router.navigate(['auth/verify']);
       }
 
       // Remove the Validation Message From template
