@@ -28,7 +28,19 @@ export class AuthenticationService {
     );
   }
 
+  verifyEmailVerification(token: string | null) {
+    const jwt = token;
+
+    return this.http.post<any>(`http://localhost:8000/api/auth/checkVerify`, {
+      jwt: token,
+    });
+  }
+
   isAuthenticated() {
     return localStorage.getItem('jwt');
+  }
+
+  isVerify() {
+    return localStorage.getItem('verify');
   }
 }

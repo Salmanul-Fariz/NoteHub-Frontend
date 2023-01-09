@@ -72,6 +72,7 @@ export class SignupComponent implements OnInit {
       } else {
         // Register Success
         localStorage.setItem('jwt', response.data.token);
+        localStorage.setItem('verify', 'Check');
 
         this.router.navigate(['auth/verify']);
       }
