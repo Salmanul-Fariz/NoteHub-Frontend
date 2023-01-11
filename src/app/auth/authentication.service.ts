@@ -11,16 +11,15 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
+  // Register a user
   signup(signUpData: SignUpData) {
     return this.http.post<any>(
       'http://localhost:8000/api/auth/signup',
       signUpData
     );
   }
-  logi() {
-    this.loggedIn = false;
-  }
 
+  // check Username Exist
   checkUsernameExist(userName: string) {
     return this.http.post<any>(
       `http://localhost:8000/api/auth/signup?userNameExist=${userName}`,
@@ -28,9 +27,8 @@ export class AuthenticationService {
     );
   }
 
+  // Mail verify
   verifyEmailVerification(token: string | null) {
-    const jwt = token;
-
     return this.http.post<any>(`http://localhost:8000/api/auth/checkVerify`, {
       jwt: token,
     });

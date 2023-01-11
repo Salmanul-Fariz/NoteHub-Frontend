@@ -1,6 +1,6 @@
 <div id="particles-js"></div>
 <section class=" bg-blue py-20 flex justify-center content-center h-auto">
-  <div class="signinBar py-8 px-9 w-10/12 md:w-7/12 lg:w-5/12">
+  <div class="signBar py-8 px-9 w-10/12 md:w-7/12 lg:w-5/12">
     <div class="flex justify-center w-full">
       <h2 class="text-center">Sign Up</h2>
     </div>
@@ -57,9 +57,7 @@
     </form>
 
     <div class="mt-5">
-      <p>Have an account ? <a href=""><u> Sign In now </u></a></p>
+      <p>Have an account ? <a [routerLink]="['/auth/signin']"><u> Sign In now </u></a></p>
     </div>
   </div>
 </section>
-
-<app-footer></app-footer>

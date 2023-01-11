@@ -6,6 +6,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { VerifyEmailComponent } from './auth/verify-email/verify-email.component';
+import { SigninComponent } from './auth/signin/signin.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,6 +14,11 @@ const appRoutes: Routes = [
     path: 'auth/signup',
     component: SignupComponent,
     canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'auth/signin',
+    component: SigninComponent,
+    // canActivate: [AuthenticationGuard],
   },
   {
     path: 'auth/verify',

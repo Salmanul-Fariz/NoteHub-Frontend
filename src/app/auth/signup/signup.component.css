@@ -92,7 +92,7 @@ button[disabled]:hover {
   background-color: #dfdddd;
 }
 
-.signinBar {
+.signBar {
   background-color: #dfdddd;
   border-radius: 15px;
   z-index: 1;

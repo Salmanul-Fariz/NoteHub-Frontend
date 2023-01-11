@@ -34,16 +34,19 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
             if (responce.data === 'Verify') {
               localStorage.removeItem('verify');
               this.router.navigate(['/']);
-              clearInterval(intervel);
+              stopIntervel();
             }
-
             if (responce.data === 'Delete') {
               localStorage.clear();
               this.router.navigate(['/auth/signup']);
-              clearInterval(intervel);
+              stopIntervel();
             }
           });
       }, 6000);
+
+      function stopIntervel() {
+        clearInterval(intervel);
+      }
     });
 
     sendIntervalRequest.subscribe();
