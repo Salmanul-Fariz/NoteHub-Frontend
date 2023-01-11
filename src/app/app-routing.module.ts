@@ -18,7 +18,7 @@ const appRoutes: Routes = [
   {
     path: 'auth/signin',
     component: SigninComponent,
-    // canActivate: [AuthenticationGuard],
+    canActivate: [AuthenticationGuard],
   },
   {
     path: 'auth/verify',

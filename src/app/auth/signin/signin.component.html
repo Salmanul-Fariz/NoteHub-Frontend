@@ -9,16 +9,16 @@
 
       <div class="block mt-4">
         <label for="userName">Username or Email</label>
-        <input type="text" formControlName="userNameOrEmail" placeholder="Enter your username or email"
+        <input type="text" formControlName="usernameOrEmail" placeholder="Enter your username or email"
           class="w-full mt-2 h-10 md:h-11 authInput">
         <small class="block text-sm pt-2"
-          *ngIf="!signinForm.get('userNameOrEmail')!.valid && signinForm.get('userNameOrEmail')!.touched ">
-          <span *ngIf="signinForm.get('userNameOrEmail').errors['required']">Field is required !</span>
-          <span *ngIf="signinForm.get('userNameOrEmail').errors['minlength']">Must contain 4 letters !</span>
+          *ngIf="!signinForm.get('usernameOrEmail')!.valid && signinForm.get('usernameOrEmail')!.touched ">
+          <span *ngIf="signinForm.get('usernameOrEmail').errors['required']">Field is required !</span>
+          <span *ngIf="signinForm.get('usernameOrEmail').errors['minlength']">Must contain 4 letters !</span>
         </small>
-        <!-- <small *ngIf="signinForm.get('userName')!.valid && isUsernameExist" class="block text-sm pt-2">
-        <span>Username already exist !</span>
-      </small>  -->
+        <small *ngIf="signinForm.get('usernameOrEmail')!.valid && userOrMailErr" class="block text-sm pt-2">
+          <span>Incorrect email or username !</span>
+        </small>
       </div>
       <div class="block mt-4">
         <label for="userName">Password</label>
@@ -28,6 +28,9 @@
           *ngIf="!signinForm.get('password')!.valid && signinForm.get('password')!.touched ">
           <span *ngIf="signinForm.get('password').errors['required']">Field is required !</span>
           <span *ngIf="signinForm.get('password').errors['minlength']">Enter Strong Password !</span>
+        </small>
+        <small *ngIf="signinForm.get('usernameOrEmail')!.valid && passwordErr" class="block text-sm pt-2">
+          <span>Incorrect Password !</span>
         </small>
       </div>
 
