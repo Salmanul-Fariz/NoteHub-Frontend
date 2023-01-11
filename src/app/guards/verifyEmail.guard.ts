@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 
-import { AuthenticationService } from '../auth/authentication.service';
+import { AuthenticationService } from '../service/authentication.service';
 
 @Injectable()
 export class VerifyEmailGuard implements CanActivate {
