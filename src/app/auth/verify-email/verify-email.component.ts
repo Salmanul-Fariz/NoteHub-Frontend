@@ -41,6 +41,11 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
               this.router.navigate(['/auth/signup']);
               stopIntervel();
             }
+            if (responce.data === 'token-expired') {
+              localStorage.clear();
+              this.router.navigate(['/auth/signup']);
+              stopIntervel();
+            }
           });
       }, 6000);
 
