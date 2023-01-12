@@ -26,11 +26,7 @@ export class SigninComponent implements OnInit {
     // Form Setup
     this.signinForm = new FormGroup({
       usernameOrEmail: new FormControl(null, {
-        validators: [
-          Validators.required,
-          Validators.minLength(4),
-          this.authService.userNameValidator,
-        ],
+        validators: [Validators.required, Validators.minLength(4)],
       }),
       password: new FormControl(null, [
         Validators.required,
@@ -47,26 +43,32 @@ export class SigninComponent implements OnInit {
   submit(formData: any) {
     this.isLoading = true;
 
-    this.authService.signin(formData).subscribe((response) => {
-      setTimeout(() => {
-        this.isLoading = false;
-        if (response.status === 'Password-Error') {
-          this.passwordErr = true;
-        } else if (response.status === 'Username-Or-Email') {
-          this.userOrMailErr = true;
-        } else {
+    this.authService.signin(formData).subscribe(
+      (response) => {
+        setTimeout(() => {
+          this.isLoading = false;
+
           // Signin Success
           localStorage.setItem('jwt', response.data.token);
-
           this.router.navigate(['/']);
-        }
-      }, 1500);
-    });
+        }, 1500);
+      },
+      (error) => {
+        setTimeout(() => {
+          this.isLoading = false;
+          if (error.error.status === 'Password-Error') {
+            this.passwordErr = true;
+          } else if (error.error.status === 'Username-Or-Email') {
+            this.userOrMailErr = true;
+          }
+        }, 1500);
+      }
+    );
     // Remove the Validation Message From template
     setTimeout(() => {
       this.passwordErr = false;
       this.userOrMailErr = false;
-    }, 2500);
+    }, 3500);
   }
 
   // Particle JS

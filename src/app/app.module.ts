@@ -11,7 +11,6 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
-import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { VerifyEmailGuard } from './guards/verifyEmail.guard';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthenticationGuard } from './guards/authentication.guard';
@@ -25,7 +24,6 @@ import { VerifyEmailComponent } from './auth/verify-email/verify-email.component
     HomeComponent,
     SignupComponent,
     SigninComponent,
-    LoadingSpinnerComponent,
     VerifyEmailComponent,
   ],
   imports: [

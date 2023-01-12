@@ -12,13 +12,13 @@
           class="w-full mt-2 h-10 md:h-11 authInput" (input)="checkUserExit($event)">
         <div class="w-full relative">
           <mat-spinner *ngIf="isUserLoading" class="userSpinner" [diameter]="30"></mat-spinner>
-          <i *ngIf="!isUserLoading && signupForm.get('userName')!.valid "
+          <i *ngIf="!isUsernameExist && signupForm.get('userName')!.valid "
             class="userSpinnerTick text-success fa-solid fa-check"></i>
         </div>
         <small class="block text-sm pt-2"
           *ngIf="!signupForm.get('userName')!.valid && signupForm.get('userName')!.touched ">
-          <span *ngIf="signupForm.get('userName').errors['required']">Field is required !</span><br>
-          <span *ngIf="signupForm.get('userName').errors['minlength']">Must contain 4 letters !</span><br>
+          <span *ngIf="signupForm.get('userName').errors['required']">Field is required !</span>
+          <span *ngIf="signupForm.get('userName').errors['minlength']">Must contain 4 letters !</span>
           <span *ngIf="signupForm.get('userName').errors['usernameStructure']">Must contain lowercase or numbers
             !</span>
         </small>

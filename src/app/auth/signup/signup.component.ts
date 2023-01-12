@@ -52,14 +52,19 @@ export class SignupComponent implements OnInit {
       this.isUserLoading = true;
       this.isUsernameExist = false;
 
-      this.authService.checkUsernameExist(value).subscribe((responce) => {
-        setTimeout(() => {
+      this.authService.checkUsernameExist(value).subscribe(
+        (responce) => {
           this.isUserLoading = false;
-          if (responce.data) {
-            this.isUsernameExist = true;
+        },
+        (error) => {
+          if (error.status === 400) {
+            setTimeout(() => {
+              this.isUserLoading = false;
+              this.isUsernameExist = true;
+            }, 300);
           }
-        }, 300);
-      });
+        }
+      );
     }
   }
 
@@ -67,28 +72,35 @@ export class SignupComponent implements OnInit {
   submit(formData: any) {
     this.isLoading = true;
 
-    this.authService.signup(formData).subscribe((response) => {
-      setTimeout(() => {
-        this.isLoading = false;
-        // Check Validation
-        if (response.status === 'Email-Error') {
-          this.authEmailFail = true;
-        } else if (response.status === 'Email-exist-Error') {
-          this.authEmailExist = true;
-        } else {
+    this.authService.signup(formData).subscribe(
+      (response) => {
+        console.log(response);
+
+        setTimeout(() => {
+          this.isLoading = false;
           // Register Success
           localStorage.setItem('jwt', response.data.token);
 
           this.router.navigate(['/']);
-        }
-      }, 1500);
-
-      // Remove the Validation Message From template
-      setTimeout(() => {
-        this.authEmailFail = false;
-        this.authEmailExist = false;
-      }, 2500);
-    });
+        }, 1500);
+      },
+      (error) => {
+        setTimeout(() => {
+          this.isLoading = false;
+          // Check Validation
+          if (error.error.status === 'Email-Error') {
+            this.authEmailFail = true;
+          } else if (error.error.status === 'Email-exist-Error') {
+            this.authEmailExist = true;
+          }
+        }, 1500);
+      }
+    );
+    // Remove the Validation Message From template
+    setTimeout(() => {
+      this.authEmailFail = false;
+      this.authEmailExist = false;
+    }, 2500);
   }
 
   // Particle JS

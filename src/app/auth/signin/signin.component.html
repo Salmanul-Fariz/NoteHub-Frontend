@@ -13,10 +13,8 @@
           class="w-full mt-2 h-10 md:h-11 authInput">
         <small class="block text-sm pt-2"
           *ngIf="!signinForm.get('usernameOrEmail')!.valid && signinForm.get('usernameOrEmail')!.touched ">
-          <span *ngIf="signinForm.get('usernameOrEmail').errors['required']">Field is required !</span><br>
-          <span *ngIf="signinForm.get('usernameOrEmail').errors['minlength']">Must contain 4 letters !</span><br>
-          <span *ngIf="signinForm.get('usernameOrEmail').errors['usernameStructure']">Must contain lowercase or numbers
-            !</span>
+          <span *ngIf="signinForm.get('usernameOrEmail').errors['required']">Field is required !</span>
+          <span *ngIf="signinForm.get('usernameOrEmail').errors['minlength']">Must contain 4 letters !</span>
         </small>
         <small *ngIf="signinForm.get('usernameOrEmail')!.valid && userOrMailErr" class="block text-sm pt-2">
           <span>Incorrect email or username !</span>
