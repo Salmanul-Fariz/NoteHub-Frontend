@@ -16,6 +16,7 @@ export class SignupComponent implements OnInit {
   authEmailFail = false;
   authEmailExist = false;
   isLoading = false;
+  isUserLoading = false;
   isUsernameExist = false;
   signupForm: FormGroup;
 
@@ -48,12 +49,12 @@ export class SignupComponent implements OnInit {
   checkUserExit(event: any) {
     const value = (<HTMLInputElement>event.target).value;
     if (value.length >= 4) {
-      this.isLoading = true;
+      this.isUserLoading = true;
       this.isUsernameExist = false;
 
       this.authService.checkUsernameExist(value).subscribe((responce) => {
         setTimeout(() => {
-          this.isLoading = false;
+          this.isUserLoading = false;
           if (responce.data) {
             this.isUsernameExist = true;
           }

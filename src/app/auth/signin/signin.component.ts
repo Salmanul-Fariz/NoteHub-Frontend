@@ -59,7 +59,6 @@ export class SigninComponent implements OnInit {
 
         this.router.navigate(['/']);
       }
-      console.log(response);
     });
     // Remove the Validation Message From template
     setTimeout(() => {

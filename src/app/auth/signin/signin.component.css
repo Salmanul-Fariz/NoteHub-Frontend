@@ -64,6 +64,10 @@ small {
   color: rgb(248, 0, 0);
 }
 
+button > p {
+  color: #ffffff;
+}
+
 button:disabled,
 button[disabled] {
   background-color: #30343c;
@@ -72,6 +76,13 @@ button[disabled] {
 button:disabled:hover,
 button[disabled]:hover {
   cursor: not-allowed;
+}
+
+.userSpinnerTick {
+  position: absolute;
+  right: 10px;
+  top: -36px;
+  font-size: 26px;
 }
 
 .orLine {

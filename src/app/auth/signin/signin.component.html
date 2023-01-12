@@ -11,10 +11,14 @@
         <label for="userName">Username or Email</label>
         <input type="text" formControlName="usernameOrEmail" placeholder="Enter your username or email"
           class="w-full mt-2 h-10 md:h-11 authInput">
+        <div class="w-full relative">
+          <i *ngIf="!userOrMailErr && signinForm.get('usernameOrEmail')!.valid "
+            class="userSpinnerTick text-success fa-solid fa-check"></i>
+        </div>
         <small class="block text-sm pt-2"
           *ngIf="!signinForm.get('usernameOrEmail')!.valid && signinForm.get('usernameOrEmail')!.touched ">
-          <span *ngIf="signinForm.get('usernameOrEmail').errors['required']">Field is required !</span>
-          <span *ngIf="signinForm.get('usernameOrEmail').errors['minlength']">Must contain 4 letters !</span>
+          <span *ngIf="signinForm.get('usernameOrEmail').errors['required']">Field is required !</span><br>
+          <span *ngIf="signinForm.get('usernameOrEmail').errors['minlength']">Must contain 4 letters !</span><br>
           <span *ngIf="signinForm.get('usernameOrEmail').errors['usernameStructure']">Must contain lowercase or numbers
             !</span>
         </small>
@@ -30,10 +34,10 @@
           *ngIf="!signinForm.get('password')!.valid && signinForm.get('password')!.touched ">
           <span *ngIf="signinForm.get('password').errors['required']">Field is required !</span>
           <span *ngIf="signinForm.get('password').errors['minlength']">Enter Strong Password !</span>
-          <span *ngIf="signinForm.get('password').errors['upperCase']">Must Contain atleast 1 uppercase !</span>
-          <span *ngIf="signinForm.get('password').errors['lowerCase']">Must Contain atleast 1 lowerCase !</span>
-          <span *ngIf="signinForm.get('password').errors['number']">Must Contain atleast 1 number !</span>
-          <span *ngIf="signinForm.get('password').errors['special']">Must Contain special character !@#%& !</span>
+          <span *ngIf="signinForm.get('password').errors['upperCase']"> , Must Contain atleast 1 uppercase !</span>
+          <span *ngIf="signinForm.get('password').errors['lowerCase']"> , Must Contain atleast 1 lowerCase !</span>
+          <span *ngIf="signinForm.get('password').errors['number']"> , Must Contain atleast 1 number !</span>
+          <span *ngIf="signinForm.get('password').errors['special']"> , Must Contain special character !@#%& !</span>
         </small>
         <small *ngIf="signinForm.get('usernameOrEmail')!.valid && passwordErr" class="block text-sm pt-2">
           <span>Incorrect Password !</span>
@@ -48,12 +52,13 @@
       <div class="signinGoogleBar flex justify-center w-full">
         <img class="googleLogo" src="https://notehub0.s3.ap-south-1.amazonaws.com/resorces/google_PNG19644.png" alt="">
       </div>
-      <div *ngIf="isLoading" class="spinner">
-        <app-loading-spinner></app-loading-spinner>
-      </div>
-      <div *ngIf="isLoading" class="overlay"></div>
 
-      <button [disabled]="!signinForm.valid" class="w-full bg-blue py-4 mt-7">Sign In</button>
+      <button [disabled]="!signinForm.valid" class="w-full flex justify-center bg-blue py-4 mt-7">
+        <p *ngIf="!isLoading">Sign In</p>
+        <p *ngIf="isLoading">Progressing</p>
+        <mat-spinner *ngIf="isLoading" [diameter]="30"></mat-spinner>
+      </button>
+
     </form>
 
     <div class="mt-5">

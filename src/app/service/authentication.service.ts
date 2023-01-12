@@ -65,7 +65,6 @@ export class AuthenticationService {
     const hasNumber = /\d/.test(password);
     const hasSpecial = /[!@#%&]/.test(password);
 
-    const errors = {};
     if (!hasUpperCase) {
       return { upperCase: true };
     }
@@ -81,7 +80,6 @@ export class AuthenticationService {
     return null;
   }
 
-  // user Name Validation
   // Check user name have space or ..
   userNameValidator(control: AbstractControl) {
     const value = control.value;
@@ -93,7 +91,6 @@ export class AuthenticationService {
     const output = [];
 
     for (let i = 0; i < value.length; i++) {
-      console.log(value);
 
       const code = value.charCodeAt(i);
       if ((code > 47 && code < 58) || (code > 96 && code < 122)) {
@@ -103,7 +100,6 @@ export class AuthenticationService {
       }
     }
     if (output.length === value.length) {
-      console.log(value);
 
       return null;
     }
