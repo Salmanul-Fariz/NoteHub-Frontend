@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  Form,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../service/authentication.service';
@@ -14,6 +20,7 @@ declare let particlesJS: any;
 })
 export class SignupComponent implements OnInit {
   authEmailFail = false;
+  usernameStructure = false;
   authEmailExist = false;
   isLoading = false;
   isUsernameExist = false;
@@ -44,18 +51,34 @@ export class SignupComponent implements OnInit {
   // Check user name exist
   checkUserExit(event: any) {
     const value = (<HTMLInputElement>event.target).value;
+    this.usernameStructure = false;
     if (value.length >= 4) {
-      this.isLoading = true;
-      this.isUsernameExist = false;
+      // Check user name have space or ..
+      const output = [];
 
-      this.authService.checkUsernameExist(value).subscribe((responce) => {
-        setTimeout(() => {
-          this.isLoading = false;
-          if (responce.data) {
-            this.isUsernameExist = true;
+      for (let i = 0; i < value.length; i++) {
+        const code = value.charCodeAt(i);
+        if ((code > 47 && code < 58) || (code > 96 && code < 122)) {
+          if (code !== 32) {
+            output.push(code);
           }
-        }, 300);
-      });
+        }
+      }
+      if (output.length === value.length) {
+        this.isLoading = true;
+        this.isUsernameExist = false;
+
+        this.authService.checkUsernameExist(value).subscribe((responce) => {
+          setTimeout(() => {
+            this.isLoading = false;
+            if (responce.data) {
+              this.isUsernameExist = true;
+            }
+          }, 300);
+        });
+      } else {
+        this.usernameStructure = true;
+      }
     }
   }
 

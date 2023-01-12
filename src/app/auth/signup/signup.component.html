@@ -14,8 +14,13 @@
           *ngIf="!signupForm.get('userName')!.valid && signupForm.get('userName')!.touched ">
           <span *ngIf="signupForm.get('userName').errors['required']">Field is required !</span>
           <span *ngIf="signupForm.get('userName').errors['minlength']">Must contain 4 letters !</span>
+          <span *ngIf="signupForm.get('userName')!.errors['notCorrect']">Must contain lowercase or numbers !</span>
         </small>
-        <small *ngIf="signupForm.get('userName')!.valid && isUsernameExist" class="block text-sm pt-2">
+        <small *ngIf="signupForm.get('userName')!.valid && usernameStructure" class="block text-sm pt-2">
+          <span>Must contain lowercase or numbers !</span>
+        </small>
+        <small *ngIf="signupForm.get('userName')!.valid && !usernameStructure &&isUsernameExist"
+          class="block text-sm pt-2">
           <span>Username already exist !</span>
         </small>
       </div>
