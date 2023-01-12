@@ -26,11 +26,16 @@ export class SigninComponent implements OnInit {
     // Form Setup
     this.signinForm = new FormGroup({
       usernameOrEmail: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(4)],
+        validators: [
+          Validators.required,
+          Validators.minLength(4),
+          this.authService.userNameValidator,
+        ],
       }),
       password: new FormControl(null, [
         Validators.required,
         Validators.minLength(6),
+        this.authService.validatePassword,
       ]),
     });
 

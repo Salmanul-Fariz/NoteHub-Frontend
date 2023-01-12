@@ -15,6 +15,8 @@
           *ngIf="!signinForm.get('usernameOrEmail')!.valid && signinForm.get('usernameOrEmail')!.touched ">
           <span *ngIf="signinForm.get('usernameOrEmail').errors['required']">Field is required !</span>
           <span *ngIf="signinForm.get('usernameOrEmail').errors['minlength']">Must contain 4 letters !</span>
+          <span *ngIf="signinForm.get('usernameOrEmail').errors['usernameStructure']">Must contain lowercase or numbers
+            !</span>
         </small>
         <small *ngIf="signinForm.get('usernameOrEmail')!.valid && userOrMailErr" class="block text-sm pt-2">
           <span>Incorrect email or username !</span>
@@ -28,6 +30,10 @@
           *ngIf="!signinForm.get('password')!.valid && signinForm.get('password')!.touched ">
           <span *ngIf="signinForm.get('password').errors['required']">Field is required !</span>
           <span *ngIf="signinForm.get('password').errors['minlength']">Enter Strong Password !</span>
+          <span *ngIf="signinForm.get('password').errors['upperCase']">Must Contain atleast 1 uppercase !</span>
+          <span *ngIf="signinForm.get('password').errors['lowerCase']">Must Contain atleast 1 lowerCase !</span>
+          <span *ngIf="signinForm.get('password').errors['number']">Must Contain atleast 1 number !</span>
+          <span *ngIf="signinForm.get('password').errors['special']">Must Contain special character !@#%& !</span>
         </small>
         <small *ngIf="signinForm.get('usernameOrEmail')!.valid && passwordErr" class="block text-sm pt-2">
           <span>Incorrect Password !</span>
