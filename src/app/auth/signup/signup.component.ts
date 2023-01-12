@@ -66,19 +66,22 @@ export class SignupComponent implements OnInit {
   // Form Submittion
   submit(formData: any) {
     this.isLoading = true;
-    this.authService.signup(formData).subscribe((response) => {
-      this.isLoading = false;
-      // Check Validation
-      if (response.status === 'Email-Error') {
-        this.authEmailFail = true;
-      } else if (response.status === 'Email-exist-Error') {
-        this.authEmailExist = true;
-      } else {
-        // Register Success
-        localStorage.setItem('jwt', response.data.token);
 
-        this.router.navigate(['/']);
-      }
+    this.authService.signup(formData).subscribe((response) => {
+      setTimeout(() => {
+        this.isLoading = false;
+        // Check Validation
+        if (response.status === 'Email-Error') {
+          this.authEmailFail = true;
+        } else if (response.status === 'Email-exist-Error') {
+          this.authEmailExist = true;
+        } else {
+          // Register Success
+          localStorage.setItem('jwt', response.data.token);
+
+          this.router.navigate(['/']);
+        }
+      }, 1500);
 
       // Remove the Validation Message From template
       setTimeout(() => {

@@ -11,10 +11,6 @@
         <label for="userName">Username or Email</label>
         <input type="text" formControlName="usernameOrEmail" placeholder="Enter your username or email"
           class="w-full mt-2 h-10 md:h-11 authInput">
-        <div class="w-full relative">
-          <i *ngIf="!userOrMailErr && signinForm.get('usernameOrEmail')!.valid "
-            class="userSpinnerTick text-success fa-solid fa-check"></i>
-        </div>
         <small class="block text-sm pt-2"
           *ngIf="!signinForm.get('usernameOrEmail')!.valid && signinForm.get('usernameOrEmail')!.touched ">
           <span *ngIf="signinForm.get('usernameOrEmail').errors['required']">Field is required !</span><br>
@@ -33,11 +29,11 @@
         <small class="block text-sm pt-2"
           *ngIf="!signinForm.get('password')!.valid && signinForm.get('password')!.touched ">
           <span *ngIf="signinForm.get('password').errors['required']">Field is required !</span>
-          <span *ngIf="signinForm.get('password').errors['minlength']">Enter Strong Password !</span>
-          <span *ngIf="signinForm.get('password').errors['upperCase']"> , Must Contain atleast 1 uppercase !</span>
-          <span *ngIf="signinForm.get('password').errors['lowerCase']"> , Must Contain atleast 1 lowerCase !</span>
-          <span *ngIf="signinForm.get('password').errors['number']"> , Must Contain atleast 1 number !</span>
-          <span *ngIf="signinForm.get('password').errors['special']"> , Must Contain special character !@#%& !</span>
+          <span *ngIf="signinForm.get('password').errors['minlength']">Enter Strong Password ! ,</span>
+          <span *ngIf="signinForm.get('password').errors['upperCase']">Must Contain atleast 1 uppercase !</span>
+          <span *ngIf="signinForm.get('password').errors['lowerCase']">Must Contain atleast 1 lowerCase !</span>
+          <span *ngIf="signinForm.get('password').errors['number']">Must Contain atleast 1 number !</span>
+          <span *ngIf="signinForm.get('password').errors['special']">Must Contain special character !@#%& !</span>
         </small>
         <small *ngIf="signinForm.get('usernameOrEmail')!.valid && passwordErr" class="block text-sm pt-2">
           <span>Incorrect Password !</span>

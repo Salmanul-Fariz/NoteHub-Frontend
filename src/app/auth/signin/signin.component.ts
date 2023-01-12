@@ -48,17 +48,19 @@ export class SigninComponent implements OnInit {
     this.isLoading = true;
 
     this.authService.signin(formData).subscribe((response) => {
-      this.isLoading = false;
-      if (response.status === 'Password-Error') {
-        this.passwordErr = true;
-      } else if (response.status === 'Username-Or-Email') {
-        this.userOrMailErr = true;
-      } else {
-        // Signin Success
-        localStorage.setItem('jwt', response.data.token);
+      setTimeout(() => {
+        this.isLoading = false;
+        if (response.status === 'Password-Error') {
+          this.passwordErr = true;
+        } else if (response.status === 'Username-Or-Email') {
+          this.userOrMailErr = true;
+        } else {
+          // Signin Success
+          localStorage.setItem('jwt', response.data.token);
 
-        this.router.navigate(['/']);
-      }
+          this.router.navigate(['/']);
+        }
+      }, 1500);
     });
     // Remove the Validation Message From template
     setTimeout(() => {

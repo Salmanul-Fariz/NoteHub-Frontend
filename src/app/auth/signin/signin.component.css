@@ -43,6 +43,8 @@ button {
   filter: drop-shadow(2px 2px 10px rgba(0, 0, 0, 0.25));
 
   color: #ffffff;
+  align-items: center;
+  gap: 10px;
 }
 
 p {
@@ -76,13 +78,6 @@ button[disabled] {
 button:disabled:hover,
 button[disabled]:hover {
   cursor: not-allowed;
-}
-
-.userSpinnerTick {
-  position: absolute;
-  right: 10px;
-  top: -36px;
-  font-size: 26px;
 }
 
 .orLine {

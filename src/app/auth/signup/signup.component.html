@@ -43,12 +43,12 @@
           class="w-full mt-2 h-10 md:h-11 authInput" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
         <small class="block text-sm pt-2"
           *ngIf="!signupForm.get('password')!.valid && signupForm.get('password')!.touched ">
-          <span *ngIf="signupForm.get('password').errors['required']">Field is required !</span>
-          <span *ngIf="signupForm.get('password').errors['minlength']">Enter Strong Password !</span>
-          <span *ngIf="signupForm.get('password').errors['upperCase']"> , Must Contain atleast 1 uppercase !</span>
-          <span *ngIf="signupForm.get('password').errors['lowerCase']"> , Must Contain atleast 1 lowerCase !</span>
-          <span *ngIf="signupForm.get('password').errors['number']"> , Must Contain atleast 1 number !</span>
-          <span *ngIf="signupForm.get('password').errors['special']"> , Must Contain special character !@#%& !</span>
+          <span *ngIf="signupForm.get('password').errors['required']">Field is required ! </span>
+          <span *ngIf="signupForm.get('password').errors['minlength']">Enter Strong Password ! ,</span>
+          <span *ngIf="signupForm.get('password').errors['upperCase']">Must Contain atleast 1 uppercase !</span>
+          <span *ngIf="signupForm.get('password').errors['lowerCase']">Must Contain atleast 1 lowerCase !</span>
+          <span *ngIf="signupForm.get('password').errors['number']">Must Contain atleast 1 number !</span>
+          <span *ngIf="signupForm.get('password').errors['special']">Must Contain special character !@#%& !</span>
         </small>
       </div>
 
