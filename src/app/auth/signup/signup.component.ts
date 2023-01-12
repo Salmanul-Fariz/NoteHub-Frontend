@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  Form,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../service/authentication.service';
@@ -20,7 +14,6 @@ declare let particlesJS: any;
 })
 export class SignupComponent implements OnInit {
   authEmailFail = false;
-  usernameStructure = false;
   authEmailExist = false;
   isLoading = false;
   isUsernameExist = false;
@@ -34,13 +27,16 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     // Form Setup
     this.signupForm = new FormGroup({
-      userName: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(4)],
-      }),
+      userName: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(4),
+        this.authService.userNameValidator,
+      ]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [
         Validators.required,
         Validators.minLength(6),
+        this.authService.validatePassword,
       ]),
     });
 
@@ -51,34 +47,18 @@ export class SignupComponent implements OnInit {
   // Check user name exist
   checkUserExit(event: any) {
     const value = (<HTMLInputElement>event.target).value;
-    this.usernameStructure = false;
     if (value.length >= 4) {
-      // Check user name have space or ..
-      const output = [];
+      this.isLoading = true;
+      this.isUsernameExist = false;
 
-      for (let i = 0; i < value.length; i++) {
-        const code = value.charCodeAt(i);
-        if ((code > 47 && code < 58) || (code > 96 && code < 122)) {
-          if (code !== 32) {
-            output.push(code);
+      this.authService.checkUsernameExist(value).subscribe((responce) => {
+        setTimeout(() => {
+          this.isLoading = false;
+          if (responce.data) {
+            this.isUsernameExist = true;
           }
-        }
-      }
-      if (output.length === value.length) {
-        this.isLoading = true;
-        this.isUsernameExist = false;
-
-        this.authService.checkUsernameExist(value).subscribe((responce) => {
-          setTimeout(() => {
-            this.isLoading = false;
-            if (responce.data) {
-              this.isUsernameExist = true;
-            }
-          }, 300);
-        });
-      } else {
-        this.usernameStructure = true;
-      }
+        }, 300);
+      });
     }
   }
 

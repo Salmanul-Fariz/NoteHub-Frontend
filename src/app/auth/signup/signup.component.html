@@ -14,13 +14,10 @@
           *ngIf="!signupForm.get('userName')!.valid && signupForm.get('userName')!.touched ">
           <span *ngIf="signupForm.get('userName').errors['required']">Field is required !</span>
           <span *ngIf="signupForm.get('userName').errors['minlength']">Must contain 4 letters !</span>
-          <span *ngIf="signupForm.get('userName')!.errors['notCorrect']">Must contain lowercase or numbers !</span>
+          <span *ngIf="signupForm.get('userName').errors['usernameStructure']">Must contain lowercase or numbers
+            !</span>
         </small>
-        <small *ngIf="signupForm.get('userName')!.valid && usernameStructure" class="block text-sm pt-2">
-          <span>Must contain lowercase or numbers !</span>
-        </small>
-        <small *ngIf="signupForm.get('userName')!.valid && !usernameStructure &&isUsernameExist"
-          class="block text-sm pt-2">
+        <small *ngIf="signupForm.get('userName')!.valid  &&isUsernameExist" class="block text-sm pt-2">
           <span>Username already exist !</span>
         </small>
       </div>
@@ -38,11 +35,15 @@
       <div class="block mt-4">
         <label for="userName">Password</label>
         <input type="password" formControlName="password" placeholder="●●●●● "
-          class="w-full mt-2 h-10 md:h-11 authInput">
+          class="w-full mt-2 h-10 md:h-11 authInput" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
         <small class="block text-sm pt-2"
           *ngIf="!signupForm.get('password')!.valid && signupForm.get('password')!.touched ">
           <span *ngIf="signupForm.get('password').errors['required']">Field is required !</span>
           <span *ngIf="signupForm.get('password').errors['minlength']">Enter Strong Password !</span>
+          <span *ngIf="signupForm.get('password').errors['upperCase']">Must Contain atleast 1 uppercase !</span>
+          <span *ngIf="signupForm.get('password').errors['lowerCase']">Must Contain atleast 1 lowerCase !</span>
+          <span *ngIf="signupForm.get('password').errors['number']">Must Contain atleast 1 number !</span>
+          <span *ngIf="signupForm.get('password').errors['special']">Must Contain special character !@#%& !</span>
         </small>
       </div>
 
