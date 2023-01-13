@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '../../service/authentication.service';
-import { ParticlesConfig } from './../../../assets/particleJS/particles.config';
+import { AuthenticationService } from '../../../service/authentication.service';
+import { ParticlesConfig } from './../../../../assets/particleJS/particles.config';
 
 declare let particlesJS: any;
 
