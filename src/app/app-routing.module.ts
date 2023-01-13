@@ -2,16 +2,19 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { VerifyEmailGuard } from './guards/verifyEmail.guard';
+import { AuthenticationGuard } from './guards/authentication.guard';
+
 import { SignupComponent } from './user/auth/signup/signup.component';
 import { HomeComponent } from './user/user-pages/home/home.component';
-import { AuthenticationGuard } from './guards/authentication.guard';
 import { VerifyEmailComponent } from './user/auth/verify-email/verify-email.component';
 import { SigninComponent } from './user/auth/signin/signin.component';
+import { UserPagesComponent } from './user/user-pages/user-pages.component';
+import { AuthComponent } from './user/auth/auth.component';
 
 import { DashboardComponent } from './admin/admin-pages/dashboard/dashboard.component';
-import { UserPagesComponent } from './user/user-pages/user-pages.component';
 import { AdminPagesComponent } from './admin/admin-pages/admin-pages.component';
-import { AuthComponent } from './user/auth/auth.component';
+import { AuthAdminComponent } from './admin/auth/auth-admin.component';
+import { AdminSigninComponent } from './admin/auth/admin-signin/admin-signin.component';
 
 const appRoutes: Routes = [
   // user pages
@@ -58,6 +61,17 @@ const appRoutes: Routes = [
           {
             path: '',
             component: DashboardComponent,
+          },
+        ],
+      },
+      // Admin authentication
+      {
+        path: 'auth',
+        component: AuthAdminComponent,
+        children: [
+          {
+            path: 'signin',
+            component: AdminSigninComponent,
           },
         ],
       },
