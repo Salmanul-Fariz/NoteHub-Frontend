@@ -11,24 +11,20 @@
     class="md:flex md:items-center z-[1] md:z-auto md:static absolute bg-blue w-full left-0 md:w-auto md:py-0 py-5 md:pl-0 pl-4 md:opacity-100 opacity-0 top-[-400]"
     [ngClass]="{'top-[80]':status==='open','opacity-100':status==='open'}">
     <li class="mx-5 my-6 md:my-0">
-      <a href="" class="text-white">HOME</a>
+      <a class="text-white">HOME</a>
     </li>
-    <li class="mx-5 my-6 md:my-0 dropdown">
-      <a href="" class="text-white dropbtn">WORKSPACE</a>
-      <ul class="dropdown-content mt-3">
-        <li>
-          <a href="">Project Workspace</a>
-        </li>
-        <li>
-          <a href="">User Workspace</a>
-        </li>
-      </ul>
+    <li class="mx-5 my-6 p-0 md:my-0">
+      <a class="text-white" mat-button [matMenuTriggerFor]="menu">WORKSPACE</a>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Project Workspace</button>
+        <button mat-menu-item>User Workspace</button>
+      </mat-menu>
     </li>
     <li class="mx-5 my-6 md:my-0">
-      <a href="" class="text-white">SUPPORT</a>
+      <a class="text-white">SUPPORT</a>
     </li>
     <li class="mx-5 my-6 md:my-0">
-      <a href="" class="text-white">FEEDBACK</a>
+      <a class="text-white">FEEDBACK</a>
     </li>
     <button [routerLink]="['/auth/signup']" class="bg-white text-black rounded px-6 py-2 mx-4">
       Get Start

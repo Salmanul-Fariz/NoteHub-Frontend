@@ -26,6 +26,9 @@ export class SignupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Particle JS
+    this.invokeParticles();
+
     // Form Setup
     this.signupForm = new FormGroup({
       userName: new FormControl(null, [
@@ -40,9 +43,6 @@ export class SignupComponent implements OnInit {
         this.authService.validatePassword,
       ]),
     });
-
-    // Particle JS
-    this.invokeParticles();
   }
 
   // Check user name exist
@@ -50,18 +50,20 @@ export class SignupComponent implements OnInit {
     const value = (<HTMLInputElement>event.target).value;
     if (value.length >= 4) {
       this.isUserLoading = true;
-      this.isUsernameExist = false;
 
       this.authService.checkUsernameExist(value).subscribe(
         (responce) => {
-          this.isUserLoading = false;
+          setTimeout(() => {
+            this.isUserLoading = false;
+            this.isUsernameExist = false;
+          }, 500);
         },
         (error) => {
           if (error.status === 400) {
             setTimeout(() => {
               this.isUserLoading = false;
               this.isUsernameExist = true;
-            }, 300);
+            }, 500);
           }
         }
       );

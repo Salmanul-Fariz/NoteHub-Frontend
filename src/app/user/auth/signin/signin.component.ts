@@ -23,6 +23,9 @@ export class SigninComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Particle JS
+    this.invokeParticles();
+
     // Form Setup
     this.signinForm = new FormGroup({
       usernameOrEmail: new FormControl(null, {
@@ -34,9 +37,6 @@ export class SigninComponent implements OnInit {
         this.authService.validatePassword,
       ]),
     });
-
-    // Particle JS
-    this.invokeParticles();
   }
 
   // Submit Form
@@ -73,6 +73,7 @@ export class SigninComponent implements OnInit {
 
   // Particle JS
   invokeParticles(): void {
+    console.log('particle');
     particlesJS('particles-js', ParticlesConfig);
   }
 }

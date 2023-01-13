@@ -3,27 +3,65 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { VerifyEmailGuard } from './guards/verifyEmail.guard';
 import { SignupComponent } from './user/auth/signup/signup.component';
-import { HomeComponent } from './user/home/home.component';
+import { HomeComponent } from './user/user-pages/home/home.component';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { VerifyEmailComponent } from './user/auth/verify-email/verify-email.component';
 import { SigninComponent } from './user/auth/signin/signin.component';
 
+import { DashboardComponent } from './admin/admin-pages/dashboard/dashboard.component';
+import { UserPagesComponent } from './user/user-pages/user-pages.component';
+import { AdminPagesComponent } from './admin/admin-pages/admin-pages.component';
+import { AuthComponent } from './user/auth/auth.component';
+
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
+  // user pages
   {
-    path: 'auth/signup',
-    component: SignupComponent,
-    canActivate: [AuthenticationGuard],
+    path: '',
+    children: [
+      {
+        path: '',
+        component: UserPagesComponent,
+        children: [{ path: '', component: HomeComponent }],
+      },
+      // User authentication
+      {
+        path: 'auth',
+        component: AuthComponent,
+        children: [
+          {
+            path: 'signup',
+            component: SignupComponent,
+            canActivate: [AuthenticationGuard],
+          },
+          {
+            path: 'signin',
+            component: SigninComponent,
+            canActivate: [AuthenticationGuard],
+          },
+          {
+            path: 'verify',
+            component: VerifyEmailComponent,
+            canActivate: [VerifyEmailGuard],
+          },
+        ],
+      },
+    ],
   },
+  // Admin Pages
   {
-    path: 'auth/signin',
-    component: SigninComponent,
-    canActivate: [AuthenticationGuard],
-  },
-  {
-    path: 'auth/verify',
-    component: VerifyEmailComponent,
-    canActivate: [VerifyEmailGuard],
+    path: 'admin',
+    children: [
+      {
+        path: '',
+        component: AdminPagesComponent,
+        children: [
+          {
+            path: '',
+            component: DashboardComponent,
+          },
+        ],
+      },
+    ],
   },
 ];
 

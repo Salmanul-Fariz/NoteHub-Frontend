@@ -12,7 +12,7 @@
           class="w-full mt-2 h-10 md:h-11 authInput" (input)="checkUserExit($event)">
         <div class="w-full relative">
           <mat-spinner *ngIf="isUserLoading" class="userSpinner" [diameter]="30"></mat-spinner>
-          <i *ngIf="!isUsernameExist && signupForm.get('userName')!.valid "
+          <i *ngIf="!isUsernameExist && !isUserLoading && signupForm.get('userName')!.valid "
             class="userSpinnerTick text-success fa-solid fa-check"></i>
         </div>
         <small class="block text-sm pt-2"

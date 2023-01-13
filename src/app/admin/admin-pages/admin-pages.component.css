@@ -1,0 +1,25 @@
+h1 {
+  color: #fff;
+  font-family: 'JosefinSans-Regular';
+  margin: 7px 0;
+}
+
+header > i {
+  color: rgb(255, 255, 255);
+  font-size: 30px;
+  padding: 18px 3%;
+}
+
+header {
+  align-items: center;
+}
+
+i,
+p {
+  color: #fff;
+}
+
+.sidenav {
+  border-radius: 0 20px 20px 0;
+  padding: 30px;
+}

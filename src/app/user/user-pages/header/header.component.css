@@ -1,0 +1,9 @@
+a,
+button {
+  font-family: JosefinSans-Regular;
+  font-size: 0.9em;
+}
+
+i:hover {
+  cursor: pointer;
+}

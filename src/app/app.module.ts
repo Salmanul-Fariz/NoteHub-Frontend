@@ -3,18 +3,28 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './user/header/header.component';
+import { AppRoutingModule } from './app-routing.module';
+
+import { HeaderComponent } from './user/user-pages/header/header.component';
 import { FooterComponent } from './user/footer/footer.component';
-import { HomeComponent } from './user/home/home.component';
+import { HomeComponent } from './user/user-pages/home/home.component';
 import { SignupComponent } from './user/auth/signup/signup.component';
 import { SigninComponent } from './user/auth/signin/signin.component';
 import { VerifyEmailComponent } from './user/auth/verify-email/verify-email.component';
 import { VerifyEmailGuard } from './guards/verifyEmail.guard';
-import { AppRoutingModule } from './app-routing.module';
 import { AuthenticationGuard } from './guards/authentication.guard';
+
+import { AdminPagesComponent } from './admin/admin-pages/admin-pages.component';
+import { DashboardComponent } from './admin/admin-pages/dashboard/dashboard.component';
+import { AuthAdminComponent } from './admin/auth/auth-admin.component';
+import { UserPagesComponent } from './user/user-pages/user-pages.component';
+import { AuthComponent } from './user/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +35,11 @@ import { AuthenticationGuard } from './guards/authentication.guard';
     SignupComponent,
     SigninComponent,
     VerifyEmailComponent,
+    DashboardComponent,
+    AuthAdminComponent,
+    UserPagesComponent,
+    AdminPagesComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +48,8 @@ import { AuthenticationGuard } from './guards/authentication.guard';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatMenuModule,
   ],
   providers: [VerifyEmailGuard, AuthenticationGuard],
   bootstrap: [AppComponent],
