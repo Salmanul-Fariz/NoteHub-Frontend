@@ -26,6 +26,8 @@ import { AdminPagesComponent } from './admin/admin-pages/admin-pages.component';
 import { DashboardComponent } from './admin/admin-pages/dashboard/dashboard.component';
 import { AuthAdminComponent } from './admin/auth/auth-admin.component';
 import { AdminSigninComponent } from './admin/auth/admin-signin/admin-signin.component';
+import { AdminAuthGuard } from './guards/adminAuth.guard';
+import { AdminSigninGuard } from './guards/adminSignin.guard';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,12 @@ import { AdminSigninComponent } from './admin/auth/admin-signin/admin-signin.com
     MatSidenavModule,
     MatMenuModule,
   ],
-  providers: [VerifyEmailGuard, AuthenticationGuard],
+  providers: [
+    VerifyEmailGuard,
+    AuthenticationGuard,
+    AdminAuthGuard,
+    AdminSigninGuard,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,1 +1,45 @@
-<p>admin-signin works!</p>
+<div id="particles-js"></div>
+<section class=" bg-blue py-32 flex justify-center content-center h-auto">
+  <div class="signBar py-8 px-9 w-10/12 md:w-7/12 lg:w-5/12">
+    <div class="flex justify-center w-full">
+      <h2 class="text-center">Sign In</h2>
+    </div>
+
+    <form class="mt-6" [formGroup]="signinForm" (ngSubmit)="submit(signinForm.value)">
+
+      <div class="block mt-4">
+        <label for="userName">Username</label>
+        <input type="text" formControlName="userName" placeholder=" Enter your username"
+          class="w-full mt-2 h-10 md:h-11 authInput">
+        <small class="block text-sm pt-2"
+          *ngIf="!signinForm.get('userName')!.valid && signinForm.get('userName')!.touched ">
+          <span *ngIf="signinForm.get('userName').errors['required']">Field is required !</span>
+          <span *ngIf="signinForm.get('userName').errors['minlength']">Must contain 4 letters !</span>
+        </small>
+        <small *ngIf="signinForm.get('userName')!.valid && usernameErr" class="block text-sm pt-2">
+          <span>Incorrect Username !</span>
+        </small>
+      </div>
+      <div class="block mt-4">
+        <label for="userName">Password</label>
+        <input type="password" formControlName="password" placeholder="●●●●● "
+          class="w-full mt-2 h-10 md:h-11 authInput">
+        <small class="block text-sm pt-2"
+          *ngIf="!signinForm.get('password')!.valid && signinForm.get('password')!.touched ">
+          <span *ngIf="signinForm.get('password').errors['required']">Field is required !</span>
+          <span *ngIf="signinForm.get('password').errors['minlength']">Enter Strong Password !</span>
+        </small>
+        <small *ngIf="signinForm.get('userName')!.valid && passwordErr" class="block text-sm pt-2">
+          <span>Incorrect Password !</span>
+        </small>
+      </div>
+
+      <button [disabled]="!signinForm.valid" class="w-full flex justify-center bg-blue py-4 mt-16">
+        <p *ngIf="!isLoading">Sign In</p>
+        <p *ngIf="isLoading">Progressing</p>
+        <mat-spinner *ngIf="isLoading" [diameter]="30"></mat-spinner>
+      </button>
+
+    </form>
+  </div>
+</section>

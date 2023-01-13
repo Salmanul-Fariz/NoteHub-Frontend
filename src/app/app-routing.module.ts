@@ -15,6 +15,8 @@ import { DashboardComponent } from './admin/admin-pages/dashboard/dashboard.comp
 import { AdminPagesComponent } from './admin/admin-pages/admin-pages.component';
 import { AuthAdminComponent } from './admin/auth/auth-admin.component';
 import { AdminSigninComponent } from './admin/auth/admin-signin/admin-signin.component';
+import { AdminAuthGuard } from './guards/adminAuth.guard';
+import { AdminSigninGuard } from './guards/adminSignin.guard';
 
 const appRoutes: Routes = [
   // user pages
@@ -57,6 +59,7 @@ const appRoutes: Routes = [
       {
         path: '',
         component: AdminPagesComponent,
+        canActivate: [AdminAuthGuard],
         children: [
           {
             path: '',
@@ -68,6 +71,7 @@ const appRoutes: Routes = [
       {
         path: 'auth',
         component: AuthAdminComponent,
+        canActivate: [AdminSigninGuard],
         children: [
           {
             path: 'signin',
