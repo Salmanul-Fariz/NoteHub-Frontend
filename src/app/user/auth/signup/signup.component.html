@@ -55,12 +55,14 @@
       <div class="orLine">
         <p>OR</p>
       </div>
-
-      <div class="signinGoogleBar flex justify-center w-full">
-        <img class="googleLogo" src="https://notehub0.s3.ap-south-1.amazonaws.com/resorces/google_PNG19644.png" alt="">
+      <div class=" flex justify-center w-full">
+        <asl-google-signin-button type='standard' shape="rectangle" logo_alignment="center" text="continue_with"
+          size='large' theme="filled_blue"></asl-google-signin-button>
       </div>
-
-      <button [disabled]="!signupForm.valid" class="w-full flex justify-center bg-blue py-4 mt-7">
+      <small *ngIf="googleEmailExist" class="text-sm mt-3 flex justify-center">
+        <span>Email already used for another account !</span>
+      </small>
+      <button [disabled]="!signupForm.valid" class="w-full flex justify-center bg-blue py-4 mt-10">
         <p *ngIf="!isLoading">Sign Up</p>
         <p *ngIf="isLoading">Progressing</p>
         <mat-spinner *ngIf="isLoading" [diameter]="30"></mat-spinner>

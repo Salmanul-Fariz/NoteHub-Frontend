@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 import { AuthenticationService } from '../../../service/authentication.service';
 import { ParticlesConfig } from './../../../../assets/particleJS/particles.config';
+import { Observable, Subscription } from 'rxjs';
 
 declare let particlesJS: any;
 
@@ -12,15 +15,19 @@ declare let particlesJS: any;
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
   authEmailFail = false;
   authEmailExist = false;
   isLoading = false;
   isUserLoading = false;
   isUsernameExist = false;
+  googleEmailExist = false;
+  googleServise = false;
+  googleSubscription: Subscription;
   signupForm: FormGroup;
 
   constructor(
+    private socialService: SocialAuthService,
     private authService: AuthenticationService,
     private router: Router
   ) {}
@@ -43,6 +50,45 @@ export class SignupComponent implements OnInit {
         this.authService.validatePassword,
       ]),
     });
+
+    // Sigin With google responce
+    this.googleSubscription = this.socialService.authState.subscribe(
+      (user: SocialUser) => {
+        if (this.googleServise) {
+          this.isLoading = true;
+          this.authService.signinWithGoogle(user).subscribe(
+            (response) => {
+              setTimeout(() => {
+                this.isLoading = false;
+                // Register Success
+                localStorage.setItem('jwt', response.data.token);
+
+                this.router.navigate(['/']);
+              }, 1500);
+            },
+            (error) => {
+              setTimeout(() => {
+                this.isLoading = false;
+                if (error.status === 400) {
+                  this.googleEmailExist = true;
+                }
+              }, 1500);
+              // Remove the Validation Message From template
+              setTimeout(() => {
+                this.googleEmailExist = false;
+              }, 2500);
+            }
+          );
+        }
+      }
+    );
+
+    this.googleServise = true;
+  }
+
+  // Sigin With google
+  signIn() {
+    this.socialService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
   // Check user name exist
@@ -108,5 +154,9 @@ export class SignupComponent implements OnInit {
   // Particle JS
   invokeParticles(): void {
     particlesJS('particles-js', ParticlesConfig);
+  }
+
+  ngOnDestroy(): void {
+    this.googleSubscription.unsubscribe();
   }
 }

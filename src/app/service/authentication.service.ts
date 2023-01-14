@@ -42,6 +42,14 @@ export class AuthenticationService {
     });
   }
 
+  // Sign in with google
+  signinWithGoogle(userData: any) {
+    return this.http.post<any>(
+      'http://localhost:8000/api/auth/google',
+      userData
+    );
+  }
+
   // is JWT token is there
   isAuthenticated() {
     return localStorage.getItem('jwt');
@@ -91,7 +99,6 @@ export class AuthenticationService {
     const output = [];
 
     for (let i = 0; i < value.length; i++) {
-
       const code = value.charCodeAt(i);
       if ((code > 47 && code < 58) || (code > 96 && code < 122)) {
         if (code !== 32) {
@@ -100,7 +107,6 @@ export class AuthenticationService {
       }
     }
     if (output.length === value.length) {
-
       return null;
     }
 

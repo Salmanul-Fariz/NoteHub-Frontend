@@ -43,9 +43,13 @@
         <p>OR</p>
       </div>
 
-      <div class="signinGoogleBar flex justify-center w-full">
-        <img class="googleLogo" src="https://notehub0.s3.ap-south-1.amazonaws.com/resorces/google_PNG19644.png" alt="">
+      <div class=" flex justify-center w-full">
+        <asl-google-signin-button type='standard' shape="rectangle" logo_alignment="center" text="continue_with"
+          size='large' theme="filled_blue"></asl-google-signin-button>
       </div>
+      <small *ngIf="googleEmailExist" class="text-sm mt-3 flex justify-center">
+        <span>Email already used for another account !</span>
+      </small>
 
       <button [disabled]="!signinForm.valid" class="w-full flex justify-center bg-blue py-4 mt-7">
         <p *ngIf="!isLoading">Sign In</p>
