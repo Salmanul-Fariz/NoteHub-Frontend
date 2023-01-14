@@ -6,7 +6,7 @@ import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 import { AuthenticationService } from '../../../service/authentication.service';
 import { ParticlesConfig } from './../../../../assets/particleJS/particles.config';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 declare let particlesJS: any;
 
