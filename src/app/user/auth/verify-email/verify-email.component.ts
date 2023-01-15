@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { UserService } from 'src/app/service/user.service';
 
 import { ParticlesConfig } from 'src/assets/particleJS/particles.config';
 import { AuthenticationService } from '../../../service/authentication.service';
@@ -16,6 +17,7 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthenticationService,
+    private userService: UserService,
     private router: Router
   ) {}
 
@@ -30,18 +32,19 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
       const intervel = setInterval(() => {
         this.authService
           .verifyEmailVerification(localStorage.getItem('jwt'))
-          .subscribe((responce) => {
-            if (responce.data === 'Verify') {
+          .subscribe((response) => {
+            if (response.data === 'Verify') {
+              this.userService.loggedIn = true;
               localStorage.removeItem('verify');
               this.router.navigate(['/']);
               stopIntervel();
             }
-            if (responce.data === 'Delete') {
+            if (response.data === 'Delete') {
               localStorage.clear();
               this.router.navigate(['/auth/signup']);
               stopIntervel();
             }
-            if (responce.data === 'token-expired') {
+            if (response.data === 'token-expired') {
               localStorage.clear();
               this.router.navigate(['/auth/signup']);
               stopIntervel();

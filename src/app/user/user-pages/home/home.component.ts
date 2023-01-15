@@ -17,8 +17,12 @@ export class HomeComponent implements OnInit {
       console.log(response);
 
       if (response.status === 'Pending-Verify') {
+        this.userService.loggedIn = false;
         localStorage.setItem('verify', 'true');
         this.router.navigate(['auth/verify']);
+      }
+      if (response.status === 'Success') {
+        this.userService.loggedIn = true;
       }
     });
   }

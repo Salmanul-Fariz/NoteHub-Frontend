@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class UserService {
+  loggedIn = false;
   constructor(private http: HttpClient) {}
 
   homePage(token: null | string) {

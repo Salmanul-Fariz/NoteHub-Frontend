@@ -7,6 +7,7 @@ import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { AuthenticationService } from '../../../service/authentication.service';
 import { ParticlesConfig } from './../../../../assets/particleJS/particles.config';
 import { Subscription } from 'rxjs';
+import { UserService } from 'src/app/service/user.service';
 
 declare let particlesJS: any;
 
@@ -29,6 +30,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   constructor(
     private socialService: SocialAuthService,
     private authService: AuthenticationService,
+    private userService: UserService,
     private router: Router
   ) {}
 
@@ -58,6 +60,7 @@ export class SignupComponent implements OnInit, OnDestroy {
           this.isLoading = true;
           this.authService.signinWithGoogle(user).subscribe(
             (response) => {
+              this.userService.loggedIn = true;
               setTimeout(() => {
                 this.isLoading = false;
                 // Register Success
