@@ -11,7 +11,6 @@ export class UserAutherizationGuard implements CanActivate {
 
   canActivate(): any {
     if (!this.authService.isAuthenticated()) {
-      this.authService.loggedIn = false;
       this.router.navigate(['/auth/signin']);
       return false;
     } else {

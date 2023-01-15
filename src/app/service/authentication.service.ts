@@ -9,8 +9,6 @@ type SignInData = { usernameOrEmail: string; password: string };
   providedIn: 'root',
 })
 export class AuthenticationService {
-  loggedIn = false;
-
   constructor(private http: HttpClient) {}
 
   // Register a user

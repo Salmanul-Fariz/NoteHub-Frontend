@@ -33,7 +33,6 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
           .verifyEmailVerification(localStorage.getItem('jwt'))
           .subscribe((response) => {
             if (response.data === 'Verify') {
-              this.authService.loggedIn = true;
               localStorage.removeItem('verify');
               this.router.navigate(['/']);
               stopIntervel();

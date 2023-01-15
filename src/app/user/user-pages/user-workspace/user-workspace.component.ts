@@ -30,9 +30,7 @@ export class UserWorkspaceComponent implements OnInit, AfterViewInit {
         (response) => {},
         (error) => {
           if (error.status === 408) {
-            console.log('sdfa');
-
-            this.authService.loggedIn = false;
+            localStorage.clear();
             this.router.navigate(['/auth/sigin']);
           }
         }

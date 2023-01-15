@@ -30,7 +30,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   constructor(
     private socialService: SocialAuthService,
     private authService: AuthenticationService,
-    private userService: UserService,
     private router: Router
   ) {}
 
@@ -60,7 +59,6 @@ export class SignupComponent implements OnInit, OnDestroy {
           this.isLoading = true;
           this.authService.signinWithGoogle(user).subscribe(
             (response) => {
-              this.authService.loggedIn = true;
               setTimeout(() => {
                 this.isLoading = false;
                 // Register Success

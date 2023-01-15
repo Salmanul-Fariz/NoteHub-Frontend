@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authentication.service';
 import { UserService } from 'src/app/service/user.service';
@@ -8,7 +8,7 @@ import { UserService } from 'src/app/service/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnChanges {
   status: string = 'close';
   currentRoute: string;
   userLoggedIn: boolean;
@@ -22,6 +22,8 @@ export class HeaderComponent implements OnInit {
     // currentRoute setting
     this.router.events.subscribe((event: any) => {
       if (event.routerEvent) {
+        this.userLoggedIn = this.authService.isAuthenticated() ? true : false;
+
         const route = event.routerEvent.url.split('/')[1];
         if (route === '') this.currentRoute = 'home';
         else if (route === 'support') this.currentRoute = 'support';
@@ -29,9 +31,9 @@ export class HeaderComponent implements OnInit {
         else if (route === 'feedback') this.currentRoute = 'feedback';
       }
     });
-
-    this.userLoggedIn = this.authService.loggedIn;
   }
+
+  ngOnChanges(changes: any) {}
 
   menuBar() {
     this.status = this.status === 'close' ? 'open' : 'close';
