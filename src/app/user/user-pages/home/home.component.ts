@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/service/authentication.service';
 import { UserService } from '../../../service/user.service';
 
 @Component({
@@ -8,20 +9,23 @@ import { UserService } from '../../../service/user.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private authService: AuthenticationService
+  ) {}
 
   ngOnInit() {
     const token = localStorage.getItem('jwt');
 
     this.userService.homePage(token).subscribe((response) => {
-
       if (response.status === 'Pending-Verify') {
-        this.userService.loggedIn = false;
+        this.authService.loggedIn = false;
         localStorage.setItem('verify', 'true');
         this.router.navigate(['auth/verify']);
       }
       if (response.status === 'Success') {
-        this.userService.loggedIn = true;
+        this.authService.loggedIn = true;
       }
     });
   }

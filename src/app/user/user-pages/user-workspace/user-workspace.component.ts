@@ -1,20 +1,43 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { delay, filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
-// import { untilDestroyed } from '@ngneat/until-destroy';
-//
+
+import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
+import { AuthenticationService } from 'src/app/service/authentication.service';
+
 @Component({
   selector: 'app-user-workspace',
   templateUrl: './user-workspace.component.html',
   styleUrls: ['./user-workspace.component.css'],
 })
-export class UserWorkspaceComponent implements AfterViewInit {
+export class UserWorkspaceComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
-  constructor(private observer: BreakpointObserver, private router: Router) {}
+  constructor(
+    private observer: BreakpointObserver,
+    private router: Router,
+    private userWorspaceService: UserWorkspaceService,
+    private authService: AuthenticationService
+  ) {}
+
+  ngOnInit(): void {
+    this.userWorspaceService
+      .viewWorspacePage(localStorage.getItem('jwt'))
+      .subscribe(
+        (response) => {},
+        (error) => {
+          if (error.status === 408) {
+            console.log('sdfa');
+
+            this.authService.loggedIn = false;
+            this.router.navigate(['/auth/sigin']);
+          }
+        }
+      );
+  }
 
   ngAfterViewInit() {
     this.observer

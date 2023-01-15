@@ -60,7 +60,7 @@ export class SignupComponent implements OnInit, OnDestroy {
           this.isLoading = true;
           this.authService.signinWithGoogle(user).subscribe(
             (response) => {
-              this.userService.loggedIn = true;
+              this.authService.loggedIn = true;
               setTimeout(() => {
                 this.isLoading = false;
                 // Register Success

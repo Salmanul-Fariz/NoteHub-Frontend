@@ -5,6 +5,7 @@ import { VerifyEmailGuard } from './guards/verifyEmail.guard';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { AdminAuthGuard } from './guards/adminAuth.guard';
 import { AdminSigninGuard } from './guards/adminSignin.guard';
+import { UserAutherizationGuard } from './guards/userAutherization.guard';
 
 import { SignupComponent } from './user/auth/signup/signup.component';
 import { HomeComponent } from './user/user-pages/home/home.component';
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
           { path: '', component: HomeComponent },
           {
             path: 'workspace/user-workspace',
+            canActivate: [UserAutherizationGuard],
             component: UserWorkspaceComponent,
           },
         ],

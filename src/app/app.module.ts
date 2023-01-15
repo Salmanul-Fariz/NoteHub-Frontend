@@ -36,6 +36,7 @@ import { AdminSigninComponent } from './admin/auth/admin-signin/admin-signin.com
 import { AdminAuthGuard } from './guards/adminAuth.guard';
 import { AdminSigninGuard } from './guards/adminSignin.guard';
 import { UserWorkspaceComponent } from './user/user-pages/user-workspace/user-workspace.component';
+import { UserAutherizationGuard } from './guards/userAutherization.guard';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { UserWorkspaceComponent } from './user/user-pages/user-workspace/user-wo
     AuthenticationGuard,
     AdminAuthGuard,
     AdminSigninGuard,
+    UserAutherizationGuard,
   ],
   bootstrap: [AppComponent],
 })

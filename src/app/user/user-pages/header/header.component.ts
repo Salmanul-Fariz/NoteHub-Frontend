@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/service/authentication.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -12,7 +13,10 @@ export class HeaderComponent implements OnInit {
   currentRoute: string;
   userLoggedIn: boolean;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     // currentRoute setting
@@ -26,7 +30,7 @@ export class HeaderComponent implements OnInit {
       }
     });
 
-    this.userLoggedIn = this.userService.loggedIn;
+    this.userLoggedIn = this.authService.loggedIn;
   }
 
   menuBar() {

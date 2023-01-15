@@ -57,7 +57,7 @@ export class SigninComponent implements OnInit {
           this.isLoading = true;
           this.authService.signinWithGoogle(user).subscribe(
             (response) => {
-              this.userService.loggedIn = true;
+              this.authService.loggedIn = true;
               setTimeout(() => {
                 this.isLoading = false;
                 // Register Success
@@ -97,7 +97,7 @@ export class SigninComponent implements OnInit {
 
     this.authService.signin(formData).subscribe(
       (response) => {
-        this.userService.loggedIn = true;
+        this.authService.loggedIn = true;
         setTimeout(() => {
           this.isLoading = false;
 
