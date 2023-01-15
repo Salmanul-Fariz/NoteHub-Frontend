@@ -69,12 +69,12 @@ export class SigninComponent implements OnInit {
                 this.isLoading = false;
                 if (error.status === 400) {
                   this.googleEmailExist = true;
+                  // Remove the Validation Message From template
+                  setTimeout(() => {
+                    this.googleEmailExist = false;
+                  }, 1000);
                 }
               }, 1500);
-              // Remove the Validation Message From template
-              setTimeout(() => {
-                this.googleEmailExist = false;
-              }, 2500);
             }
           );
         }
