@@ -72,10 +72,11 @@ export class SignupComponent implements OnInit, OnDestroy {
                 this.isLoading = false;
                 if (error.status === 400) {
                   this.googleEmailExist = true;
+
                   // Remove the Validation Message From template
                   setTimeout(() => {
                     this.googleEmailExist = false;
-                  }, 1000);
+                  }, 1500);
                 }
               }, 1500);
             }
@@ -142,14 +143,15 @@ export class SignupComponent implements OnInit, OnDestroy {
           } else if (error.error.status === 'Email-exist-Error') {
             this.authEmailExist = true;
           }
+
+          // Remove the Validation Message From template
+          setTimeout(() => {
+            this.authEmailFail = false;
+            this.authEmailExist = false;
+          }, 1500);
         }, 1500);
       }
     );
-    // Remove the Validation Message From template
-    setTimeout(() => {
-      this.authEmailFail = false;
-      this.authEmailExist = false;
-    }, 2500);
   }
 
   // Particle JS

@@ -72,7 +72,7 @@ export class SigninComponent implements OnInit {
                   // Remove the Validation Message From template
                   setTimeout(() => {
                     this.googleEmailExist = false;
-                  }, 1000);
+                  }, 1500);
                 }
               }, 1500);
             }
@@ -111,14 +111,15 @@ export class SigninComponent implements OnInit {
           } else if (error.error.status === 'Username-Or-Email') {
             this.userOrMailErr = true;
           }
+
+          // Remove the Validation Message From template
+          setTimeout(() => {
+            this.passwordErr = false;
+            this.userOrMailErr = false;
+          }, 1500);
         }, 1500);
       }
     );
-    // Remove the Validation Message From template
-    setTimeout(() => {
-      this.passwordErr = false;
-      this.userOrMailErr = false;
-    }, 3500);
   }
 
   // Particle JS
