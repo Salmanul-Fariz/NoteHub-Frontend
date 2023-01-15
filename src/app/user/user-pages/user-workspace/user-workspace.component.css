@@ -1,0 +1,85 @@
+mat-sidenav {
+  margin: 14px;
+  width: 200px;
+  border-right: none;
+  background: #0e1525;
+  border-radius: 6px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 3px 5px 20px rgb(0 0 0 / 22%);
+}
+
+mat-sidenav-container {
+  height: calc(100vh - 65px);
+}
+
+hr {
+  color: #616161;
+  margin: 16px 0;
+}
+
+.sidenav {
+  border-radius: 0 20px 20px 0;
+  padding: 30px;
+}
+
+.workspace-container {
+  height: calc(100vh - 92px);
+  border-radius: 10px;
+  margin: 14px;
+  margin-left: 32px;
+  padding: 16px;
+  overflow: auto;
+  box-shadow: 3px 5px 20px rgb(0 0 0 / 22%);
+}
+
+.workspace {
+  border-radius: 8px;
+  background-color: rgb(252 252 252 / 62%);
+  padding: 6px 8px;
+  align-items: center;
+}
+
+.workspace:hover {
+  cursor: pointer;
+}
+
+.workspace-name {
+  font-size: 18px;
+}
+
+.workspace-settings {
+  display: flex;
+  flex-direction: column;
+  column-gap: 0.5rem;
+}
+
+.workspace-settings-tool {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  gap: 0.5rem;
+}
+
+.workspace-settings-tool:hover {
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.068);
+}
+
+.workspace-settings-tool > * {
+  color: #fff;
+  font-size: 16px;
+}
+
+.leftbarToggle {
+  font-size: 30px;
+}
+
+.visibleBar {
+  display: block;
+}
+
+.leftbarToggle:hover {
+  cursor: pointer;
+}

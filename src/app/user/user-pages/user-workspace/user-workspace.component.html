@@ -1,0 +1,42 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav">
+    <div class="workspace w-full flex justify-start gap-2">
+      <i class="fa-solid fa-book"></i>
+      <p class="workspace-name">My Book</p>
+    </div>
+    <div class="mt-3 workspace-settings">
+      <div class="workspace-settings-tool">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <h5>Search</h5>
+      </div>
+      <div class="workspace-settings-tool">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <h5>Updates</h5>
+      </div>
+      <div class="workspace-settings-tool">
+        <i class="fa-solid fa-gear"></i>
+        <h5>Settings</h5>
+      </div>
+    </div>
+    <hr>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="workspace-container">
+      <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+        <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+        <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+      </button>
+      <div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus praesentium facilis illum animi possimus
+          asperiores, quasi facere eaque, magnam fugit iure rerum perspiciatis optio repudiandae beatae iste, id unde
+          porro.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit ut sit vero fugit voluptate deserunt harum
+          quibusdam necessitatibus quas a consequatur odio optio hic delectus perspiciatis, animi dignissimos sed enim.
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi culpa dicta illum esse quia error incidunt,
+          laborum praesentium ut neque nulla asperiores corporis reiciendis soluta unde quibusdam nobis iusto
+          repellendus?
+        </p>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

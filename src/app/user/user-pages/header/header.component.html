@@ -1,23 +1,23 @@
-<nav class=" bg-blue w-full p-2 md:flex md:items-center md:justify-between">
+<nav style="z-index: 100;" class="bg-blue w-full p-2 md:flex md:items-center md:justify-between">
   <div class="flex justify-between items-center">
     <span>
       <img class="h-9 sm:h-9 lg:h-10 xl:h-12" src="https://notehub0.s3.ap-south-1.amazonaws.com/icons/iconText.png">
     </span>
     <span class="text-2xl md:hidden block text-white mx-3 ">
-      <i class="fa-solid fa-bars " (click)="menuBar()"></i>
+      <i #toggleMenu class="fa-solid fa-bars " (click)="menuBar()"></i>
     </span>
   </div>
   <ul
-    class="md:flex md:items-center z-[1] md:z-auto md:static absolute bg-blue w-full left-0 md:w-auto md:py-0 py-5 md:pl-0 pl-4 md:opacity-100 opacity-0 top-[-400]"
-    [ngClass]="{'top-[80]':status==='open','opacity-100':status==='open'}">
-    <li [ngClass]="{currentRoute:currentRoute==='home'}">
+    class="md:flex md:items-center z-[10] md:z-[0] md:static bg-blue w-full left-0 md:w-auto md:py-0 py-5 md:pl-0 pl-4 md:opacity-100 top-[-400]"
+    [ngClass]="{'top-[80]':status==='open','opacity-100':status==='open' , 'hidden':status==='close' , 'absolute':status === 'open' }">
+    <li [routerLink]="['/']" [ngClass]="{currentRoute:currentRoute==='home'}">
       <a class="text-white">HOME</a>
     </li>
-    <li class="p-0" [ngClass]="{currentRoute:currentRoute==='workspace'}">
-      <a class="text-white" mat-button [matMenuTriggerFor]="menu">WORKSPACE</a>
+    <li [matMenuTriggerFor]="menu" class="p-0" [ngClass]="{currentRoute:currentRoute==='workspace'}">
+      <a class="text-white" mat-button>WORKSPACE</a>
       <mat-menu #menu="matMenu">
         <button mat-menu-item>Project Workspace</button>
-        <button mat-menu-item>User Workspace</button>
+        <button [routerLink]="['/workspace/user-workspace']" mat-menu-item>User Workspace</button>
       </mat-menu>
     </li>
     <li [ngClass]="{currentRoute:currentRoute==='support'}">

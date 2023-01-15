@@ -12,6 +12,8 @@ import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -33,6 +35,7 @@ import { AuthAdminComponent } from './admin/auth/auth-admin.component';
 import { AdminSigninComponent } from './admin/auth/admin-signin/admin-signin.component';
 import { AdminAuthGuard } from './guards/adminAuth.guard';
 import { AdminSigninGuard } from './guards/adminSignin.guard';
+import { UserWorkspaceComponent } from './user/user-pages/user-workspace/user-workspace.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,7 @@ import { AdminSigninGuard } from './guards/adminSignin.guard';
     AdminPagesComponent,
     AuthComponent,
     AdminSigninComponent,
+    UserWorkspaceComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +64,8 @@ import { AdminSigninGuard } from './guards/adminSignin.guard';
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatMenuModule,
+    MatToolbarModule,
+    MatIconModule,
   ],
   providers: [
     {

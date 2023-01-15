@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit {
     const token = localStorage.getItem('jwt');
 
     this.userService.homePage(token).subscribe((response) => {
-      console.log(response);
 
       if (response.status === 'Pending-Verify') {
         this.userService.loggedIn = false;

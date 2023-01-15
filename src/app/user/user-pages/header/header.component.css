@@ -11,10 +11,10 @@ i:hover {
 li:hover {
   background-color: rgba(255, 253, 253, 0.116);
   border-radius: 14px;
-  /* border-bottom: solid 2px #0053a6; */
 }
 
 li {
+  border-left: solid 3px transparent;
   padding: 12px 18px;
 }
 

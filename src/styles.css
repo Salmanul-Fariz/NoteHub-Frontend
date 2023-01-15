@@ -46,6 +46,7 @@
 /* ------------------------ */
 body,
 html {
+  scroll-behavior: smooth;
   font-family: Jaldi-Regular;
 }
 

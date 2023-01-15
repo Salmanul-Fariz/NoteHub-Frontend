@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -18,11 +17,13 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     // currentRoute setting
     this.router.events.subscribe((event: any) => {
-      const route = event.routerEvent.url.split('/')[1];
-      if (route === '') this.currentRoute = 'home';
-      else if (route === 'support') this.currentRoute = 'support';
-      else if (route === 'workspace') this.currentRoute = 'workspace';
-      else if (route === 'feedback') this.currentRoute = 'feedback';
+      if (event.routerEvent) {
+        const route = event.routerEvent.url.split('/')[1];
+        if (route === '') this.currentRoute = 'home';
+        else if (route === 'support') this.currentRoute = 'support';
+        else if (route === 'workspace') this.currentRoute = 'workspace';
+        else if (route === 'feedback') this.currentRoute = 'feedback';
+      }
     });
 
     this.userLoggedIn = this.userService.loggedIn;
