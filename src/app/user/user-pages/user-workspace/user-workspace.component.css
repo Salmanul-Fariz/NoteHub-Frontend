@@ -72,18 +72,6 @@ hr {
   font-size: 16px;
 }
 
-.leftbarToggle {
-  font-size: 30px;
-}
-
-.visibleBar {
-  display: block;
-}
-
-.leftbarToggle:hover {
-  cursor: pointer;
-}
-
 /* main .workspace start */
 
 .main {
@@ -178,4 +166,111 @@ mat-menu > button {
   width: 100%;
   padding: 25px 60px;
   overflow: hidden;
+}
+
+/* workspace content container */
+
+.workspace-content-container {
+  width: 100%;
+  padding: 25px 60px;
+  overflow: hidden;
+  display: flex;
+  height: calc(60vh - 92px);
+}
+
+.workspace-content-set {
+  position: relative;
+  width: 100%;
+}
+
+.workspace-content {
+  width: 100%;
+  min-width: 100%;
+  font-size: 1.14em;
+  white-space: pre-wrap;
+  word-break: break-word;
+  caret-color: #5f5f5f;
+  padding: 3px 2px;
+  min-height: 1em;
+}
+
+[placeholder]:empty::before {
+  content: attr(placeholder);
+  color: #555;
+}
+
+[placeholder]:empty:focus::before {
+  content: '';
+}
+
+[contenteditable]:focus {
+  outline: 0ch;
+}
+
+.workspace-content-handle {
+  position: absolute;
+  top: 8px;
+  left: -48px;
+  display: none;
+  justify-content: flex-start;
+}
+
+.workspace-content:hover + .workspace-content-handle {
+  display: flex;
+}
+
+.workspace-content-handle:hover {
+  display: flex;
+}
+
+.workspace-content-handle > mat-icon {
+  font-size: 18px;
+  color: #616161;
+}
+
+.workspace-content-handle > mat-icon:hover {
+  cursor: pointer;
+}
+
+.workspace-content-menu-block {
+  position: absolute;
+  top: 0;
+  left: 14px;
+  min-height: 0;
+  max-width: 220px;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden auto;
+  max-height: calc(60vh - 180px);
+  padding: 6px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 3px 5px 20px rgb(0 0 0 / 22%);
+}
+
+.workspace-content-menu-block > ul {
+  width: auto;
+  padding: 2px 3px;
+}
+
+.workspace-content-menu-block-list {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 7px 6px;
+}
+
+.workspace-content-menu-block-list:hover {
+  cursor: pointer;
+  background-color: #e4dddd;
+  border-radius: 6px;
+}
+
+.workspace-content-menu-block-list > mat-icon {
+  font-size: 24px;
+}
+.workspace-content-menu-block-list > h5 {
+  font-size: 18px;
 }

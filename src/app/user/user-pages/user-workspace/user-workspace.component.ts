@@ -15,6 +15,7 @@ import { AuthenticationService } from 'src/app/service/authentication.service';
 export class UserWorkspaceComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
+  isOpenOptionTab: boolean;
 
   constructor(
     private observer: BreakpointObserver,
@@ -58,5 +59,22 @@ export class UserWorkspaceComponent implements OnInit, AfterViewInit {
           this.sidenav.close();
         }
       });
+  }
+
+  // open Option Tab  while enter / at first
+  openOptionTab(event: any) {
+    const value = (<HTMLElement>event.target).innerHTML;
+    if (value.length === 1) {
+      if (value.charCodeAt(0) === 47) {
+        this.isOpenOptionTab = true;
+      }
+    } else {
+      this.isOpenOptionTab = false;
+    }
+  }
+
+  // close Option Tab  while enter / at first
+  closeOptionTab(event: any) {
+    this.isOpenOptionTab = false;
   }
 }
