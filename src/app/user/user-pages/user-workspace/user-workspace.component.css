@@ -171,3 +171,11 @@ mat-menu > button {
 .workspace-page-icon > .icon {
   font-size: 42px;
 }
+
+/*  workspace title container */
+
+.workspace-title-container {
+  width: 100%;
+  padding: 25px 60px;
+  overflow: hidden;
+}
