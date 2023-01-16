@@ -91,6 +91,50 @@ hr {
   position: relative;
 }
 
+/* workspace  title bar */
+
+.workspace-title {
+  width: 100%;
+  padding: 4px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workspace-title-icon {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+
+.workspace-title-icon > * {
+  font-size: 20px;
+}
+
+.workspace-title-icon > * {
+  font-size: 20px;
+}
+
+.workspace-title-menu > button {
+  display: flex;
+  align-items: center;
+}
+
+.workspace-title-menu-icon {
+  font-size: 22px;
+}
+
+.workspace-title-menu-text {
+  font-size: 15px;
+}
+
+mat-menu > button {
+  align-items: center;
+}
+
+/* workspace cover image */
+
 .workspace-cover-img {
   width: 100%;
   padding: 4px 0;

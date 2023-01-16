@@ -27,6 +27,41 @@
         <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
       </button>
       <div class="main">
+        <div class="workspace-title">
+          <div class="workspace-title-icon">
+            <i class="icon fa-brands fa-angular"></i>
+            <h3>Angular</h3>
+          </div>
+          <div class="workspace-title-menu">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon class="workspace-title-menu-icon">share</mat-icon>
+                <span class="workspace-title-menu-text">Share</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon class="workspace-title-menu-icon">update</mat-icon>
+                <span class="workspace-title-menu-text">Update</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon class="workspace-title-menu-icon">star</mat-icon>
+                <span class="workspace-title-menu-text">Add to Favarite</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon class="workspace-title-menu-icon">delete</mat-icon>
+                <span class="workspace-title-menu-text">Delete</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon class="workspace-title-menu-icon">ios_share</mat-icon>
+                <span class="workspace-title-menu-text">Export</span>
+              </button>
+            </mat-menu>
+
+          </div>
+
+        </div>
         <div class="workspace-cover-img">
           <img src="https://wallpaperaccess.com/full/3910936.png" alt="">
           <button>Change Cover image</button>

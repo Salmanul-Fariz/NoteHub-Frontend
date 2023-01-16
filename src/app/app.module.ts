@@ -12,7 +12,6 @@ import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
@@ -65,7 +64,6 @@ import { UserAutherizationGuard } from './guards/userAutherization.guard';
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatMenuModule,
-    MatToolbarModule,
     MatIconModule,
   ],
   providers: [
