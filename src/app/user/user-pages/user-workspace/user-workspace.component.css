@@ -175,6 +175,7 @@ mat-menu > button {
   padding: 25px 60px;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
   height: calc(60vh - 92px);
 }
 
@@ -209,8 +210,8 @@ mat-menu > button {
 
 .workspace-content-handle {
   position: absolute;
-  top: 8px;
-  left: -48px;
+  top: 7px;
+  left: -20px;
   display: none;
   justify-content: flex-start;
 }
@@ -224,8 +225,8 @@ mat-menu > button {
 }
 
 .workspace-content-handle > mat-icon {
-  font-size: 18px;
-  color: #616161;
+  font-size: 20px;
+  color: #7e7d7d;
 }
 
 .workspace-content-handle > mat-icon:hover {
