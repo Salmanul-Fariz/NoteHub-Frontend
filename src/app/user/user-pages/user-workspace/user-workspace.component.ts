@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  HostListener,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { delay, filter } from 'rxjs/operators';
@@ -16,12 +23,13 @@ export class UserWorkspaceComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   isOpenOptionTab: boolean;
+  array = [1];
 
   constructor(
     private observer: BreakpointObserver,
     private router: Router,
     private userWorspaceService: UserWorkspaceService,
-    private authService: AuthenticationService
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
@@ -63,18 +71,41 @@ export class UserWorkspaceComponent implements OnInit, AfterViewInit {
 
   // open Option Tab  while enter / at first
   openOptionTab(event: any) {
+    const cords = event.target.getBoundingClientRect();
     const value = (<HTMLElement>event.target).innerHTML;
+
+    const optionTab = document.querySelector(
+      '.workspace-content-menu-block'
+    ) as HTMLElement;
+
     if (value.length === 1) {
       if (value.charCodeAt(0) === 47) {
-        this.isOpenOptionTab = true;
+        optionTab.style.display = 'flex';
+        optionTab.style.left = cords.x + 20 + 'px';
+        optionTab.style.top = cords.y + 'px';
       }
     } else {
-      this.isOpenOptionTab = false;
+      // close Option Tab  while enter / at first
+      optionTab.style.display = 'none';
+      optionTab.style.left = '0px';
+      optionTab.style.top = '0px';
     }
   }
 
-  // close Option Tab  while enter / at first
-  closeOptionTab(event: any) {
-    this.isOpenOptionTab = false;
+  onKeydown(event: any, id: any) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      // Push new div
+      this.array.push(1);
+
+      // Put caret cursor (statc)
+      setTimeout(() => {
+        const newDiv = document.getElementById(`1-${this.array.length - 1}`);
+        console.log(newDiv);
+        if (newDiv) {
+          newDiv.focus();
+        }
+      }, 0);
+    }
   }
 }

@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { UserService } from 'src/app/service/user.service';
 
 import { ParticlesConfig } from 'src/assets/particleJS/particles.config';
 import { AuthenticationService } from '../../../service/authentication.service';
 
-declare let particlesJS: any;
 @Component({
   selector: 'app-verify-email',
   templateUrl: './verify-email.component.html',
@@ -21,11 +19,6 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Particle JS
-    this.invokeParticles();
-
-    // timer
-
     // Auto Checking
     const sendIntervalRequest = new Observable((observer) => {
       const intervel = setInterval(() => {
@@ -56,11 +49,6 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
     });
 
     sendIntervalRequest.subscribe();
-  }
-
-  // Particle JS
-  invokeParticles(): void {
-    particlesJS('particles-js', ParticlesConfig);
   }
 
   ngOnDestroy(): void {
