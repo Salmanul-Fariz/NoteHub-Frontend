@@ -93,6 +93,8 @@ export class UserWorkspaceComponent implements OnInit, AfterViewInit {
   }
 
   onKeydown(event: any, id: any) {
+    console.log(event);
+
     if (event.key === 'Enter') {
       event.preventDefault();
       // Push new div
@@ -101,11 +103,27 @@ export class UserWorkspaceComponent implements OnInit, AfterViewInit {
       // Put caret cursor (statc)
       setTimeout(() => {
         const newDiv = document.getElementById(`1-${this.array.length - 1}`);
-        console.log(newDiv);
         if (newDiv) {
           newDiv.focus();
         }
       }, 0);
+    } else if (event.key === 'Backspace') {
+      console.log(event);
+
+      if (event.target.innerHTML === '') {
+        const myDiv = document.getElementById(`${id.element}-${id.i - 1}`);
+        const range = document.createRange();
+        const sel = window.getSelection();
+        if (myDiv && sel) {
+          if (myDiv.innerText.length !== 0) {
+            range.setStart(myDiv.childNodes[0], myDiv.innerText.length);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+          }
+          myDiv.focus();
+        }
+      }
     }
   }
 }
