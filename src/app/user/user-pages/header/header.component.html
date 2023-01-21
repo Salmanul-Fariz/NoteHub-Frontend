@@ -13,11 +13,11 @@
     <li [routerLink]="['/']" [ngClass]="{currentRoute:currentRoute==='home'}">
       <a class="text-white">HOME</a>
     </li>
-    <li [matMenuTriggerFor]="menu" class="p-0" [ngClass]="{currentRoute:currentRoute==='workspace'}">
+    <li [matMenuTriggerFor]="menu" class="p-0" [ngClass]="{currentRoute:currentRoute==='workspaces'}">
       <a class="text-white" mat-button>WORKSPACE</a>
       <mat-menu #menu="matMenu">
         <button mat-menu-item>Project Workspace</button>
-        <button [routerLink]="['/workspace/user-workspace']" mat-menu-item>User Workspace</button>
+        <button [routerLink]="['/workspaces/user-workspace']" mat-menu-item>User Workspace</button>
       </mat-menu>
     </li>
     <li [ngClass]="{currentRoute:currentRoute==='support'}">

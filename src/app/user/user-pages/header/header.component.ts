@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit, OnChanges {
         const route = event.routerEvent.url.split('/')[1];
         if (route === '') this.currentRoute = 'home';
         else if (route === 'support') this.currentRoute = 'support';
-        else if (route === 'workspace') this.currentRoute = 'workspace';
+        else if (route === 'workspaces') this.currentRoute = 'workspaces';
         else if (route === 'feedback') this.currentRoute = 'feedback';
       }
     });

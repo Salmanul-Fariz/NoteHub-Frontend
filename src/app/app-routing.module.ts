@@ -31,7 +31,7 @@ const appRoutes: Routes = [
         children: [
           { path: '', component: HomeComponent },
           {
-            path: 'workspace/user-workspace',
+            path: 'workspaces/user-workspace',
             canActivate: [UserAutherizationGuard],
             component: UserWorkspaceComponent,
           },

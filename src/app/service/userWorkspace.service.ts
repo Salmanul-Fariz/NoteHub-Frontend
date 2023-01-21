@@ -9,7 +9,7 @@ export class UserWorkspaceService {
   // View User Workspace Page
   viewWorspacePage(token: string | null) {
     return this.http.get<any>(
-      `http://localhost:8000/api/workspace/user-workspace?token=${token}`
+      `http://localhost:8000/api/workspaces/user-workspace?token=${token}`
     );
   }
 }
