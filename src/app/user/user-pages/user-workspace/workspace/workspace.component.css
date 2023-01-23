@@ -1,0 +1,160 @@
+/* main .workspace start */
+
+.main {
+  width: 100%;
+  position: relative;
+}
+
+/* workspace  title bar */
+
+.workspace-title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workspace-title-icon {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+
+.workspace-title-icon > * {
+  font-size: 20px;
+}
+
+.workspace-title-icon > * {
+  font-size: 20px;
+}
+
+.workspace-title-menu > button {
+  display: flex;
+  align-items: center;
+}
+
+.workspace-title-menu-icon {
+  font-size: 22px;
+}
+
+.workspace-title-menu-text {
+  font-size: 15px;
+}
+
+mat-menu > button {
+  align-items: center;
+}
+
+/* workspace cover image */
+
+.workspace-cover-img {
+  width: 100%;
+  padding: 4px 0;
+  height: 160px;
+}
+
+.workspace-cover-img > img {
+  width: 100%;
+  max-height: 100%;
+}
+
+.workspace-cover-img > button {
+  position: absolute;
+  right: 15px;
+  bottom: 14px;
+  border: solid 1px darkgrey;
+  background-color: #e4dddd;
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.workspace-page-icon {
+  width: 62px;
+  padding: 10px 9px;
+  position: absolute;
+  bottom: -26px;
+  height: 62px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.workspace-page-icon > .icon {
+  font-size: 42px;
+}
+
+/*  workspace title container */
+
+.workspace-title-container {
+  width: 100%;
+  padding: 25px 60px;
+  overflow: hidden;
+}
+
+/* workspace content container */
+
+.workspace-content-container {
+  width: 100%;
+  padding: 6px 60px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(60vh - 92px);
+}
+
+.workspace-content-set {
+  position: relative;
+  width: 100%;
+}
+
+.workspace-content {
+  /* display: inline; */
+  width: 100%;
+  min-width: 100%;
+  font-size: 1.14em;
+  white-space: pre-wrap;
+  word-break: break-word;
+  caret-color: #5f5f5f;
+  padding: 3px 2px;
+  min-height: 1em;
+}
+
+[placeholder]:empty::before {
+  content: '';
+}
+
+[placeholder]:empty:focus::before {
+  content: attr(placeholder);
+  color: #555;
+}
+
+[contenteditable]:focus {
+  outline: 0ch;
+}
+
+.workspace-content-handle {
+  position: absolute;
+  top: 7px;
+  left: -20px;
+  display: none;
+  justify-content: flex-start;
+}
+
+.workspace-content:hover + .workspace-content-handle {
+  display: flex;
+}
+
+.workspace-content-handle:hover {
+  display: flex;
+}
+
+.workspace-content-handle > mat-icon {
+  font-size: 20px;
+  color: #7e7d7d;
+}
+
+.workspace-content-handle > mat-icon:hover {
+  cursor: pointer;
+}

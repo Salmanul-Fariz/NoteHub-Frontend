@@ -41,7 +41,7 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
               stopIntervel();
             }
           });
-      }, 6000);
+      }, 4000);
 
       function stopIntervel() {
         clearInterval(intervel);

@@ -13,6 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -36,6 +37,8 @@ import { AdminAuthGuard } from './guards/adminAuth.guard';
 import { AdminSigninGuard } from './guards/adminSignin.guard';
 import { UserWorkspaceComponent } from './user/user-pages/user-workspace/user-workspace.component';
 import { UserAutherizationGuard } from './guards/userAutherization.guard';
+import { WorkspaceLeftNavComponent } from './user/user-pages/user-workspace/workspace-left-nav/workspace-left-nav.component';
+import { WorkspaceComponent } from './user/user-pages/user-workspace/workspace/workspace.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +56,8 @@ import { UserAutherizationGuard } from './guards/userAutherization.guard';
     AuthComponent,
     AdminSigninComponent,
     UserWorkspaceComponent,
+    WorkspaceLeftNavComponent,
+    WorkspaceComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +70,7 @@ import { UserAutherizationGuard } from './guards/userAutherization.guard';
     MatSidenavModule,
     MatMenuModule,
     MatIconModule,
+    MatDialogModule,
   ],
   providers: [
     {
