@@ -44,3 +44,6 @@ Thumbs.db
 # Code formater
 .prettierrc
 .eslintrc.json
+
+# environment
+**/environments

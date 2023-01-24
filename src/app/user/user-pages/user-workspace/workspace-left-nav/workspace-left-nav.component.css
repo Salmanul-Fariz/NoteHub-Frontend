@@ -33,7 +33,7 @@ hr {
   display: flex;
   align-items: center;
   padding: 6px 8px;
-  gap: 0.5rem;
+  gap: 0.8rem;
 }
 
 .workspace-settings-tool:hover {
@@ -44,7 +44,7 @@ hr {
 
 .workspace-settings-tool > * {
   color: #fff;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .workspace-pages-new {

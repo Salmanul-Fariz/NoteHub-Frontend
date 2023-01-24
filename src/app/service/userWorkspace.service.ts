@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
 
+import { environment } from '../environments/environment';
+
 @Injectable({ providedIn: 'root' })
 export class UserWorkspaceService {
   constructor(private http: HttpClient) {}
@@ -9,7 +11,7 @@ export class UserWorkspaceService {
   // View User Workspace Page
   viewWorspacePage(token: string | null) {
     return this.http.get<any>(
-      `http://localhost:8000/api/workspaces/user-workspace?token=${token}`
+      `${environment.baseUrl}/workspaces/user-workspace?token=${token}`
     );
   }
 }
