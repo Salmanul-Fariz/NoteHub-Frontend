@@ -28,17 +28,15 @@ export class UserWorkspaceComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.userWorspaceService
-      .viewWorspacePage(localStorage.getItem('jwt'))
-      .subscribe(
-        (response) => {},
-        (error) => {
-          if (error.status === 408) {
-            localStorage.clear();
-            this.router.navigate(['auth/signin']);
-          }
+    this.userWorspaceService.viewWorspacePage().subscribe(
+      (response) => {},
+      (error) => {
+        if (error.status === 408) {
+          localStorage.clear();
+          this.router.navigate(['auth/signin']);
         }
-      );
+      }
+    );
   }
 
   ngAfterViewInit() {

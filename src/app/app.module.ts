@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   SocialLoginModule,
@@ -39,6 +39,7 @@ import { UserWorkspaceComponent } from './user/user-pages/user-workspace/user-wo
 import { UserAutherizationGuard } from './guards/userAutherization.guard';
 import { WorkspaceLeftNavComponent } from './user/user-pages/user-workspace/workspace-left-nav/workspace-left-nav.component';
 import { WorkspaceComponent } from './user/user-pages/user-workspace/workspace/workspace.component';
+import { TokenIntercepterService } from './Intercepter/token-intercepter.service';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,11 @@ import { WorkspaceComponent } from './user/user-pages/user-workspace/workspace/w
           console.error(err);
         },
       } as SocialAuthServiceConfig,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenIntercepterService,
+      multi: true,
     },
     VerifyEmailGuard,
     AuthenticationGuard,

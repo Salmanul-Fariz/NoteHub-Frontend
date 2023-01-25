@@ -12,9 +12,7 @@ export class HomeComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
-    const token = localStorage.getItem('jwt');
-
-    this.userService.homePage(token).subscribe((response) => {
+    this.userService.homePage().subscribe((response) => {
       if (response.status === 'Pending-Verify') {
         localStorage.setItem('verify', 'true');
         this.router.navigate(['auth/verify']);

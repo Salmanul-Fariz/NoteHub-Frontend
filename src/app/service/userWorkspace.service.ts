@@ -9,9 +9,9 @@ export class UserWorkspaceService {
   constructor(private http: HttpClient) {}
 
   // View User Workspace Page
-  viewWorspacePage(token: string | null) {
+  viewWorspacePage() {
     return this.http.get<any>(
-      `${environment.baseUrl}/workspaces/user-workspace?token=${token}`
+      `${environment.baseUrl}/workspaces/user-workspace`
     );
   }
 }

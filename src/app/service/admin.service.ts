@@ -9,9 +9,7 @@ export class AdminService {
 
   // View dashboard
   dashboardPage() {
-    return this.http.get<any>(
-      `${environment.baseUrl}/admin?token=${localStorage.getItem('admin-jwt')}`
-    );
+    return this.http.get<any>(`${environment.baseUrl}/admin}`);
   }
 
   // Sign in Post

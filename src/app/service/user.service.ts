@@ -9,7 +9,7 @@ import { environment } from '../environments/environment';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  homePage(token: null | string) {
-    return this.http.get<any>(`${environment.baseUrl}?token=${token}`);
+  homePage() {
+    return this.http.get<any>(`${environment.baseUrl}`);
   }
 }
