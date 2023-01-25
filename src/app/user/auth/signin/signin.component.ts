@@ -54,8 +54,8 @@ export class SigninComponent implements OnInit {
       (user: SocialUser) => {
         if (this.googleServise) {
           this.isLoading = true;
-          this.authService.signinWithGoogle(user).subscribe(
-            (response) => {
+          this.authService.signinWithGoogle(user).subscribe({
+            next: (response) => {
               setTimeout(() => {
                 this.isLoading = false;
                 // Register Success
@@ -64,7 +64,7 @@ export class SigninComponent implements OnInit {
                 this.router.navigate(['/']);
               }, 1500);
             },
-            (error) => {
+            error: (error) => {
               setTimeout(() => {
                 this.isLoading = false;
                 if (error.status === 400) {
@@ -75,8 +75,8 @@ export class SigninComponent implements OnInit {
                   }, 1500);
                 }
               }, 1500);
-            }
-          );
+            },
+          });
         }
       }
     );
@@ -93,8 +93,8 @@ export class SigninComponent implements OnInit {
   submit(formData: any) {
     this.isLoading = true;
 
-    this.authService.signin(formData).subscribe(
-      (response) => {
+    this.authService.signin(formData).subscribe({
+      next: (response) => {
         setTimeout(() => {
           this.isLoading = false;
 
@@ -103,7 +103,7 @@ export class SigninComponent implements OnInit {
           this.router.navigate(['/']);
         }, 1500);
       },
-      (error) => {
+      error: (error) => {
         setTimeout(() => {
           this.isLoading = false;
           if (error.error.status === 'Password-Error') {
@@ -118,8 +118,8 @@ export class SigninComponent implements OnInit {
             this.userOrMailErr = false;
           }, 1500);
         }, 1500);
-      }
-    );
+      },
+    });
   }
 
   // Particle JS

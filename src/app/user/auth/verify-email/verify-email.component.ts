@@ -24,22 +24,24 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
       const intervel = setInterval(() => {
         this.authService
           .verifyEmailVerification(localStorage.getItem('jwt'))
-          .subscribe((response) => {
-            if (response.data === 'Verify') {
-              localStorage.removeItem('verify');
-              this.router.navigate(['/']);
-              stopIntervel();
-            }
-            if (response.data === 'Delete') {
-              localStorage.clear();
-              this.router.navigate(['/auth/signup']);
-              stopIntervel();
-            }
-            if (response.data === 'token-expired') {
-              localStorage.clear();
-              this.router.navigate(['/auth/signup']);
-              stopIntervel();
-            }
+          .subscribe({
+            next: (response) => {
+              if (response.data === 'Verify') {
+                localStorage.removeItem('verify');
+                this.router.navigate(['/']);
+                stopIntervel();
+              }
+              if (response.data === 'Delete') {
+                localStorage.clear();
+                this.router.navigate(['/auth/signup']);
+                stopIntervel();
+              }
+              if (response.data === 'token-expired') {
+                localStorage.clear();
+                this.router.navigate(['/auth/signup']);
+                stopIntervel();
+              }
+            },
           });
       }, 4000);
 

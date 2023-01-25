@@ -57,8 +57,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       (user: SocialUser) => {
         if (this.googleServise) {
           this.isLoading = true;
-          this.authService.signinWithGoogle(user).subscribe(
-            (response) => {
+          this.authService.signinWithGoogle(user).subscribe({
+            next: (response) => {
               setTimeout(() => {
                 this.isLoading = false;
                 // Register Success
@@ -67,7 +67,7 @@ export class SignupComponent implements OnInit, OnDestroy {
                 this.router.navigate(['/']);
               }, 1500);
             },
-            (error) => {
+            error: (error) => {
               setTimeout(() => {
                 this.isLoading = false;
                 if (error.status === 400) {
@@ -79,8 +79,8 @@ export class SignupComponent implements OnInit, OnDestroy {
                   }, 1500);
                 }
               }, 1500);
-            }
-          );
+            },
+          });
         }
       }
     );
@@ -99,22 +99,22 @@ export class SignupComponent implements OnInit, OnDestroy {
     if (value.length >= 4) {
       this.isUserLoading = true;
 
-      this.authService.checkUsernameExist(value).subscribe(
-        (responce) => {
+      this.authService.checkUsernameExist(value).subscribe({
+        next: (responce) => {
           setTimeout(() => {
             this.isUserLoading = false;
             this.isUsernameExist = false;
           }, 500);
         },
-        (error) => {
+        error: (error) => {
           if (error.status === 400) {
             setTimeout(() => {
               this.isUserLoading = false;
               this.isUsernameExist = true;
             }, 500);
           }
-        }
-      );
+        },
+      });
     }
   }
 
@@ -122,8 +122,8 @@ export class SignupComponent implements OnInit, OnDestroy {
   submit(formData: any) {
     this.isLoading = true;
 
-    this.authService.signup(formData).subscribe(
-      (response) => {
+    this.authService.signup(formData).subscribe({
+      next: (response) => {
         console.log(response);
 
         setTimeout(() => {
@@ -134,7 +134,7 @@ export class SignupComponent implements OnInit, OnDestroy {
           this.router.navigate(['/']);
         }, 1500);
       },
-      (error) => {
+      error: (error) => {
         setTimeout(() => {
           this.isLoading = false;
           // Check Validation
@@ -150,8 +150,8 @@ export class SignupComponent implements OnInit, OnDestroy {
             this.authEmailExist = false;
           }, 1500);
         }, 1500);
-      }
-    );
+      },
+    });
   }
 
   // Particle JS
