@@ -4,6 +4,10 @@ button {
   font-size: 0.9em;
 }
 
+nav {
+  z-index: 100;
+}
+
 i:hover {
   cursor: pointer;
 }
