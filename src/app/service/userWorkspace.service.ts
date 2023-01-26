@@ -23,4 +23,12 @@ export class UserWorkspaceService {
       `${environment.baseUrl}/workspaces/user-workspace`
     );
   }
+
+  // Update Workspace icon
+  UpdateWorkspaceIcon(newIcon: string) {
+    return this.http.patch<any>(
+      `${environment.baseUrl}/workspaces/user-workspace/icon`,
+      { data: newIcon }
+    );
+  }
 }

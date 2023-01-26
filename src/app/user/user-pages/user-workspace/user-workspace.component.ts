@@ -38,8 +38,8 @@ export class UserWorkspaceComponent
     this.workspaceService.viewWorspacePage().subscribe({
       next: (response) => {
         const obj = {
-          name: response.data['work-spaces']['user-workspace'].name,
-          icon: response.data['work-spaces']['user-workspace'].icon,
+          name: response.data.workSpaces.userWorkspace.name,
+          icon: response.data.workSpaces.userWorkspace.icon,
         };
         this.workspace = obj;
       },
@@ -94,7 +94,13 @@ export class UserWorkspaceComponent
   }
 
   addEmoji(event: any) {
-    console.log(event);
+    this.workspaceService
+      .UpdateWorkspaceIcon(event.emoji.id)
+      .subscribe((response) => {
+        this.isEmojiBar = false;
+        this.workspaceService.isModal = false;
+        this.workspace.icon = event.emoji.id;
+      });
   }
 
   ngOnDestroy(): void {
