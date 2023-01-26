@@ -27,6 +27,8 @@ export class UserWorkspaceComponent
   workspace: { name: string; icon: string } = { name: '', icon: '' };
   isModal: boolean | unknown;
   isEmojiBar: boolean;
+  workSpaceNameUpdate: string;
+  isWorkSpaceNameUpdate: boolean = false;
 
   constructor(
     private observer: BreakpointObserver,
@@ -41,6 +43,7 @@ export class UserWorkspaceComponent
           name: response.data.workSpaces.userWorkspace.name,
           icon: response.data.workSpaces.userWorkspace.icon,
         };
+        this.workSpaceNameUpdate = obj.name;
         this.workspace = obj;
       },
       error: (error) => {
@@ -82,6 +85,7 @@ export class UserWorkspaceComponent
   }
 
   closeModal() {
+    this.isWorkSpaceNameUpdate = false;
     this.workspaceService.isModal = false;
   }
 
@@ -98,9 +102,22 @@ export class UserWorkspaceComponent
       .UpdateWorkspaceIcon(event.emoji.id)
       .subscribe((response) => {
         this.isEmojiBar = false;
+        this.isWorkSpaceNameUpdate = false;
         this.workspaceService.isModal = false;
         this.workspace.icon = event.emoji.id;
       });
+  }
+
+  updateName(event: any) {
+    console.log(event.target.value);
+
+    this.isWorkSpaceNameUpdate = false;
+    if (
+      event.target.value !== this.workSpaceNameUpdate &&
+      event.target.value !== ''
+    ) {
+      this.isWorkSpaceNameUpdate = true;
+    }
   }
 
   ngOnDestroy(): void {

@@ -49,8 +49,10 @@
       <div class="flex w-full xl:w-6/12">
         <div class="flex flex-col gap-y-2">
           <label for="name">Workspace Name</label>
-          <input type="text" value="{{workspace.name}}">
-          <button class="bg-primary rounded-lg mt-3 p-1 text-white text-xl">Save</button>
+          <input type="text" value="{{workspace.name}}" (input)="updateName($event)">
+          <button [disabled]="!isWorkSpaceNameUpdate"
+            [ngClass]="{'opacity-50':!isWorkSpaceNameUpdate, 'cursor-not-allowed':!isWorkSpaceNameUpdate}"
+            class="bg-primary rounded-lg mt-3 p-1 text-white text-xl">Save</button>
         </div>
       </div>
       <div class="flex w-full xl:w-6/12">
