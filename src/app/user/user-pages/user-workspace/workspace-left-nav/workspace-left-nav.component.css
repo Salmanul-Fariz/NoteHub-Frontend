@@ -3,6 +3,12 @@ hr {
   margin: 16px 0;
 }
 
+ngx-emoji {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
 .sidenav {
   border-radius: 0 20px 20px 0;
   padding: 30px;
@@ -10,7 +16,7 @@ hr {
 
 .workspace {
   border-radius: 6px;
-  background-color: rgb(252 252 252 / 62%);
+  background-color: rgb(255, 255, 255);
   padding: 6px 8px;
   align-items: center;
 }

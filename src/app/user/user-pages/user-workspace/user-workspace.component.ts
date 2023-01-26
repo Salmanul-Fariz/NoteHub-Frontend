@@ -1,8 +1,8 @@
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -11,32 +11,51 @@ import { delay, filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-workspace',
   templateUrl: './user-workspace.component.html',
   styleUrls: ['./user-workspace.component.css'],
 })
-export class UserWorkspaceComponent implements OnInit, AfterViewInit {
+export class UserWorkspaceComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
+  modalSubscribtion: Subscription;
+  workspace: { name: string; icon: string } = { name: '', icon: '' };
+  isModal: boolean | unknown;
+  isEmojiBar: boolean;
 
   constructor(
     private observer: BreakpointObserver,
     private router: Router,
-    private userWorspaceService: UserWorkspaceService
+    private workspaceService: UserWorkspaceService
   ) {}
 
   ngOnInit(): void {
-    this.userWorspaceService.viewWorspacePage().subscribe({
-      next: (response) => {},
+    this.workspaceService.viewWorspacePage().subscribe({
+      next: (response) => {
+        const obj = {
+          name: response.data['work-spaces']['user-workspace'].name,
+          icon: response.data['work-spaces']['user-workspace'].icon,
+        };
+        this.workspace = obj;
+      },
       error: (error) => {
-        if (error.status === 408) {
+        if (error.status === 408 || 400) {
           localStorage.clear();
           this.router.navigate(['auth/signin']);
         }
       },
     });
+
+    this.modalSubscribtion = this.workspaceService.modalObservable.subscribe(
+      (res) => {
+        this.isModal = res;
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -60,5 +79,25 @@ export class UserWorkspaceComponent implements OnInit, AfterViewInit {
           this.sidenav.close();
         }
       });
+  }
+
+  closeModal() {
+    this.workspaceService.isModal = false;
+  }
+
+  openEmojiBar() {
+    this.isEmojiBar = true;
+  }
+
+  closeEmojiBar() {
+    this.isEmojiBar = false;
+  }
+
+  addEmoji(event: any) {
+    console.log(event);
+  }
+
+  ngOnDestroy(): void {
+    this.modalSubscribtion.unsubscribe();
   }
 }

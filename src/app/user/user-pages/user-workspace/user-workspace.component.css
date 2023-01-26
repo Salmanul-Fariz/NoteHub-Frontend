@@ -65,3 +65,84 @@ mat-sidenav-container {
 .workspace-content-menu-block-list > h5 {
   font-size: 18px;
 }
+
+/* modal */
+.ws-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.ws-close-modal {
+  font-size: 35px;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.ws-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 5;
+}
+
+/* icon bar */
+
+label {
+  font-size: 20px;
+}
+
+input {
+  font-size: 18px;
+  padding: 6px 8px;
+  color: #4b4b4b;
+  border: solid 1px #8e8e8e;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+ngx-emoji {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+.workspace-icon-i {
+  color: #888888;
+  font-size: 19px;
+}
+
+.workspace-icon-i:hover {
+  cursor: pointer;
+}
+
+emoji-mart {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 25;
+}
+
+.ic-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 15;
+}

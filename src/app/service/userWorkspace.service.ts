@@ -1,11 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UserWorkspaceService {
+  isModal: boolean = false;
+
+  modalObservable = new Observable((observer) => {
+    setInterval(() => {
+      observer.next(this.isModal);
+    }, 0);
+  });
+
   constructor(private http: HttpClient) {}
 
   // View User Workspace Page

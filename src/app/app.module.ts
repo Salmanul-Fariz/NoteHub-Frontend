@@ -3,11 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  SocialLoginModule,
-  SocialAuthServiceConfig,
-} from '@abacritt/angularx-social-login';
+import { SocialLoginModule } from '@abacritt/angularx-social-login';
+import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -19,6 +19,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { VerifyEmailGuard } from './guards/verifyEmail.guard';
 import { AuthenticationGuard } from './guards/authentication.guard';
+import { TokenIntercepterService } from './Intercepter/token-intercepter.service';
 
 import { HeaderComponent } from './user/user-pages/header/header.component';
 import { FooterComponent } from './user/footer/footer.component';
@@ -39,7 +40,6 @@ import { UserWorkspaceComponent } from './user/user-pages/user-workspace/user-wo
 import { UserAutherizationGuard } from './guards/userAutherization.guard';
 import { WorkspaceLeftNavComponent } from './user/user-pages/user-workspace/workspace-left-nav/workspace-left-nav.component';
 import { WorkspaceComponent } from './user/user-pages/user-workspace/workspace/workspace.component';
-import { TokenIntercepterService } from './Intercepter/token-intercepter.service';
 
 @NgModule({
   declarations: [
@@ -72,6 +72,8 @@ import { TokenIntercepterService } from './Intercepter/token-intercepter.service
     MatMenuModule,
     MatIconModule,
     MatDialogModule,
+    PickerModule,
+    EmojiModule,
   ],
   providers: [
     {

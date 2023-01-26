@@ -2,7 +2,9 @@
   <mat-sidenav #sidenav="matSidenav">
 
     <!-- navbar -->
-    <app-workspace-left-nav></app-workspace-left-nav>
+    <app-workspace-left-nav [workspace]="workspace"></app-workspace-left-nav>
+
+
 
   </mat-sidenav>
   <mat-sidenav-content>
@@ -36,3 +38,32 @@
     </li>
   </ul>
 </div>
+
+<!-- modal -->
+<div class="ws-modal w-10/12 md:w-6/12" [ngClass]="{'hidden':!isModal}">
+  <div class="flex flex-col">
+    <div class="flex justify-end mr-4">
+      <button class="ws-close-modal" (click)="closeModal()">&times;</button>
+    </div>
+    <div class="flex flex-col xl:flex-row justify-start mt-2 pt-2 pl-8 pr-8 pb-12 gap-y-4">
+      <div class="flex w-full xl:w-6/12">
+        <div class="flex flex-col gap-y-2">
+          <label for="name">Workspace Name</label>
+          <input type="text" value="{{workspace.name}}">
+        </div>
+      </div>
+      <div class="flex w-full xl:w-6/12">
+        <div class="flex flex-col gap-y-2">
+          <label for="name">Workspace icon</label>
+          <div class="flex gap-10 items-end">
+            <ngx-emoji emoji="{{workspace.icon}}" size="36"></ngx-emoji>
+            <i (click)="openEmojiBar()" class="workspace-icon-i fa-solid fa-pen-to-square mb-1"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<emoji-mart *ngIf="isEmojiBar" (emojiClick)="addEmoji($event)"></emoji-mart>
+<div class="ws-overlay" [ngClass]="{'hidden':!isModal }" (click)="closeModal()"></div>
+<div class="ic-overlay" [ngClass]="{'hidden':!isEmojiBar }" (click)="closeEmojiBar()"></div>
