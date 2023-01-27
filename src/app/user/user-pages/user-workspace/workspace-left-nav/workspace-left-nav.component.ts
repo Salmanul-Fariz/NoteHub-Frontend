@@ -15,6 +15,7 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
   pagesDataTransfer: Subscription;
   isModal: boolean | unknown;
   pagesDetails: string[];
+  pagesEmpty: boolean;
 
   constructor(
     private workspaceService: UserWorkspaceService,
@@ -30,8 +31,15 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
     // Page Details
     this.pagesDataTransfer = this.workspaceService.pagesDataTransfer.subscribe(
       (data) => {
+        console.log(data);
+
+        document.body.style.cursor = 'auto';
+
         this.pagesDetails = data;
-        console.log(this.pagesDetails);
+
+        if (data.length !== 0) {
+          this.pagesEmpty = true;
+        }
       }
     );
   }
@@ -41,11 +49,13 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
   }
 
   createPage() {
+    document.body.style.cursor = 'wait';
     this.workspaceService.CreateWorkspacePage().subscribe({
       next: (response) => {
-        console.log(response);
         this.workspaceService.pushPage(response.data);
-        console.log(this.workspaceService.pages);
+        this.workspaceService.pagesDataTransfer.emit(
+          this.workspaceService.pages
+        );
       },
       error: (error) => {
         if (error.status === 408 || 400) {
@@ -54,6 +64,11 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
         }
       },
     });
+  }
+
+  // Show Pages Details
+  sendPageDetails(index: number) {
+    this.workspaceService.pageDataTransfer.emit(this.pagesDetails[index]);
   }
 
   ngOnDestroy(): void {

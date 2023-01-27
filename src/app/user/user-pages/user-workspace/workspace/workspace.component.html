@@ -1,61 +1,74 @@
-<!-- main container -->
-<div class="main">
-  <div class="workspace-title">
-    <div class="workspace-title-icon">
+<section *ngIf="!pageEmpty; else elseBlock">
+
+  <!-- main container -->
+  <div class="main">
+    <div class="workspace-title">
+      <div class="workspace-title-icon">
+        <i class="icon fa-brands fa-angular"></i>
+        <h3>Angular</h3>
+      </div>
+      <div class="workspace-title-menu">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon class="workspace-title-menu-icon">share</mat-icon>
+            <span class="workspace-title-menu-text">Share</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon class="workspace-title-menu-icon">update</mat-icon>
+            <span class="workspace-title-menu-text">Update</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon class="workspace-title-menu-icon">star</mat-icon>
+            <span class="workspace-title-menu-text">Add to Favarite</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon class="workspace-title-menu-icon">delete</mat-icon>
+            <span class="workspace-title-menu-text">Delete</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon class="workspace-title-menu-icon">ios_share</mat-icon>
+            <span class="workspace-title-menu-text">Export</span>
+          </button>
+        </mat-menu>
+      </div>
+
+    </div>
+    <div class="workspace-cover-img">
+      <img src="https://wallpaperaccess.com/full/3910936.png" alt="">
+      <button>Change Cover image</button>
+    </div>
+    <div class="workspace-page-icon">
       <i class="icon fa-brands fa-angular"></i>
-      <h3>Angular</h3>
     </div>
-    <div class="workspace-title-menu">
-      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-          <mat-icon class="workspace-title-menu-icon">share</mat-icon>
-          <span class="workspace-title-menu-text">Share</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon class="workspace-title-menu-icon">update</mat-icon>
-          <span class="workspace-title-menu-text">Update</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon class="workspace-title-menu-icon">star</mat-icon>
-          <span class="workspace-title-menu-text">Add to Favarite</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon class="workspace-title-menu-icon">delete</mat-icon>
-          <span class="workspace-title-menu-text">Delete</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon class="workspace-title-menu-icon">ios_share</mat-icon>
-          <span class="workspace-title-menu-text">Export</span>
-        </button>
-      </mat-menu>
-    </div>
+  </div>
 
+  <!-- title container -->
+  <div class="workspace-title-container">
+    <h2 class="text-3xl w-full md:w-1/2 md:text-4xl">Angular</h2>
   </div>
-  <div class="workspace-cover-img">
-    <img src="https://wallpaperaccess.com/full/3910936.png" alt="">
-    <button>Change Cover image</button>
-  </div>
-  <div class="workspace-page-icon">
-    <i class="icon fa-brands fa-angular"></i>
-  </div>
-</div>
 
-<!-- title container -->
-<div class="workspace-title-container">
-  <h2 class="text-3xl w-full md:w-1/2 md:text-4xl">Angular</h2>
-</div>
-
-<!-- workspace content container -->
-<div class="workspace-content-container">
-  <div *ngFor="let element of array;let i = index" class="workspace-content-set mt-1">
-    <div id="{{element}}-{{i}}" class="workspace-content" contenteditable="true" spellcheck="true"
-      placeholder="Type '/' for commands" (input)="openOptionTab($event)" (keydown)="onKeydown($event,{element,i})">
-    </div>
-    <div class="workspace-content-handle">
-      <mat-icon>add</mat-icon>
+  <!-- workspace content container -->
+  <div class="workspace-content-container">
+    <div *ngFor="let element of array;let i = index" class="workspace-content-set mt-1">
+      <div id="{{element}}-{{i}}" class="workspace-content" contenteditable="true" spellcheck="true"
+        placeholder="Type '/' for commands" (input)="openOptionTab($event)" (keydown)="onKeydown($event,{element,i})">
+      </div>
+      <div class="workspace-content-handle">
+        <mat-icon>add</mat-icon>
+      </div>
     </div>
   </div>
-</div>
+
+</section>
+
+<ng-template #elseBlock>
+  <div class="empty-page-container">
+    <div class="empty-page">
+      <i class="fa-solid fa-file"></i>
+      <h3>Open a page</h3>
+    </div>
+  </div>
+</ng-template>

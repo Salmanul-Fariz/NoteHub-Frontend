@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-
 import { EventEmitter, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
@@ -9,6 +7,7 @@ import { environment } from '../environments/environment';
 export class UserWorkspaceService {
   pagesDataTransfer = new EventEmitter<string[]>();
   isModalDataTransfer = new EventEmitter<boolean>();
+  pageDataTransfer = new EventEmitter<{}>();
   pages: string[];
 
   constructor(private http: HttpClient) {}
@@ -47,5 +46,10 @@ export class UserWorkspaceService {
   // Push createPage to array
   pushPage(data: any) {
     this.pages.push(data);
+  }
+
+  // ShowPages
+  ShowPages() {
+    return this.pages;
   }
 }

@@ -1,7 +1,8 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
 
 @Component({
@@ -9,11 +10,27 @@ import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
   templateUrl: './workspace.component.html',
   styleUrls: ['./workspace.component.css'],
 })
-export class WorkspaceComponent {
+export class WorkspaceComponent implements OnInit, OnDestroy {
   isOpenOptionTab: boolean;
+  pageDataTransferSb: Subscription;
+  pageEmpty: boolean = true;
+  pagesDetails: {};
   array = [1];
 
-  constructor() {}
+  constructor(private workspaceService: UserWorkspaceService) {}
+
+  ngOnInit(): void {
+    // Page Details
+    this.pageDataTransferSb = this.workspaceService.pageDataTransfer.subscribe(
+      (data) => {
+        this.pagesDetails = data;
+
+        if (data) {
+          this.pageEmpty = false;
+        }
+      }
+    );
+  }
 
   // open Option Tab  while enter / at first
   openOptionTab(event: any) {
@@ -72,5 +89,9 @@ export class WorkspaceComponent {
         }
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    this.pageDataTransferSb.unsubscribe();
   }
 }

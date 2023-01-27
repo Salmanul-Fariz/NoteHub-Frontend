@@ -89,7 +89,7 @@ ngx-emoji {
 
 .workspace-pages-container {
   width: 100%;
-  padding: 10px 4px;
+  padding: 4px;
   background-color: #ffffff;
   border-radius: 6px;
   display: flex;
@@ -113,7 +113,7 @@ ngx-emoji {
 }
 
 .workspace-pages-name {
-  font-size: 16px;
+  font-size: 17px;
   width: 100%;
   overflow: hidden;
   padding-left: 5px;
