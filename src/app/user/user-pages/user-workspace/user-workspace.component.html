@@ -47,13 +47,14 @@
     </div>
     <div class="flex flex-col xl:flex-row justify-start mt-2 pt-2 pl-8 pr-8 pb-12 gap-y-4">
       <div class="flex w-full xl:w-6/12">
-        <div class="flex flex-col gap-y-2">
+        <form class="flex flex-col gap-y-2" [formGroup]="workspaceNameForm"
+          (ngSubmit)="nameUpdate(workspaceNameForm.value)">
           <label for="name">Workspace Name</label>
-          <input type="text" value="{{workspace.name}}" (input)="updateName($event)">
+          <input formControlName="data" type="text" value="{{workspace.name}}" (input)="updateName($event)">
           <button [disabled]="!isWorkSpaceNameUpdate"
             [ngClass]="{'opacity-50':!isWorkSpaceNameUpdate, 'cursor-not-allowed':!isWorkSpaceNameUpdate}"
             class="bg-primary rounded-lg mt-3 p-1 text-white text-xl">Save</button>
-        </div>
+        </form>
       </div>
       <div class="flex w-full xl:w-6/12">
         <div class="flex flex-col gap-y-2">

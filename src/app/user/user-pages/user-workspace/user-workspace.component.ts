@@ -12,6 +12,7 @@ import { NavigationEnd, Router } from '@angular/router';
 
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
 import { Subscription } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-workspace',
@@ -29,6 +30,7 @@ export class UserWorkspaceComponent
   isEmojiBar: boolean;
   workSpaceNameUpdate: string;
   isWorkSpaceNameUpdate: boolean = false;
+  workspaceNameForm: FormGroup;
 
   constructor(
     private observer: BreakpointObserver,
@@ -59,6 +61,13 @@ export class UserWorkspaceComponent
         this.isModal = res;
       }
     );
+
+    // Form Setup
+    this.workspaceNameForm = new FormGroup({
+      data: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(1)],
+      }),
+    });
   }
 
   ngAfterViewInit() {
@@ -109,8 +118,6 @@ export class UserWorkspaceComponent
   }
 
   updateName(event: any) {
-    console.log(event.target.value);
-
     this.isWorkSpaceNameUpdate = false;
     if (
       event.target.value !== this.workSpaceNameUpdate &&
@@ -118,6 +125,16 @@ export class UserWorkspaceComponent
     ) {
       this.isWorkSpaceNameUpdate = true;
     }
+  }
+
+  nameUpdate(data: any) {
+    this.workspaceService.UpdateWorkspaceName(data).subscribe((response) => {
+      this.isEmojiBar = false;
+      this.isWorkSpaceNameUpdate = false;
+      this.workspaceService.isModal = false;
+      this.workSpaceNameUpdate = data.data;
+      this.workspace.name = data.data;
+    });
   }
 
   ngOnDestroy(): void {

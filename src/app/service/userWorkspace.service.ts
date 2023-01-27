@@ -31,4 +31,12 @@ export class UserWorkspaceService {
       { data: newIcon }
     );
   }
+
+  // Update Workspace name
+  UpdateWorkspaceName(newName: string) {
+    return this.http.patch<any>(
+      `${environment.baseUrl}/workspaces/user-workspace/name`,
+      newName
+    );
+  }
 }
