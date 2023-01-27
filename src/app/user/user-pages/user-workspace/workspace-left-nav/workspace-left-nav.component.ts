@@ -12,7 +12,9 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
   @Input() workspace: { name: string; icon: string };
 
   modalSubscribtion: Subscription;
+  pagesDataTransfer: Subscription;
   isModal: boolean | unknown;
+  pagesDetails: string[];
 
   constructor(
     private workspaceService: UserWorkspaceService,
@@ -20,15 +22,22 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.modalSubscribtion = this.workspaceService.modalObservable.subscribe(
-      (res) => {
-        this.isModal = res;
+    this.modalSubscribtion =
+      this.workspaceService.isModalDataTransfer.subscribe((data) => {
+        this.isModal = data;
+      });
+
+    // Page Details
+    this.pagesDataTransfer = this.workspaceService.pagesDataTransfer.subscribe(
+      (data) => {
+        this.pagesDetails = data;
+        console.log(this.pagesDetails);
       }
     );
   }
 
   openModal() {
-    this.workspaceService.isModal = true;
+    this.workspaceService.isModalDataTransfer.emit(true);
   }
 
   createPage() {
@@ -49,5 +58,6 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.modalSubscribtion.unsubscribe();
+    this.pagesDataTransfer.unsubscribe();
   }
 }

@@ -41,8 +41,6 @@ export class UserWorkspaceComponent
   ngOnInit(): void {
     this.workspaceService.viewWorspacePage().subscribe({
       next: (response) => {
-        console.log(response);
-
         const obj = {
           name: response.data.userDetails.workSpaces.userWorkspace.name,
           icon: response.data.userDetails.workSpaces.userWorkspace.icon,
@@ -52,7 +50,9 @@ export class UserWorkspaceComponent
 
         // Page Details
         this.workspaceService.pages = response.data.pageDetails;
-        console.log(this.workspaceService.pages);
+
+        // Data Transer event
+        this.workspaceService.pagesDataTransfer.emit(response.data.pageDetails);
       },
       error: (error) => {
         if (error.status === 408 || 400) {
@@ -62,11 +62,10 @@ export class UserWorkspaceComponent
       },
     });
 
-    this.modalSubscribtion = this.workspaceService.modalObservable.subscribe(
-      (res) => {
-        this.isModal = res;
-      }
-    );
+    this.modalSubscribtion =
+      this.workspaceService.isModalDataTransfer.subscribe((data) => {
+        this.isModal = data;
+      });
 
     // Form Setup
     this.workspaceNameForm = new FormGroup({
@@ -101,7 +100,7 @@ export class UserWorkspaceComponent
 
   closeModal() {
     this.isWorkSpaceNameUpdate = false;
-    this.workspaceService.isModal = false;
+    this.workspaceService.isModalDataTransfer.emit(false);
   }
 
   openEmojiBar() {
@@ -117,7 +116,8 @@ export class UserWorkspaceComponent
       next: (response) => {
         this.isEmojiBar = false;
         this.isWorkSpaceNameUpdate = false;
-        this.workspaceService.isModal = false;
+        this.workspaceService.isModalDataTransfer.emit(false);
+
         this.workspace.icon = event.emoji.id;
       },
       error: (error) => {
@@ -144,7 +144,8 @@ export class UserWorkspaceComponent
       next: (response) => {
         this.isEmojiBar = false;
         this.isWorkSpaceNameUpdate = false;
-        this.workspaceService.isModal = false;
+        this.workspaceService.isModalDataTransfer.emit(false);
+
         this.workSpaceNameUpdate = data.data;
         this.workspace.name = data.data;
       },

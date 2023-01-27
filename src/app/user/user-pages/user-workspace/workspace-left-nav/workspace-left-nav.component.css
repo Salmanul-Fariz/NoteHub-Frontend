@@ -71,7 +71,7 @@ ngx-emoji {
 
 .workspace-pages-new:hover {
   cursor: pointer;
-  margin-top: -5px;
+  margin-top: 5px;
 }
 
 .workspace-pages-new > * {
@@ -83,4 +83,41 @@ ngx-emoji {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+/* workspace pages  */
+
+.workspace-pages-container {
+  width: 100%;
+  padding: 10px 4px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+}
+
+.workspace-pages-bar {
+  width: 100%;
+  padding: 3px 2px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.workspace-pages-bar:hover {
+  background-color: #e1e0e0;
+  padding: 3px 2px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.workspace-pages-name {
+  font-size: 16px;
+  width: 100%;
+  overflow: hidden;
+  padding-left: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: start;
 }
