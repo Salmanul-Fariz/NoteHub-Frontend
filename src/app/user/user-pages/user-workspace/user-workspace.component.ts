@@ -41,12 +41,18 @@ export class UserWorkspaceComponent
   ngOnInit(): void {
     this.workspaceService.viewWorspacePage().subscribe({
       next: (response) => {
+        console.log(response);
+
         const obj = {
-          name: response.data.workSpaces.userWorkspace.name,
-          icon: response.data.workSpaces.userWorkspace.icon,
+          name: response.data.userDetails.workSpaces.userWorkspace.name,
+          icon: response.data.userDetails.workSpaces.userWorkspace.icon,
         };
         this.workSpaceNameUpdate = obj.name;
         this.workspace = obj;
+
+        // Page Details
+        this.workspaceService.pages = response.data.pageDetails;
+        console.log(this.workspaceService.pages);
       },
       error: (error) => {
         if (error.status === 408 || 400) {
@@ -107,14 +113,20 @@ export class UserWorkspaceComponent
   }
 
   addEmoji(event: any) {
-    this.workspaceService
-      .UpdateWorkspaceIcon(event.emoji.id)
-      .subscribe((response) => {
+    this.workspaceService.UpdateWorkspaceIcon(event.emoji.id).subscribe({
+      next: (response) => {
         this.isEmojiBar = false;
         this.isWorkSpaceNameUpdate = false;
         this.workspaceService.isModal = false;
         this.workspace.icon = event.emoji.id;
-      });
+      },
+      error: (error) => {
+        if (error.status === 408 || 400) {
+          localStorage.clear();
+          this.router.navigate(['auth/signin']);
+        }
+      },
+    });
   }
 
   updateName(event: any) {
@@ -128,12 +140,20 @@ export class UserWorkspaceComponent
   }
 
   nameUpdate(data: any) {
-    this.workspaceService.UpdateWorkspaceName(data).subscribe((response) => {
-      this.isEmojiBar = false;
-      this.isWorkSpaceNameUpdate = false;
-      this.workspaceService.isModal = false;
-      this.workSpaceNameUpdate = data.data;
-      this.workspace.name = data.data;
+    this.workspaceService.UpdateWorkspaceName(data).subscribe({
+      next: (response) => {
+        this.isEmojiBar = false;
+        this.isWorkSpaceNameUpdate = false;
+        this.workspaceService.isModal = false;
+        this.workSpaceNameUpdate = data.data;
+        this.workspace.name = data.data;
+      },
+      error: (error) => {
+        if (error.status === 408 || 400) {
+          localStorage.clear();
+          this.router.navigate(['auth/signin']);
+        }
+      },
     });
   }
 

@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class UserWorkspaceService {
   isModal: boolean = false;
+  pages: string[];
 
   modalObservable = new Observable((observer) => {
     setInterval(() => {
@@ -38,5 +39,18 @@ export class UserWorkspaceService {
       `${environment.baseUrl}/workspaces/user-workspace/name`,
       newName
     );
+  }
+
+  // Create Workspace Page
+  CreateWorkspacePage() {
+    return this.http.post<any>(
+      `${environment.baseUrl}/workspaces/user-workspace`,
+      {}
+    );
+  }
+
+  // Push createPage to array
+  pushPage(data: any) {
+    this.pages.push(data);
   }
 }
