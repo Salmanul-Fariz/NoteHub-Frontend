@@ -7,8 +7,9 @@ import { environment } from '../environments/environment';
 export class UserWorkspaceService {
   pagesDataTransfer = new EventEmitter<string[]>();
   isModalDataTransfer = new EventEmitter<boolean>();
+  titleIconEditDataTransfer = new EventEmitter<{ bol: boolean; id: string }>();
   pageDataTransfer = new EventEmitter<{}>();
-  pages: string[];
+  pages: any[];
 
   constructor(private http: HttpClient) {}
 
@@ -41,6 +42,23 @@ export class UserWorkspaceService {
       `${environment.baseUrl}/workspaces/user-workspace`,
       {}
     );
+  }
+
+  // Update workspace page icon
+  UpdateWorkspacePageIcon(iconName: string, pageId: string) {
+    return this.http.patch<any>(
+      `${environment.baseUrl}/workspaces/user-workspace/page-icon`,
+      { iconName: iconName, pageId: pageId }
+    );
+  }
+
+  // update page icon and update page array
+  updatePageArray(id: string, data: any) {
+    const index = this.pages.findIndex((val) => {
+      return val._id === id;
+    });
+
+    this.pages.splice(index, 1, data);
   }
 
   // Push createPage to array

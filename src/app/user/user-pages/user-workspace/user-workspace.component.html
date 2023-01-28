@@ -69,5 +69,6 @@
   </div>
 </div>
 <emoji-mart *ngIf="isEmojiBar" (emojiClick)="addEmoji($event)"></emoji-mart>
+<emoji-mart *ngIf="titleEmojiEdit.bol" (emojiClick)="addTitleEmoji($event,titleEmojiEdit.id)"></emoji-mart>
 <div class="ws-overlay" [ngClass]="{'hidden':!isModal }" (click)="closeModal()"></div>
-<div class="ic-overlay" [ngClass]="{'hidden':!isEmojiBar }" (click)="closeEmojiBar()"></div>
+<div class="ic-overlay" [ngClass]="{'hidden':!isEmojiBar && !titleEmojiEdit.bol}" (click)="closeEmojiBar()"></div>

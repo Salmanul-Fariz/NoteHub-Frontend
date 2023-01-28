@@ -40,7 +40,7 @@
       <img src="https://wallpaperaccess.com/full/3910936.png" alt="">
       <button>Change Cover image</button>
     </div>
-    <div class="workspace-page-icon">
+    <div class="workspace-page-icon" (click)="editPageIcon(pagesDetails._id)">
       <ngx-emoji emoji="{{pagesDetails.icon}}" size="42"></ngx-emoji>
     </div>
   </div>

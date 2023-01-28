@@ -92,6 +92,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Edit Page icon
+  editPageIcon(id: string) {
+    this.workspaceService.titleIconEditDataTransfer.emit({ bol: true, id: id });
+  }
+
   ngOnDestroy(): void {
     this.pageDataTransferSb.unsubscribe();
   }

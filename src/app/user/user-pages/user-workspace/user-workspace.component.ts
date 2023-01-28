@@ -25,9 +25,11 @@ export class UserWorkspaceComponent
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   modalSubscribtion: Subscription;
+  editTitleEmojiSubscribtion: Subscription;
   workspace: { name: string; icon: string } = { name: '', icon: '' };
   isModal: boolean | unknown;
   isEmojiBar: boolean;
+  titleEmojiEdit: { bol: boolean; id: string } = { bol: false, id: '' };
   workSpaceNameUpdate: string;
   isWorkSpaceNameUpdate: boolean = false;
   workspaceNameForm: FormGroup;
@@ -73,6 +75,12 @@ export class UserWorkspaceComponent
         validators: [Validators.required, Validators.minLength(1)],
       }),
     });
+
+    // Edit title icon
+    this.editTitleEmojiSubscribtion =
+      this.workspaceService.titleIconEditDataTransfer.subscribe((data) => {
+        this.titleEmojiEdit = data;
+      });
   }
 
   ngAfterViewInit() {
@@ -109,6 +117,7 @@ export class UserWorkspaceComponent
 
   closeEmojiBar() {
     this.isEmojiBar = false;
+    this.titleEmojiEdit.bol = false;
   }
 
   addEmoji(event: any) {
@@ -116,9 +125,6 @@ export class UserWorkspaceComponent
       next: (response) => {
         this.isEmojiBar = false;
         this.isWorkSpaceNameUpdate = false;
-        this.workspaceService.isModalDataTransfer.emit(false);
-
-        this.workspace.icon = event.emoji.id;
       },
       error: (error) => {
         if (error.status === 408 || 400) {
@@ -127,6 +133,29 @@ export class UserWorkspaceComponent
         }
       },
     });
+  }
+
+  // Edit Title icon
+  addTitleEmoji(event: any, id: string) {
+    document.body.style.cursor = 'wait';
+    this.titleEmojiEdit.bol = false;
+    this.workspaceService
+      .UpdateWorkspacePageIcon(event.emoji.id, id)
+      .subscribe({
+        next: (response) => {
+          this.workspaceService.updatePageArray(id, response.data);
+          this.workspaceService.pageDataTransfer.emit(response.data);
+          this.isEmojiBar = false;
+          this.isWorkSpaceNameUpdate = false;
+          document.body.style.cursor = 'auto';
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
   }
 
   updateName(event: any) {
@@ -160,5 +189,6 @@ export class UserWorkspaceComponent
 
   ngOnDestroy(): void {
     this.modalSubscribtion.unsubscribe();
+    this.editTitleEmojiSubscribtion.unsubscribe();
   }
 }
