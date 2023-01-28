@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { async, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { S3BucketService } from 'src/app/service/s3-bucket.service';
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
 
@@ -13,8 +13,10 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   isOpenOptionTab: boolean;
   pageDataTransferSb: Subscription;
   pageEmpty: boolean = true;
-  pagesDetails: {};
+  pagesDetails: any;
   setTimerUpdateName: ReturnType<typeof setTimeout>;
+  backgroundPositionY: string;
+  backgroundImage: string;
   array = [1];
 
   constructor(
@@ -28,6 +30,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     this.pageDataTransferSb = this.workspaceService.pageDataTransfer.subscribe(
       (data) => {
         this.pagesDetails = data;
+
+        if (this.pagesDetails.coverImg.url) {
+          this.backgroundPositionY = `${this.pagesDetails.coverImg.positionY}`;
+          this.backgroundImage = `url(${this.pagesDetails.coverImg.url})`;
+        }
 
         if (data) {
           this.pageEmpty = false;

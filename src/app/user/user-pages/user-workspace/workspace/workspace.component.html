@@ -1,7 +1,7 @@
 <section *ngIf="!pageEmpty; else elseBlock">
 
   <!-- main container -->
-  <div class="main">
+  <div class="main" id="hello">
     <div class="workspace-title">
       <div class="workspace-title-icon">
         <ngx-emoji emoji="{{pagesDetails.icon}}" size="24"></ngx-emoji>
@@ -36,11 +36,18 @@
       </div>
 
     </div>
-    <div class="workspace-cover-img" *ngIf="pagesDetails.coverImg.url;else elseCoverImg">
-      <img src="https://wallpaperaccess.com/full/3910936.png" alt="">
+    <div class="workspace-cover-img" *ngIf="pagesDetails.coverImg.url;else elseCoverImg"
+      [ngStyle]="{'background-position-y':backgroundPositionY,'background-image':backgroundImage}">
       <div class="flex justify-between gap-1">
-        <button>Change Cover</button>
-        <button>Reposition</button>
+        <form action="">
+          <input (input)="uploadCover($event,pagesDetails._id)" id="files" type="file" accept="image/*">
+          <label for="files">Change Cover</label>
+        </form>
+
+        <form action="">
+          <input (input)="uploadCover($event,pagesDetails._id)" id="files" type="file" accept="image/*">
+          <label for="files">Reposition</label>
+        </form>
       </div>
     </div>
     <ng-template #elseCoverImg>
