@@ -68,6 +68,14 @@ export class UserWorkspaceService {
     );
   }
 
+  // Update workspace page Cover image positionY
+  UpdateWorkspaceCoverPosition(positionY: number, pageId: string) {
+    return this.http.patch<any>(
+      `${environment.baseUrl}/workspaces/user-workspace/cover-position`,
+      { positionY: positionY, pageId: pageId }
+    );
+  }
+
   // update page icon and update page array
   updatePageArray(id: string, data: any) {
     const index = this.pages.findIndex((val) => {

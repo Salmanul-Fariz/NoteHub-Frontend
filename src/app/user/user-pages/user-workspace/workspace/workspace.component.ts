@@ -17,6 +17,8 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   setTimerUpdateName: ReturnType<typeof setTimeout>;
   backgroundPositionY: string;
   backgroundImage: string;
+  cursor: string = 'auto';
+  isbackgroundPositionY: boolean;
   array = [1];
 
   constructor(
@@ -32,7 +34,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         this.pagesDetails = data;
 
         if (this.pagesDetails.coverImg.url) {
-          this.backgroundPositionY = `${this.pagesDetails.coverImg.positionY}`;
+          this.backgroundPositionY = `${this.pagesDetails.coverImg.positionY}%`;
           this.backgroundImage = `url(${this.pagesDetails.coverImg.url})`;
         }
 
@@ -175,6 +177,46 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         },
       });
     }
+  }
+
+  // drag Open Cover Image
+  dragOpenCoverImage() {
+    this.isbackgroundPositionY = true;
+    this.cursor = 'move';
+  }
+
+  // drag Close Cover Image
+  dragCloseCoverImage() {
+    this.cursor = 'auto';
+    this.isbackgroundPositionY = false;
+    this.backgroundPositionY = `${this.pagesDetails.coverImg.positionY}%`;
+  }
+
+  // Change the value
+  dragYPosition(event: any) {
+    this.backgroundPositionY = `${event.target.value}%`;
+  }
+
+  // drag Save Cover Image
+  dragSaveCoverImage(pageId: string) {
+    document.body.style.cursor = 'wait';
+    const data = +this.backgroundPositionY.split('%')[0];
+    this.workspaceService.UpdateWorkspaceCoverPosition(data, pageId).subscribe({
+      next: (response) => {
+        this.cursor = 'auto';
+        this.isbackgroundPositionY = false;
+        this.workspaceService.updatePageArray(pageId, response.data);
+        this.workspaceService.pageDataTransfer.emit(response.data);
+        document.body.style.cursor = 'auto';
+      },
+      error: (error) => {
+        document.body.style.cursor = 'auto';
+        if (error.status === 408 || 400) {
+          localStorage.clear();
+          this.router.navigate(['auth/signin']);
+        }
+      },
+    });
   }
 
   ngOnDestroy(): void {

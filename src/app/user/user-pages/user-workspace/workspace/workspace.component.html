@@ -37,17 +37,32 @@
 
     </div>
     <div class="workspace-cover-img" *ngIf="pagesDetails.coverImg.url;else elseCoverImg"
-      [ngStyle]="{'background-position-y':backgroundPositionY,'background-image':backgroundImage}">
-      <div class="flex justify-between gap-1">
+      [ngStyle]="{'background-position-y':backgroundPositionY,'background-image':backgroundImage,'cursor':cursor}">
+      <div class="flex justify-between gap-1" *ngIf="!isbackgroundPositionY">
         <form action="">
           <input (input)="uploadCover($event,pagesDetails._id)" id="files" type="file" accept="image/*">
           <label for="files">Change Cover</label>
         </form>
 
-        <form action="">
-          <input (input)="uploadCover($event,pagesDetails._id)" id="files" type="file" accept="image/*">
-          <label for="files">Reposition</label>
-        </form>
+        <div (click)="dragOpenCoverImage()">
+          <label>Reposition</label>
+        </div>
+      </div>
+      <div class="flex flex-col gap-y-1" *ngIf="isbackgroundPositionY">
+        <div class="dragY flex w-full">
+          <input (input)="dragYPosition($event)" type="range" min="0" max="100"
+            value="{{pagesDetails.coverImg.positionY}}">
+        </div>
+
+        <div class="flex justify-start gap-1">
+          <div (click)="dragCloseCoverImage()">
+            <label>Cancel</label>
+          </div>
+
+          <div (click)="dragSaveCoverImage(pagesDetails._id)">
+            <label>Save</label>
+          </div>
+        </div>
       </div>
     </div>
     <ng-template #elseCoverImg>

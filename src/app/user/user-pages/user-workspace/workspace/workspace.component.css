@@ -54,6 +54,7 @@ mat-menu > button {
   width: 100%;
   padding: 4px 0;
   height: 160px;
+  background-size: 100% auto;
 }
 
 .workspace-cover-img > img {
@@ -95,6 +96,11 @@ mat-menu > button {
   display: block;
   width: 42px;
   height: 42px;
+  cursor: pointer;
+}
+
+.dragY input {
+  display: block;
   cursor: pointer;
 }
 
