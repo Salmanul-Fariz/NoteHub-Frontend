@@ -36,8 +36,8 @@
       </div>
 
     </div>
-    <img src="{{img}}" alt="">
     <div class="workspace-cover-img" *ngIf="pagesDetails.coverImg.url;else elseCoverImg">
+      <img src="https://wallpaperaccess.com/full/3910936.png" alt="">
       <div class="flex justify-between gap-1">
         <button>Change Cover</button>
         <button>Reposition</button>
@@ -47,7 +47,7 @@
       <div class="workspace-cover-img">
         <div>
           <form action="upload image">
-            <input (input)="uploadCover($event)" id="files" type="file" accept="image/*">
+            <input (input)="uploadCover($event,pagesDetails._id)" id="files" type="file" accept="image/*">
             <label for="files">Add Cover</label>
           </form>
         </div>

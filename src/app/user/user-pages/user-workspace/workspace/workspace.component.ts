@@ -16,7 +16,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   pagesDetails: {};
   setTimerUpdateName: ReturnType<typeof setTimeout>;
   array = [1];
-  img: string;
 
   constructor(
     private workspaceService: UserWorkspaceService,
@@ -127,10 +126,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   }
 
   // Cover image upload
-  uploadCover(event: any) {
+  uploadCover(event: any, pageId: string) {
     const file = event.target.files[0];
     if (file) {
-      let imageUrl;
+      document.body.style.cursor = 'wait';
+
       // get a seccure url from a server
       this.s3Service.createUploadUrl().subscribe({
         next: (response) => {
@@ -138,18 +138,35 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
           // post the image directly to the s3 bucket
           this.s3Service.uploadpageCoverImg(url, file).then((data) => {
-            imageUrl = data.url.split('?')[0];
+            const imageUrl = data.url.split('?')[0];
+
+            // post req to server to save any data
+            this.workspaceService
+              .UpdateWorkspaceCoverImage(imageUrl, pageId)
+              .subscribe({
+                next: (response) => {
+                  this.workspaceService.updatePageArray(pageId, response.data);
+                  this.workspaceService.pageDataTransfer.emit(response.data);
+                  document.body.style.cursor = 'auto';
+                },
+                error: (error) => {
+                  document.body.style.cursor = 'auto';
+                  if (error.status === 408 || 400) {
+                    localStorage.clear();
+                    this.router.navigate(['auth/signin']);
+                  }
+                },
+              });
           });
         },
         error: (error) => {
+          document.body.style.cursor = 'auto';
           if (error.status === 408 || 400) {
             localStorage.clear();
             this.router.navigate(['auth/signin']);
           }
         },
       });
-
-      // post req to server to save any data
     }
   }
 
