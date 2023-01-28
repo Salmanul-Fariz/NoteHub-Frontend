@@ -61,10 +61,13 @@ mat-menu > button {
   max-height: 100%;
 }
 
-.workspace-cover-img > button {
+.workspace-cover-img > div {
   position: absolute;
   right: 15px;
   bottom: 14px;
+}
+
+.workspace-cover-img button {
   border: solid 1px darkgrey;
   background-color: #e4dddd;
   padding: 1px 6px;
@@ -96,6 +99,16 @@ mat-menu > button {
   width: 100%;
   padding: 25px 60px;
   overflow: hidden;
+}
+
+.workspace-title-container input {
+  background-color: #fafafa;
+}
+
+.workspace-title-container input:focus {
+  outline: none;
+  border: solid 1px #6e6e6e;
+  border-radius: 6px;
 }
 
 .workspace-title-container > h2 {

@@ -36,10 +36,20 @@
       </div>
 
     </div>
-    <div class="workspace-cover-img">
+    <div class="workspace-cover-img" *ngIf="pagesDetails.coverImg.url;else elseCoverImg">
       <img src="https://wallpaperaccess.com/full/3910936.png" alt="">
-      <button>Change Cover image</button>
+      <div class="flex justify-between gap-1">
+        <button>Change Cover</button>
+        <button>Reposition</button>
+      </div>
     </div>
+    <ng-template #elseCoverImg>
+      <div class="workspace-cover-img">
+        <div>
+          <button>Add Cover</button>
+        </div>
+      </div>
+    </ng-template>
     <div class="workspace-page-icon" (click)="editPageIcon(pagesDetails._id)">
       <ngx-emoji emoji="{{pagesDetails.icon}}" size="42"></ngx-emoji>
     </div>
