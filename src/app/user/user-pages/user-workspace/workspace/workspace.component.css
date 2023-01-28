@@ -17,16 +17,18 @@
 .workspace-title-icon {
   display: flex;
   justify-content: center;
-  gap: 10px;
   align-items: center;
+  gap: 10px;
 }
 
-.workspace-title-icon > * {
-  font-size: 20px;
+.workspace-title-icon > ngx-emoji {
+  width: 24px;
+  display: block;
+  height: 24px;
 }
 
-.workspace-title-icon > * {
-  font-size: 20px;
+.workspace-title-icon > h3 {
+  font-size: 19px;
 }
 
 .workspace-title-menu > button {
@@ -81,8 +83,11 @@ mat-menu > button {
   align-items: center;
 }
 
-.workspace-page-icon > .icon {
-  font-size: 42px;
+.workspace-page-icon > ngx-emoji {
+  display: block;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
 }
 
 /*  workspace title container */

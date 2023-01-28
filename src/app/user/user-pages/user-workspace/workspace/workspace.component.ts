@@ -24,6 +24,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     this.pageDataTransferSb = this.workspaceService.pageDataTransfer.subscribe(
       (data) => {
         this.pagesDetails = data;
+        console.log(this.pagesDetails);
 
         if (data) {
           this.pageEmpty = false;

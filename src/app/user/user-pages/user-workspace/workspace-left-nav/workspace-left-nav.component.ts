@@ -31,8 +31,6 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
     // Page Details
     this.pagesDataTransfer = this.workspaceService.pagesDataTransfer.subscribe(
       (data) => {
-        console.log(data);
-
         document.body.style.cursor = 'auto';
 
         this.pagesDetails = data;

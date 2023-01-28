@@ -4,8 +4,8 @@
   <div class="main">
     <div class="workspace-title">
       <div class="workspace-title-icon">
-        <i class="icon fa-brands fa-angular"></i>
-        <h3>Angular</h3>
+        <ngx-emoji emoji="{{pagesDetails.icon}}" size="24"></ngx-emoji>
+        <h3>{{pagesDetails.title}}</h3>
       </div>
       <div class="workspace-title-menu">
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -41,13 +41,13 @@
       <button>Change Cover image</button>
     </div>
     <div class="workspace-page-icon">
-      <i class="icon fa-brands fa-angular"></i>
+      <ngx-emoji emoji="{{pagesDetails.icon}}" size="42"></ngx-emoji>
     </div>
   </div>
 
   <!-- title container -->
   <div class="workspace-title-container">
-    <h2 class="text-3xl w-full md:w-1/2 md:text-4xl">Angular</h2>
+    <h2 class="text-3xl w-full md:w-1/2 md:text-4xl">{{pagesDetails.title}}</h2>
   </div>
 
   <!-- workspace content container -->
