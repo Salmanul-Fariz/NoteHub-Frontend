@@ -52,6 +52,14 @@ export class UserWorkspaceService {
     );
   }
 
+  // Update workspace page name
+  UpdateWorkspacePageName(pageName: string, pageId: string) {
+    return this.http.patch<any>(
+      `${environment.baseUrl}/workspaces/user-workspace/page-name`,
+      { pageName: pageName, pageId: pageId }
+    );
+  }
+
   // update page icon and update page array
   updatePageArray(id: string, data: any) {
     const index = this.pages.findIndex((val) => {

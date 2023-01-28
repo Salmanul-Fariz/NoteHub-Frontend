@@ -47,7 +47,8 @@
 
   <!-- title container -->
   <div class="workspace-title-container">
-    <h2 class="text-3xl w-full md:w-1/2 md:text-4xl">{{pagesDetails.title}}</h2>
+    <input (input)="pageNameUpdate($event,pagesDetails._id)" maxlength="20" value="{{pagesDetails.title}}"
+      class="text-3xl w-full md:w-1/2 md:text-4xl">
   </div>
 
   <!-- workspace content container -->

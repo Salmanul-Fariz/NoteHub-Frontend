@@ -1,6 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
@@ -15,16 +13,19 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   pageDataTransferSb: Subscription;
   pageEmpty: boolean = true;
   pagesDetails: {};
+  setTimerUpdateName: ReturnType<typeof setTimeout>;
   array = [1];
 
-  constructor(private workspaceService: UserWorkspaceService) {}
+  constructor(
+    private workspaceService: UserWorkspaceService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     // Page Details
     this.pageDataTransferSb = this.workspaceService.pageDataTransfer.subscribe(
       (data) => {
         this.pagesDetails = data;
-        console.log(this.pagesDetails);
 
         if (data) {
           this.pageEmpty = false;
@@ -95,6 +96,31 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   // Edit Page icon
   editPageIcon(id: string) {
     this.workspaceService.titleIconEditDataTransfer.emit({ bol: true, id: id });
+  }
+
+  // Upadte Page name
+  pageNameUpdate(event: any, id: string) {
+    clearTimeout(this.setTimerUpdateName);
+    if (event.target.value.length < 20) {
+      this.setTimerUpdateName = setTimeout(() => {
+        document.body.style.cursor = 'wait';
+        this.workspaceService
+          .UpdateWorkspacePageName(event.target.value, id)
+          .subscribe({
+            next: (response) => {
+              this.workspaceService.updatePageArray(id, response.data);
+              this.workspaceService.pageDataTransfer.emit(response.data);
+              document.body.style.cursor = 'auto';
+            },
+            error: (error) => {
+              if (error.status === 408 || 400) {
+                localStorage.clear();
+                this.router.navigate(['auth/signin']);
+              }
+            },
+          });
+      }, 1000);
+    }
   }
 
   ngOnDestroy(): void {

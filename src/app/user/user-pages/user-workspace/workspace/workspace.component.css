@@ -98,6 +98,14 @@ mat-menu > button {
   overflow: hidden;
 }
 
+.workspace-title-container > h2 {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
+}
+
 /* workspace content container */
 
 .workspace-content-container {
