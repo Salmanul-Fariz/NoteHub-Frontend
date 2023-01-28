@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { async, Subscription } from 'rxjs';
+import { S3BucketService } from 'src/app/service/s3-bucket.service';
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
 
 @Component({
@@ -15,9 +16,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   pagesDetails: {};
   setTimerUpdateName: ReturnType<typeof setTimeout>;
   array = [1];
+  img: string;
 
   constructor(
     private workspaceService: UserWorkspaceService,
+    private s3Service: S3BucketService,
     private router: Router
   ) {}
 
@@ -120,6 +123,33 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
             },
           });
       }, 1000);
+    }
+  }
+
+  // Cover image upload
+  uploadCover(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      let imageUrl;
+      // get a seccure url from a server
+      this.s3Service.createUploadUrl().subscribe({
+        next: (response) => {
+          const url = response.data;
+
+          // post the image directly to the s3 bucket
+          this.s3Service.uploadpageCoverImg(url, file).then((data) => {
+            imageUrl = data.url.split('?')[0];
+          });
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+
+      // post req to server to save any data
     }
   }
 

@@ -67,12 +67,17 @@ mat-menu > button {
   bottom: 14px;
 }
 
-.workspace-cover-img button {
+.workspace-cover-img label {
   border: solid 1px darkgrey;
   background-color: #e4dddd;
   padding: 1px 6px;
   border-radius: 5px;
   font-size: 12px;
+  cursor: pointer;
+}
+
+.workspace-cover-img input {
+  display: none;
 }
 
 .workspace-page-icon {
