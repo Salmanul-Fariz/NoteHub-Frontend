@@ -97,9 +97,21 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     }
   }
 
+  // close the options active
+  closeActiveOption() {
+    const options = document.querySelectorAll(
+      '.workspace-content-menu-block-list'
+    ) as NodeListOf<HTMLElement>;
+
+    options.forEach((el) => {
+      el.classList.remove('optionsBar');
+    });
+  }
+
   // open Option Tab  while enter / at first
   openOptionTab(event: any) {
     this.isChangeOptionClass = false;
+    this.closeActiveOption();
 
     const cords = event.target.getBoundingClientRect();
     const value = (<HTMLElement>event.target).innerHTML;
