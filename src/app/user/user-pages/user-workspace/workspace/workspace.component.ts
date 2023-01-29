@@ -19,6 +19,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   backgroundImage: string;
   cursor: string = 'auto';
   isbackgroundPositionY: boolean;
+  isChangeOptionClass: boolean;
   array = [1];
 
   constructor(
@@ -43,10 +44,63 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         }
       }
     );
+
+    // change options to next options
+    window.addEventListener('keydown', (event: any) => {
+      if (this.isChangeOptionClass) {
+        // arrow top 38
+        // arrow bottom 40
+        if (event.keyCode === 40) {
+          // Options arrow down
+          const options = document.querySelectorAll(
+            '.workspace-content-menu-block-list'
+          ) as NodeListOf<HTMLElement>;
+
+          this.changeOptionArrow(1, 0, options.length - 1, options);
+        }
+
+        if (event.keyCode === 38) {
+          // Options arrow top
+          const options = document.querySelectorAll(
+            '.workspace-content-menu-block-list'
+          ) as NodeListOf<HTMLElement>;
+
+          this.changeOptionArrow(-1, options.length - 1, 0, options);
+        }
+      }
+    });
+  }
+
+  // Change the options with arrow key
+  changeOptionArrow(
+    addIndex: number,
+    lastAddIndex: number,
+    endIndex: number,
+    options: NodeListOf<HTMLElement>
+  ) {
+    let currentIndex: number = 0;
+    options.forEach((el, index) => {
+      const isContain = el.classList.contains('optionsBar');
+
+      if (isContain) {
+        currentIndex = index;
+      }
+    });
+
+    // add and remove hover effect
+    if (currentIndex === endIndex) {
+      options[currentIndex].classList.remove('optionsBar');
+      options[lastAddIndex].classList.add('optionsBar');
+    } else {
+      options[currentIndex].classList.remove('optionsBar');
+      options[currentIndex + addIndex].classList.add('optionsBar');
+    }
   }
 
   // open Option Tab  while enter / at first
   openOptionTab(event: any) {
+    this.isChangeOptionClass = false;
+
     const cords = event.target.getBoundingClientRect();
     const value = (<HTMLElement>event.target).innerHTML;
 
@@ -54,8 +108,16 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       '.workspace-content-menu-block'
     ) as HTMLElement;
 
+    const options = document.querySelectorAll(
+      '.workspace-content-menu-block-list'
+    ) as NodeListOf<HTMLElement>;
+
+    options[0].classList.add('optionsBar');
+
     if (value.length === 1) {
       if (value.charCodeAt(0) === 47) {
+        this.isChangeOptionClass = true;
+
         optionTab.style.display = 'flex';
         optionTab.style.left = cords.x + 20 + 'px';
         optionTab.style.top = cords.y + 'px';

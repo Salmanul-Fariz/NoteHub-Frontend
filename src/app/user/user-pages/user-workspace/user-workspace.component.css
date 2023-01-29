@@ -23,49 +23,6 @@ mat-sidenav-container {
   box-shadow: 3px 5px 20px rgb(0 0 0 / 22%);
 }
 
-.workspace-content-menu-block {
-  position: fixed;
-  z-index: 1000;
-  min-height: 0;
-  max-width: 220px;
-  min-width: 180px;
-  display: none;
-  flex-direction: column;
-  overflow: hidden auto;
-  max-height: calc(60vh - 180px);
-  padding: 6px;
-  background-color: #fff;
-  border-radius: 6px;
-  box-shadow: 3px 5px 20px rgb(0 0 0 / 22%);
-}
-
-.workspace-content-menu-block > ul {
-  width: auto;
-  padding: 2px 3px;
-}
-
-.workspace-content-menu-block-list {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px;
-  padding: 7px 6px;
-}
-
-.workspace-content-menu-block-list:hover {
-  cursor: pointer;
-  background-color: #e4dddd;
-  border-radius: 6px;
-}
-
-.workspace-content-menu-block-list > mat-icon {
-  font-size: 24px;
-}
-
-.workspace-content-menu-block-list > h5 {
-  font-size: 18px;
-}
-
 /* modal */
 .ws-modal {
   position: absolute;

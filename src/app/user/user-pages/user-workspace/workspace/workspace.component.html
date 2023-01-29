@@ -13,10 +13,6 @@
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item>
-            <mat-icon class="workspace-title-menu-icon">share</mat-icon>
-            <span class="workspace-title-menu-text">Share</span>
-          </button>
-          <button mat-menu-item>
             <mat-icon class="workspace-title-menu-icon">delete</mat-icon>
             <span class="workspace-title-menu-text">Delete</span>
           </button>
@@ -89,8 +85,37 @@
       </div>
     </div>
   </div>
-
 </section>
+
+<!-- content option menu -->
+<div class="workspace-content-menu-block">
+  <ul>
+    <li class="workspace-content-menu-block-list">
+      <mat-icon>title</mat-icon>
+      <option>Text</option>
+    </li>
+    <li class="workspace-content-menu-block-list">
+      <mat-icon>format_list_bulleted</mat-icon>
+      <option>Bulleted list</option>
+    </li>
+    <li class="workspace-content-menu-block-list">
+      <mat-icon>arrow_right</mat-icon>
+      <option>Toggle list</option>
+    </li>
+    <li class="workspace-content-menu-block-list">
+      <mat-icon>text_fields</mat-icon>
+      <option>Heading 1</option>
+    </li>
+    <li class="workspace-content-menu-block-list">
+      <mat-icon>text_fields</mat-icon>
+      <option>Heading 2</option>
+    </li>
+    <li class="workspace-content-menu-block-list">
+      <mat-icon>text_fields</mat-icon>
+      <option>Heading 3</option>
+    </li>
+  </ul>
+</div>
 
 <ng-template #elseBlock>
   <div class="empty-page-container">
