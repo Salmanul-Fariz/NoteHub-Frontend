@@ -1,11 +1,10 @@
 <section *ngIf="!pageEmpty; else elseBlock">
-
   <!-- main container -->
   <div class="main" id="hello">
     <div class="workspace-title">
       <div class="workspace-title-icon">
-        <ngx-emoji emoji="{{pagesDetails.icon}}" size="24"></ngx-emoji>
-        <h3>{{pagesDetails.title}}</h3>
+        <ngx-emoji emoji="{{ pagesDetails.icon }}" size="24"></ngx-emoji>
+        <h3>{{ pagesDetails.title }}</h3>
       </div>
       <div class="workspace-title-menu">
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -22,13 +21,15 @@
           </button>
         </mat-menu>
       </div>
-
     </div>
-    <div class="workspace-cover-img" *ngIf="pagesDetails.coverImg.url;else elseCoverImg"
-      [ngStyle]="{'background-position-y':backgroundPositionY,'background-image':backgroundImage,'cursor':cursor}">
+    <div class="workspace-cover-img" *ngIf="pagesDetails.coverImg.url; else elseCoverImg" [ngStyle]="{
+        'background-position-y': backgroundPositionY,
+        'background-image': backgroundImage,
+        cursor: cursor
+      }">
       <div class="flex justify-between gap-1" *ngIf="!isbackgroundPositionY">
         <form action="">
-          <input (input)="uploadCover($event,pagesDetails._id)" id="files" type="file" accept="image/*">
+          <input (input)="uploadCover($event, pagesDetails._id)" id="files" type="file" accept="image/*" />
           <label for="files">Change Cover</label>
         </form>
 
@@ -39,7 +40,7 @@
       <div class="flex flex-col gap-y-1" *ngIf="isbackgroundPositionY">
         <div class="dragY flex w-full">
           <input (input)="dragYPosition($event)" type="range" min="0" max="100"
-            value="{{pagesDetails.coverImg.positionY}}">
+            value="{{ pagesDetails.coverImg.positionY }}" />
         </div>
 
         <div class="flex justify-start gap-1">
@@ -57,29 +58,38 @@
       <div class="workspace-cover-img">
         <div>
           <form action="upload image">
-            <input (input)="uploadCover($event,pagesDetails._id)" id="files" type="file" accept="image/*">
+            <input (input)="uploadCover($event, pagesDetails._id)" id="files" type="file" accept="image/*" />
             <label for="files">Add Cover</label>
           </form>
         </div>
       </div>
     </ng-template>
     <div class="workspace-page-icon" (click)="editPageIcon(pagesDetails._id)">
-      <ngx-emoji emoji="{{pagesDetails.icon}}" size="42"></ngx-emoji>
+      <ngx-emoji emoji="{{ pagesDetails.icon }}" size="42"></ngx-emoji>
     </div>
   </div>
 
   <!-- title container -->
   <div class="workspace-title-container">
-    <input (input)="pageNameUpdate($event,pagesDetails._id)" maxlength="20" value="{{pagesDetails.title}}"
-      class="text-3xl w-full md:w-1/2 md:text-4xl">
+    <input (input)="pageNameUpdate($event, pagesDetails._id)" maxlength="20" value="{{ pagesDetails.title }}"
+      class="text-3xl w-full md:w-1/2 md:text-4xl" />
   </div>
 
   <!-- workspace content container -->
   <div class="workspace-content-container">
-    <div *ngFor="let element of array;let i = index" class="workspace-content-set mt-1">
-      <div id="{{element}}-{{i}}" class="workspace-content" contenteditable="true" spellcheck="true"
-        placeholder="Type '/' for commands" (input)="openOptionTab($event)" (keydown)="onKeydown($event,{element,i})">
-      </div>
+    <div *ngFor="let element of pagesDetails.page; let i = index" class="workspace-content-set mt-1">
+      <div *ngIf="element.type === 'text'" id="{{element._id}}" class="workspace-content" contenteditable="true"
+        spellcheck="true" placeholder="Type '/' for commands" (input)="inputPageText($event,element._id)"
+        (keydown)="onKeydown($event,{element,i})">{{
+        element.content
+        }}</div>
+      <div *ngIf="element.type === 'bullet'" id="{{element._id}}" class="workspace-content" contenteditable="true"
+        spellcheck="true" placeholder="Type '/' for commands"
+        (input)="inputPageBullet($event,pagesDetails._id,element._id)" (keydown)="onKeydown($event,{element,i})">
+        &#x2022;
+        &nbsp; {{
+        element.content
+        }}</div>
       <div class="workspace-content-handle">
         <mat-icon>add</mat-icon>
       </div>
@@ -94,7 +104,8 @@
       <mat-icon>title</mat-icon>
       <option>Text</option>
     </li>
-    <li class="workspace-content-menu-block-list" (mouseover)="closeActiveOption()">
+    <li class="workspace-content-menu-block-list" (mouseover)="closeActiveOption()"
+      (click)="updateSecType(pagesDetails._id,'bullet')">
       <mat-icon>format_list_bulleted</mat-icon>
       <option>Bulleted list</option>
     </li>

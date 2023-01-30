@@ -20,6 +20,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   cursor: string = 'auto';
   isbackgroundPositionY: boolean;
   isChangeOptionClass: boolean;
+  pageSectionId: string;
   array = [1];
 
   constructor(
@@ -48,8 +49,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     // change options to next options
     window.addEventListener('keydown', (event: any) => {
       if (this.isChangeOptionClass) {
-        // arrow top 38
-        // arrow bottom 40
         if (event.keyCode === 40) {
           // Options arrow down
           const options = document.querySelectorAll(
@@ -108,8 +107,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     });
   }
 
-  // open Option Tab  while enter / at first
-  openOptionTab(event: any) {
+  inputPageText(event: any, pageSecId: string) {
     this.isChangeOptionClass = false;
     this.closeActiveOption();
 
@@ -126,9 +124,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
     options[0].classList.add('optionsBar');
 
+    // open Option Tab  while enter / at first
     if (value.length === 1) {
       if (value.charCodeAt(0) === 47) {
         this.isChangeOptionClass = true;
+        this.pageSectionId = pageSecId;
 
         optionTab.style.display = 'flex';
         optionTab.style.left = cords.x + 20 + 'px';
@@ -139,6 +139,17 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       optionTab.style.display = 'none';
       optionTab.style.left = '0px';
       optionTab.style.top = '0px';
+    }
+  }
+
+  inputPageBullet(event: any, pageId: string, pageSecId: string) {
+    const value = (<HTMLElement>event.target).innerHTML;
+
+    // when bullet is no there remove bullet type
+    if (!value.includes('• &nbsp;')) {
+      this.pageSectionId = pageSecId;
+
+      this.updateSecType(pageId, 'text');
     }
   }
 
@@ -291,6 +302,33 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         }
       },
     });
+  }
+
+  // update workspace page section type
+  updateSecType(pageId: string, pageType: string) {
+    document.body.style.cursor = 'wait';
+    this.workspaceService
+      .UpdateWorkspaceSecType(pageType, this.pageSectionId, pageId)
+      .subscribe({
+        next: (response) => {
+          // close Option Tab  while enter / at first
+          const optionTab = document.querySelector(
+            '.workspace-content-menu-block'
+          ) as HTMLElement;
+
+          optionTab.style.display = 'none';
+
+          this.workspaceService.updatePageArray(pageId, response.data);
+          this.workspaceService.pageDataTransfer.emit(response.data);
+          document.body.style.cursor = 'auto';
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
   }
 
   ngOnDestroy(): void {
