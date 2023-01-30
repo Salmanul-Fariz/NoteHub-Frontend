@@ -8,6 +8,11 @@
 }
 
 @font-face {
+  font-family: Jaldi-Bold;
+  src: url(./assets/fonts/Jaldi/Jaldi-Bold.ttf);
+}
+
+@font-face {
   font-family: JosefinSans-Bold;
   src: url(./assets/fonts/Josefin_Sans/JosefinSans-Bold.ttf);
 }

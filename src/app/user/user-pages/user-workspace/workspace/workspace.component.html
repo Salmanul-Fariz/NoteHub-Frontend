@@ -106,6 +106,13 @@
           }}</div>
       </div>
 
+      <!-- Heading 1 -->
+      <div *ngIf="element.type === 'heading1'" id="{{element._id}}" class="heading1Option workspace-content"
+        contenteditable="true" spellcheck="true" placeholder="Type '/' for commands"
+        (input)="inputPage($event,element._id)" (keydown)="onKeydown($event,element._id,'text')">{{
+        element.content
+        }}</div>
+
       <div class="workspace-content-handle">
         <mat-icon>add</mat-icon>
       </div>
@@ -116,7 +123,8 @@
 <!-- content option menu -->
 <div class="workspace-content-menu-block">
   <ul>
-    <li class="workspace-content-menu-block-list" (mouseover)="closeActiveOption()">
+    <li class="workspace-content-menu-block-list" (mouseover)="closeActiveOption()"
+      (click)="updateSecType(pagesDetails._id,'text')">
       <mat-icon>title</mat-icon>
       <option>Text</option>
     </li>
@@ -130,7 +138,8 @@
       <mat-icon>arrow_right</mat-icon>
       <option>Toggle list</option>
     </li>
-    <li class="workspace-content-menu-block-list" (mouseover)="closeActiveOption()">
+    <li class="workspace-content-menu-block-list" (mouseover)="closeActiveOption()"
+      (click)="updateSecType(pagesDetails._id,'heading1')">
       <mat-icon>text_fields</mat-icon>
       <option>Heading 1</option>
     </li>
