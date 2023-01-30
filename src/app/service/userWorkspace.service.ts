@@ -88,6 +88,18 @@ export class UserWorkspaceService {
     );
   }
 
+  // Update workspace page section Content
+  UpdateWorkspaceSecContent(
+    pageContent: string,
+    pageSectionId: string,
+    pageId: string
+  ) {
+    return this.http.patch<any>(
+      `${environment.baseUrl}/workspaces/user-workspace/page/content`,
+      { pageContent: pageContent, pageSectionId: pageSectionId, pageId: pageId }
+    );
+  }
+
   // update page icon and update page array
   updatePageArray(id: string, data: any) {
     const index = this.pages.findIndex((val) => {

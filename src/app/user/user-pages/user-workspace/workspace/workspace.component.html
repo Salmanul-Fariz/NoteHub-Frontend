@@ -7,6 +7,15 @@
         <h3>{{ pagesDetails.title }}</h3>
       </div>
       <div class="workspace-title-menu">
+        <div class="float-left pr-2">
+          <div *ngIf="isSavingContent" class="flex gap-1 items-center">
+            <mat-icon class="text-lg">cloud_sync</mat-icon>
+            <p>Saving...</p>
+          </div>
+          <div *ngIf="!isSavingContent">
+            <mat-icon class="text-lg">cloud_done</mat-icon>
+          </div>
+        </div>
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
           <mat-icon>more_vert</mat-icon>
         </button>

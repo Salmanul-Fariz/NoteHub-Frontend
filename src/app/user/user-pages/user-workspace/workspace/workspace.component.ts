@@ -15,12 +15,14 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   pageEmpty: boolean = true;
   pagesDetails: any;
   setTimerUpdateName: ReturnType<typeof setTimeout>;
+  setTimerUpdateContent: ReturnType<typeof setTimeout>;
   backgroundPositionY: string;
   backgroundImage: string;
   cursor: string = 'auto';
   isbackgroundPositionY: boolean;
   isChangeOptionClass: boolean;
   pageSectionId: string;
+  isSavingContent: boolean;
   array = [1];
 
   constructor(
@@ -143,7 +145,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     });
   }
 
-  inputPage(event: any, pageSecId: string, pageType: string) {
+  inputPage(event: any, pageSecId: string) {
     this.isChangeOptionClass = false;
     this.closeActiveOption();
 
@@ -176,6 +178,13 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       optionTab.style.left = '0px';
       optionTab.style.top = '0px';
     }
+
+    // Update user Workspace page content
+    clearTimeout(this.setTimerUpdateContent);
+    this.isSavingContent = true;
+    this.setTimerUpdateContent = setTimeout(() => {
+      this.updateSecContent(value, this.pagesDetails._id, pageSecId);
+    }, 800);
   }
 
   onKeydown(event: any, pageSecId: any, pageType: string) {
@@ -197,26 +206,9 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         const range = sel.getRangeAt(0);
         const currentIndex = range.startOffset;
         if (currentIndex === 0) {
-          console.log(currentIndex, pageSecId, pageType);
-
-          // when toggle is no there remove toggle type
-          if (pageType === 'toggle') {
-            this.pageSectionId = pageSecId;
-            console.log(this.pagesDetails._id);
-
-            this.updateSecType(this.pagesDetails._id, 'text');
-          }
-
-          // when bullet is no there remove bullet type
-          const value = (<HTMLElement>event.target).innerHTML;
-          console.log(value);
-          if (pageType === 'bullet') {
-            if (!value.includes('• &nbsp;')) {
-              this.pageSectionId = pageSecId;
-
-              this.updateSecType(this.pagesDetails._id, 'text');
-            }
-          }
+          // when toggle is no there remove other type
+          this.pageSectionId = pageSecId;
+          this.updateSecType(this.pagesDetails._id, 'text');
 
           // const myDiv = document.getElementById(`${id.element}-${id.i - 1}`);
           // const range = document.createRange();
@@ -373,6 +365,49 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
               this.pageSectionId
             ) as HTMLElement;
             currentDiv.focus();
+          }, 0);
+
+          document.body.style.cursor = 'auto';
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+  }
+
+  // update user Workspace page content
+  updateSecContent(pageContent: string, pageId: string, pageSecId: string) {
+    document.body.style.cursor = 'wait';
+    this.workspaceService
+      .UpdateWorkspaceSecContent(pageContent, pageSecId, pageId)
+      .subscribe({
+        next: (response) => {
+          this.isSavingContent = false;
+          this.workspaceService.updatePageArray(pageId, response.data);
+          this.workspaceService.pageDataTransfer.emit(response.data);
+
+          // For focus the cursor
+          setTimeout(() => {
+            const currentDiv = document.getElementById(
+              pageSecId
+            ) as HTMLElement;
+            const range = document.createRange();
+            const sel = window.getSelection();
+            if (currentDiv && sel) {
+              if (currentDiv.innerText.length !== 0) {
+                range.setStart(
+                  currentDiv.childNodes[0],
+                  currentDiv.innerText.length
+                );
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+              }
+              currentDiv.focus();
+            }
           }, 0);
 
           document.body.style.cursor = 'auto';
