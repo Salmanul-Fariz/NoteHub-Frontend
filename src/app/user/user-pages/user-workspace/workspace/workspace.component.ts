@@ -163,7 +163,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     options[0].classList.add('optionsBar');
 
     // open Option Tab  while enter / at first
-    if (value.length === 1) {
+    if (value.length - 1 === 0 || value.charCodeAt(value.length - 2) === 32) {
       if (value.charCodeAt(0) === 47) {
         this.isChangeOptionClass = true;
         this.pageSectionId = pageSecId;
