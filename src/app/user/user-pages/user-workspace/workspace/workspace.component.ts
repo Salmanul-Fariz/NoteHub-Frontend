@@ -330,6 +330,15 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
           this.workspaceService.updatePageArray(pageId, response.data);
           this.workspaceService.pageDataTransfer.emit(response.data);
+
+          // For focus the cursor
+          setTimeout(() => {
+            const currentDiv = document.getElementById(
+              this.pageSectionId
+            ) as HTMLElement;
+            currentDiv.focus();
+          }, 0);
+
           document.body.style.cursor = 'auto';
         },
         error: (error) => {
