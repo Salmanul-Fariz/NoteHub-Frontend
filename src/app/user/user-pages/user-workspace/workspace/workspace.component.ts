@@ -107,7 +107,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     });
   }
 
-  inputPageText(event: any, pageSecId: string) {
+  inputPage(event: any, pageSecId: string, pageType: string) {
     this.isChangeOptionClass = false;
     this.closeActiveOption();
 
@@ -142,18 +142,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     }
   }
 
-  inputPageBullet(event: any, pageId: string, pageSecId: string) {
-    const value = (<HTMLElement>event.target).innerHTML;
-
-    // when bullet is no there remove bullet type
-    if (!value.includes('• &nbsp;')) {
-      this.pageSectionId = pageSecId;
-
-      this.updateSecType(pageId, 'text');
-    }
-  }
-
-  onKeydown(event: any, id: any) {
+  onKeydown(event: any, pageSecId: any, pageType: string) {
     if (event.key === 'Enter') {
       event.preventDefault();
       // Push new div
@@ -172,18 +161,39 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         const range = sel.getRangeAt(0);
         const currentIndex = range.startOffset;
         if (currentIndex === 0) {
-          const myDiv = document.getElementById(`${id.element}-${id.i - 1}`);
-          const range = document.createRange();
-          const sel = window.getSelection();
-          if (myDiv && sel) {
-            if (myDiv.innerText.length !== 0) {
-              range.setStart(myDiv.childNodes[0], myDiv.innerText.length);
-              range.collapse(true);
-              sel.removeAllRanges();
-              sel.addRange(range);
-            }
-            myDiv.focus();
+          console.log(currentIndex, pageSecId, pageType);
+
+          // when toggle is no there remove toggle type
+          if (pageType === 'toggle') {
+            this.pageSectionId = pageSecId;
+            console.log(this.pagesDetails._id);
+
+            this.updateSecType(this.pagesDetails._id, 'text');
           }
+
+          // when bullet is no there remove bullet type
+          const value = (<HTMLElement>event.target).innerHTML;
+          console.log(value);
+          if (pageType === 'bullet') {
+            if (!value.includes('• &nbsp;')) {
+              this.pageSectionId = pageSecId;
+
+              this.updateSecType(this.pagesDetails._id, 'text');
+            }
+          }
+
+          // const myDiv = document.getElementById(`${id.element}-${id.i - 1}`);
+          // const range = document.createRange();
+          // const sel = window.getSelection();
+          // if (myDiv && sel) {
+          //   if (myDiv.innerText.length !== 0) {
+          //     range.setStart(myDiv.childNodes[0], myDiv.innerText.length);
+          //     range.collapse(true);
+          //     sel.removeAllRanges();
+          //     sel.addRange(range);
+          //   }
+          //   myDiv.focus();
+          // }
         }
       }
     }

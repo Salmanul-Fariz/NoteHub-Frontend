@@ -274,3 +274,8 @@ mat-menu > button {
 .workspace-content-menu-block-list > option {
   font-size: 18px;
 }
+
+/* workspace option */
+.bulletOption{
+  font-size: 8px;
+}

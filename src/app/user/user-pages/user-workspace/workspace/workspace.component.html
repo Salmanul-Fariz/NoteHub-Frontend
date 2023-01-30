@@ -78,18 +78,34 @@
   <!-- workspace content container -->
   <div class="workspace-content-container">
     <div *ngFor="let element of pagesDetails.page; let i = index" class="workspace-content-set mt-1">
+
+      <!-- text -->
       <div *ngIf="element.type === 'text'" id="{{element._id}}" class="workspace-content" contenteditable="true"
-        spellcheck="true" placeholder="Type '/' for commands" (input)="inputPageText($event,element._id)"
-        (keydown)="onKeydown($event,{element,i})">{{
+        spellcheck="true" placeholder="Type '/' for commands" (input)="inputPage($event,element._id)"
+        (keydown)="onKeydown($event,element._id,'text')">{{
         element.content
         }}</div>
-      <div *ngIf="element.type === 'bullet'" id="{{element._id}}" class="workspace-content" contenteditable="true"
-        spellcheck="true" placeholder="Type '/' for commands"
-        (input)="inputPageBullet($event,pagesDetails._id,element._id)" (keydown)="onKeydown($event,{element,i})">
-        &#x2022;
-        &nbsp; {{
-        element.content
-        }}</div>
+
+      <!-- bullet -->
+      <div class="w-full flex gap-1 items-center" *ngIf="element.type === 'bullet'">
+        <i class="bulletOption fa-solid fa-circle"></i>
+        <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
+          placeholder="Type '/' for commands" (input)="inputPage($event,element._id)"
+          (keydown)="onKeydown($event,element._id,'bullet')">{{
+          element.content
+          }}</div>
+      </div>
+
+      <!-- toggle -->
+      <div class="w-full flex gap-1 items-center" *ngIf="element.type === 'toggle'">
+        <i class="fa-solid fa-angle-right"></i>
+        <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
+          placeholder="Type '/' for commands" (input)="inputPage($event,element._id)"
+          (keydown)="onKeydown($event,element._id,'toggle')">{{
+          element.content
+          }}</div>
+      </div>
+
       <div class="workspace-content-handle">
         <mat-icon>add</mat-icon>
       </div>
@@ -109,7 +125,8 @@
       <mat-icon>format_list_bulleted</mat-icon>
       <option>Bulleted list</option>
     </li>
-    <li class="workspace-content-menu-block-list" (mouseover)="closeActiveOption()">
+    <li class="workspace-content-menu-block-list" (mouseover)="closeActiveOption()"
+      (click)="updateSecType(pagesDetails._id,'toggle')">
       <mat-icon>arrow_right</mat-icon>
       <option>Toggle list</option>
     </li>
