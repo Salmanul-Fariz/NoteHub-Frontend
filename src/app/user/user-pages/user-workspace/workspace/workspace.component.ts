@@ -124,9 +124,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     if (currentIndex === endIndex) {
       options[currentIndex].classList.remove('optionsBar');
       options[lastAddIndex].classList.add('optionsBar');
+      options[lastAddIndex].focus();
     } else {
       options[currentIndex].classList.remove('optionsBar');
       options[currentIndex + addIndex].classList.add('optionsBar');
+      options[lastAddIndex + addIndex].focus();
     }
   }
 
