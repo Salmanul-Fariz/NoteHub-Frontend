@@ -49,22 +49,56 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     // change options to next options
     window.addEventListener('keydown', (event: any) => {
       if (this.isChangeOptionClass) {
+        const options = document.querySelectorAll(
+          '.workspace-content-menu-block-list'
+        ) as NodeListOf<HTMLElement>;
         if (event.keyCode === 40) {
           // Options arrow down
-          const options = document.querySelectorAll(
-            '.workspace-content-menu-block-list'
-          ) as NodeListOf<HTMLElement>;
-
           this.changeOptionArrow(1, 0, options.length - 1, options);
         }
 
         if (event.keyCode === 38) {
           // Options arrow top
-          const options = document.querySelectorAll(
-            '.workspace-content-menu-block-list'
-          ) as NodeListOf<HTMLElement>;
-
           this.changeOptionArrow(-1, options.length - 1, 0, options);
+        }
+
+        // update data with enter key and arrow
+        if (event.keyCode === 13) {
+          let currentIndex: number = 0;
+          options.forEach((el, index) => {
+            const isContain = el.classList.contains('optionsBar');
+
+            if (isContain) {
+              currentIndex = index;
+            }
+          });
+
+          let pageType: string = '';
+
+          switch (currentIndex) {
+            case 0:
+              pageType = 'text';
+              break;
+            case 1:
+              pageType = 'bullet';
+              break;
+            case 2:
+              pageType = 'toggle';
+              break;
+            case 3:
+              pageType = 'heading1';
+              break;
+            case 4:
+              pageType = 'heading2';
+              break;
+            case 5:
+              pageType = 'heading3';
+              break;
+            default:
+              break;
+          }
+
+          this.updateSecType(this.pagesDetails._id, pageType);
         }
       }
     });
