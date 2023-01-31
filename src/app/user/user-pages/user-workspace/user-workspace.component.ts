@@ -123,7 +123,9 @@ export class UserWorkspaceComponent
   addEmoji(event: any) {
     this.workspaceService.UpdateWorkspaceIcon(event.emoji.id).subscribe({
       next: (response) => {
-        this.isEmojiBar = false;
+        this.workspace.icon = event.emoji.id;
+        this.closeEmojiBar();
+        this.closeModal();
         this.isWorkSpaceNameUpdate = false;
       },
       error: (error) => {

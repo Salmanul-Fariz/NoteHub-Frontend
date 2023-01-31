@@ -53,15 +53,12 @@ body,
 html {
   font-family: Jaldi-Regular;
   cursor: auto;
-  scroll-behavior: smooth;
-  scrollbar-gutter: stable both-edges;
-  scrollbar-width: thin;
 }
 
 /* Scroll bar */
 ::-webkit-scrollbar {
   height: 12px;
-  width: 6px;
+  width: 10px;
   background: #000;
 }
 
