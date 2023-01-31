@@ -174,11 +174,11 @@ mat-menu > button {
 .workspace-content-handle {
   position: absolute;
   height: 100%;
-  top: 0;
+  top: 4px;
   left: -24px;
   display: none;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .workspace-content:hover + .workspace-content-handle {

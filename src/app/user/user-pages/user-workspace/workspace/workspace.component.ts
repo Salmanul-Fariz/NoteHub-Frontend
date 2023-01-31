@@ -150,7 +150,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     this.closeActiveOption();
 
     const cords = event.target.getBoundingClientRect();
-    const value = (<HTMLElement>event.target).innerHTML;
+    const value = (<HTMLElement>event.target).innerText;
 
     const optionTab = document.querySelector(
       '.workspace-content-menu-block'
@@ -163,7 +163,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     options[0].classList.add('optionsBar');
 
     // open Option Tab  while enter / at first
-    if (value.length - 1 === 0 || value.charCodeAt(value.length - 2) === 32) {
+    if (value.length === 1) {
       if (value.charCodeAt(0) === 47) {
         this.isChangeOptionClass = true;
         this.pageSectionId = pageSecId;
@@ -183,6 +183,8 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     clearTimeout(this.setTimerUpdateContent);
     this.isSavingContent = true;
     this.setTimerUpdateContent = setTimeout(() => {
+      console.log(value);
+
       this.updateSecContent(value, this.pagesDetails._id, pageSecId);
     }, 800);
   }
@@ -386,6 +388,8 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           this.isSavingContent = false;
+          console.log(response.data);
+
           this.workspaceService.updatePageArray(pageId, response.data);
           this.workspaceService.pageDataTransfer.emit(response.data);
 
@@ -406,7 +410,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
                 sel.removeAllRanges();
                 sel.addRange(range);
               }
-              currentDiv.focus();
+              // currentDiv.focus();
             }
           }, 0);
 

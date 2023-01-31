@@ -8,11 +8,11 @@
       </div>
       <div class="workspace-title-menu">
         <div class="float-left pr-2">
-          <div *ngIf="isSavingContent" class="flex gap-1 items-center">
+          <div *ngIf="isSavingContent" class="flex gap-1 items-center ">
             <mat-icon class="text-lg">cloud_sync</mat-icon>
             <p>Saving...</p>
           </div>
-          <div *ngIf="!isSavingContent">
+          <div *ngIf="!isSavingContent" class="h-4">
             <mat-icon class="text-lg">cloud_done</mat-icon>
           </div>
         </div>
