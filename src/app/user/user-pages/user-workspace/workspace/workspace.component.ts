@@ -179,29 +179,54 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       optionTab.style.top = '0px';
     }
 
-    // Update user Workspace page content
-    clearTimeout(this.setTimerUpdateContent);
-    this.isSavingContent = true;
-    this.setTimerUpdateContent = setTimeout(() => {
-      console.log(value);
-
-      this.updateSecContent(value, this.pagesDetails._id, pageSecId);
-    }, 800);
+    if (!this.isChangeOptionClass) {
+      // Update user Workspace page content
+      clearTimeout(this.setTimerUpdateContent);
+      this.isSavingContent = true;
+      this.setTimerUpdateContent = setTimeout(() => {
+        this.updateSecContent(value, this.pagesDetails._id, pageSecId);
+      }, 1000);
+    }
   }
 
   onKeydown(event: any, pageSecId: any, pageType: string) {
     if (event.key === 'Enter') {
       event.preventDefault();
-      // Push new div
-      this.array.push(1);
+      if (!this.isChangeOptionClass) {
+        document.body.style.cursor = 'wait';
 
-      // Put caret cursor (statc)
-      setTimeout(() => {
-        const newDiv = document.getElementById(`1-${this.array.length - 1}`);
-        if (newDiv) {
-          newDiv.focus();
-        }
-      }, 0);
+        this.workspaceService
+          .AddNewSection(
+            this.pagesDetails._id,
+            pageSecId,
+            pageType,
+            '',
+            'TopNodeInsert'
+          )
+          .subscribe({
+            next: (response) => {
+              this.workspaceService.updatePageArray(
+                this.pagesDetails._id,
+                response.data.data
+              );
+              this.workspaceService.pageDataTransfer.emit(response.data.data);
+              document.body.style.cursor = 'auto';
+              // Put caret cursor
+              setTimeout(() => {
+                const newDiv = document.getElementById(response.data.id);
+                if (newDiv) {
+                  newDiv.focus();
+                }
+              }, 0);
+            },
+            // error: (error) => {
+            //   if (error.status === 408 || 400) {
+            //     localStorage.clear();
+            //     this.router.navigate(['auth/signin']);
+            //   }
+            // },
+          });
+      }
     } else if (event.key === 'Backspace') {
       const sel = window.getSelection();
       if (sel) {
@@ -346,6 +371,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
   // update workspace page section type
   updateSecType(pageId: string, pageType: string) {
+    this.isChangeOptionClass = false;
     document.body.style.cursor = 'wait';
     this.workspaceService
       .UpdateWorkspaceSecType(pageType, this.pageSectionId, pageId)
@@ -388,7 +414,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           this.isSavingContent = false;
-          console.log(response.data);
 
           this.workspaceService.updatePageArray(pageId, response.data);
           this.workspaceService.pageDataTransfer.emit(response.data);

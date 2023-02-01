@@ -117,21 +117,21 @@
       <!-- Heading 1 -->
       <div *ngIf="element.type === 'heading1'" id="{{element._id}}" class="heading1Option workspace-content"
         contenteditable="true" spellcheck="true" placeholder="Heading 1" (input)="inputPage($event,element._id)"
-        (keydown)="onKeydown($event,element._id,'text')">{{
+        (keydown)="onKeydown($event,element._id,'heading1')">{{
         element.content
         }}</div>
 
       <!-- Heading 2 -->
       <div *ngIf="element.type === 'heading2'" id="{{element._id}}" class="heading2Option workspace-content"
         contenteditable="true" spellcheck="true" placeholder="Heading 2" (input)="inputPage($event,element._id)"
-        (keydown)="onKeydown($event,element._id,'text')">{{
+        (keydown)="onKeydown($event,element._id,'heading2')">{{
         element.content
         }}</div>
 
       <!-- Heading 3 -->
       <div *ngIf="element.type === 'heading3'" id="{{element._id}}" class="heading3Option workspace-content"
         contenteditable="true" spellcheck="true" placeholder="Heading 3" (input)="inputPage($event,element._id)"
-        (keydown)="onKeydown($event,element._id,'text')">{{
+        (keydown)="onKeydown($event,element._id,'heading3')">{{
         element.content
         }}</div>
 

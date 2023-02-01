@@ -100,6 +100,25 @@ export class UserWorkspaceService {
     );
   }
 
+  // Add new section
+  AddNewSection(
+    pageId: string,
+    pageSectionId: string,
+    pageType: string,
+    pageContent: string,
+    PageInsertType: string
+  ) {
+    return this.http.post<any>(
+      `${environment.baseUrl}/workspaces/user-workspace/page/content?type=${PageInsertType}`,
+      {
+        pageId: pageId,
+        pageSectionId: pageSectionId,
+        pageType: pageType,
+        pageContent: pageContent,
+      }
+    );
+  }
+
   // update page icon and update page array
   updatePageArray(id: string, data: any) {
     const index = this.pages.findIndex((val) => {
