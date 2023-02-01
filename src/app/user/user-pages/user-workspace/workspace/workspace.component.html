@@ -106,7 +106,7 @@
 
       <!-- toggle -->
       <div class="w-full flex gap-1 items-center" *ngIf="element.type === 'toggle'">
-        <i class="fa-solid fa-angle-right"></i>
+        <i class="toggleOption fa-solid fa-angle-right"></i>
         <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Toggle" (input)="inputPage($event,element._id)"
           (keydown)="onKeydown($event,element._id,'toggle')">{{
