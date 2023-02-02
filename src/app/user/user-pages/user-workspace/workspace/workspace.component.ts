@@ -37,9 +37,17 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     // Page Details
     this.pageDataTransferSb = this.workspaceService.pageDataTransfer.subscribe(
       (data: any) => {
+        console.log('Start');
+
         // tree implementation
-        this.treeService.root = data.page;
-        data.page = this.treeService.ChangeDatatolevel();
+        if (data.page) {
+          data.levelPage = null;
+          this.treeService.root = data.page;
+          console.log(data.levelPage);
+          console.log(this.treeService.root);
+          data.levelPage = this.treeService.ChangeDatatolevel();
+          console.log(data.levelPage);
+        }
 
         this.pagesDetails = data;
 
@@ -457,6 +465,8 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       .UpdateWorkspaceSecContent(pageContent, pageSecId, pageId)
       .subscribe({
         next: (response) => {
+          console.log(response.data);
+
           this.isSavingContent = false;
 
           this.workspaceService.updatePageArray(pageId, response.data);

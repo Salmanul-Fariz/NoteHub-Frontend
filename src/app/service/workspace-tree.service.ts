@@ -22,8 +22,9 @@ export class WorkspaceTreeService {
   }
 
   ChangeDatatolevel() {
-    this.#_printAllNodes(this.root, '100%');
+    const tree = new WorkspaceTreeService();
+    tree.#_printAllNodes(this.root, '100%');
 
-    return this.#OrderArray;
+    return tree.#OrderArray;
   }
 }
