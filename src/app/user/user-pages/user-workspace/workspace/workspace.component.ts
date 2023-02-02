@@ -496,6 +496,18 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       });
   }
 
+  // display the handle
+  displayHandle(id: string) {
+    const div = document.getElementById(`handle-${id}`) as HTMLElement;
+    div.style.display = 'flex';
+  }
+
+  // none the handle
+  noneHandle(id: string) {
+    const div = document.getElementById(`handle-${id}`) as HTMLElement;
+    div.style.display = 'none';
+  }
+
   ngOnDestroy(): void {
     this.pageDataTransferSb.unsubscribe();
   }

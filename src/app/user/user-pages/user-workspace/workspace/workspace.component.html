@@ -90,12 +90,16 @@
 
       <!-- text -->
       <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'text'"
-        [ngStyle]="{width:element.level}">
+        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Type '/' for commands" (input)="inputPage($event,element._id)"
           (keydown)="onKeydown($event,element._id,'text')">{{
           element.content
           }}</div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
       </div>
 
       <!-- bullet -->
@@ -144,9 +148,7 @@
           }}</div>
       </div>
 
-      <div class="workspace-content-handle">
-        <mat-icon>add</mat-icon>
-      </div>
+
     </div>
   </div>
 </section>

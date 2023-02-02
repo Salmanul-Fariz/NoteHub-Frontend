@@ -177,15 +177,20 @@ mat-menu > button {
   position: absolute;
   height: 100%;
   top: 4px;
-  left: -24px;
+  left: -54px;
   z-index: 2px;
   display: none;
   justify-content: flex-start;
   align-items: flex-start;
+  gap: 5px;
 }
 
 .handleHover:hover + .workspace-content-handle {
   display: flex;
+}
+
+.handleHover {
+  position: relative;
 }
 
 .workspace-content-handle:hover {
@@ -193,9 +198,14 @@ mat-menu > button {
 }
 
 .workspace-content-handle > mat-icon {
-  font-size: 26px;
+  font-size: 20px;
   color: #7e7d7d;
-  cursor: pointer;
+  cursor: grabbing;
+  background-color: #ececec;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* empty page */
