@@ -89,14 +89,17 @@
     <div *ngFor="let element of pagesDetails.page; let i = index" class="workspace-content-set mt-1">
 
       <!-- text -->
-      <div *ngIf="element.type === 'text'" id="{{element._id}}" class="workspace-content" contenteditable="true"
-        spellcheck="true" placeholder="Type '/' for commands" (input)="inputPage($event,element._id)"
-        (keydown)="onKeydown($event,element._id,'text')">{{
-        element.content
-        }}</div>
+      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'text'"
+        [ngStyle]="{width:element.level}">
+        <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
+          placeholder="Type '/' for commands" (input)="inputPage($event,element._id)"
+          (keydown)="onKeydown($event,element._id,'text')">{{
+          element.content
+          }}</div>
+      </div>
 
       <!-- bullet -->
-      <div class="w-full flex gap-1 items-center" *ngIf="element.type === 'bullet'">
+      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'bullet'">
         <i class="bulletOption fa-solid fa-circle"></i>
         <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true" placeholder="List"
           (input)="inputPage($event,element._id)" (keydown)="onKeydown($event,element._id,'bullet')">{{
@@ -105,7 +108,7 @@
       </div>
 
       <!-- toggle -->
-      <div class="w-full flex gap-1 items-center" *ngIf="element.type === 'toggle'">
+      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'toggle'">
         <i class="toggleOption fa-solid fa-angle-right"></i>
         <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Toggle" (input)="inputPage($event,element._id)"
@@ -115,25 +118,31 @@
       </div>
 
       <!-- Heading 1 -->
-      <div *ngIf="element.type === 'heading1'" id="{{element._id}}" class="heading1Option workspace-content"
-        contenteditable="true" spellcheck="true" placeholder="Heading 1" (input)="inputPage($event,element._id)"
-        (keydown)="onKeydown($event,element._id,'heading1')">{{
-        element.content
-        }}</div>
+      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'heading1'">
+        <div id="{{element._id}}" class="heading1Option workspace-content" contenteditable="true" spellcheck="true"
+          placeholder="Heading 1" (input)="inputPage($event,element._id)"
+          (keydown)="onKeydown($event,element._id,'heading1')">{{
+          element.content
+          }}</div>
+      </div>
 
       <!-- Heading 2 -->
-      <div *ngIf="element.type === 'heading2'" id="{{element._id}}" class="heading2Option workspace-content"
-        contenteditable="true" spellcheck="true" placeholder="Heading 2" (input)="inputPage($event,element._id)"
-        (keydown)="onKeydown($event,element._id,'heading2')">{{
-        element.content
-        }}</div>
+      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'heading2'">
+        <div id="{{element._id}}" class="heading2Option workspace-content" contenteditable="true" spellcheck="true"
+          placeholder="Heading 2" (input)="inputPage($event,element._id)"
+          (keydown)="onKeydown($event,element._id,'heading2')">{{
+          element.content
+          }}</div>
+      </div>
 
       <!-- Heading 3 -->
-      <div *ngIf="element.type === 'heading3'" id="{{element._id}}" class="heading3Option workspace-content"
-        contenteditable="true" spellcheck="true" placeholder="Heading 3" (input)="inputPage($event,element._id)"
-        (keydown)="onKeydown($event,element._id,'heading3')">{{
-        element.content
-        }}</div>
+      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'heading3'">
+        <div id="{{element._id}}" class="heading3Option workspace-content" contenteditable="true" spellcheck="true"
+          placeholder="Heading 3" (input)="inputPage($event,element._id)"
+          (keydown)="onKeydown($event,element._id,'heading3')">{{
+          element.content
+          }}</div>
+      </div>
 
       <div class="workspace-content-handle">
         <mat-icon>add</mat-icon>

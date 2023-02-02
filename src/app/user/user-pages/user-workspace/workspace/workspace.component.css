@@ -144,6 +144,8 @@ mat-menu > button {
 .workspace-content-set {
   position: relative;
   width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .workspace-content {
@@ -176,12 +178,13 @@ mat-menu > button {
   height: 100%;
   top: 4px;
   left: -24px;
+  z-index: 2px;
   display: none;
   justify-content: flex-start;
   align-items: flex-start;
 }
 
-.workspace-content:hover + .workspace-content-handle {
+.handleHover:hover + .workspace-content-handle {
   display: flex;
 }
 

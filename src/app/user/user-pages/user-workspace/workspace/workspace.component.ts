@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { S3BucketService } from 'src/app/service/s3-bucket.service';
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
+import { WorkspaceTreeService } from 'src/app/service/workspace-tree.service';
 
 @Component({
   selector: 'app-workspace',
@@ -27,6 +28,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
   constructor(
     private workspaceService: UserWorkspaceService,
+    private treeService: WorkspaceTreeService,
     private s3Service: S3BucketService,
     private router: Router
   ) {}
@@ -34,7 +36,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Page Details
     this.pageDataTransferSb = this.workspaceService.pageDataTransfer.subscribe(
-      (data) => {
+      (data: any) => {
+        // tree implementation
+        this.treeService.root = data.page;
+        data.page = this.treeService.ChangeDatatolevel();
+
         this.pagesDetails = data;
 
         if (this.pagesDetails.coverImg.url) {
@@ -219,12 +225,12 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
                 }
               }, 0);
             },
-            // error: (error) => {
-            //   if (error.status === 408 || 400) {
-            //     localStorage.clear();
-            //     this.router.navigate(['auth/signin']);
-            //   }
-            // },
+            error: (error) => {
+              if (error.status === 408 || 400) {
+                localStorage.clear();
+                this.router.navigate(['auth/signin']);
+              }
+            },
           });
       }
     } else if (event.key === 'Backspace') {
@@ -250,6 +256,44 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           //   myDiv.focus();
           // }
         }
+      }
+    } else if (event.key === 'Tab') {
+      if (!this.isChangeOptionClass) {
+        document.body.style.cursor = 'wait';
+
+        this.workspaceService
+          .AddNewSection(
+            this.pagesDetails._id,
+            pageSecId,
+            pageType,
+            '',
+            'ParentInsert'
+          )
+          .subscribe({
+            next: (response) => {
+              console.log(response);
+
+              this.workspaceService.updatePageArray(
+                this.pagesDetails._id,
+                response.data.data
+              );
+              this.workspaceService.pageDataTransfer.emit(response.data.data);
+              document.body.style.cursor = 'auto';
+              // Put caret cursor
+              setTimeout(() => {
+                const newDiv = document.getElementById(response.data.id);
+                if (newDiv) {
+                  newDiv.focus();
+                }
+              }, 0);
+            },
+            error: (error) => {
+              if (error.status === 408 || 400) {
+                localStorage.clear();
+                this.router.navigate(['auth/signin']);
+              }
+            },
+          });
       }
     }
   }
