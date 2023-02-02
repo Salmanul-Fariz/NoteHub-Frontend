@@ -177,7 +177,7 @@ mat-menu > button {
   position: absolute;
   height: 100%;
   top: 4px;
-  left: -54px;
+  left: -55px;
   z-index: 2px;
   display: none;
   justify-content: flex-start;
@@ -295,17 +295,17 @@ mat-menu > button {
 }
 
 .heading1Option {
-  font-size: 36px;
+  font-size: 30px;
   font-family: Jaldi-Bold;
 }
 
 .heading2Option {
-  font-size: 32px;
+  font-size: 26px;
   font-family: Jaldi-Bold;
 }
 
 .heading3Option {
-  font-size: 26px;
+  font-size: 22px;
   font-family: Jaldi-Bold;
 }
 

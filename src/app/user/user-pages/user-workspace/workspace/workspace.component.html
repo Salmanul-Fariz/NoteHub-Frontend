@@ -103,49 +103,79 @@
       </div>
 
       <!-- bullet -->
-      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'bullet'">
-        <i class="bulletOption fa-solid fa-circle"></i>
-        <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true" placeholder="List"
-          (input)="inputPage($event,element._id)" (keydown)="onKeydown($event,element._id,'bullet')">{{
-          element.content
-          }}</div>
+      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'bullet'"
+        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+        <div class="flex gap-1 items-center">
+          <i class="bulletOption fa-solid fa-circle"></i>
+          <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
+            placeholder="List" (input)="inputPage($event,element._id)"
+            (keydown)="onKeydown($event,element._id,'bullet')">{{
+            element.content
+            }}</div>
+        </div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
       </div>
 
       <!-- toggle -->
-      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'toggle'">
-        <i class="toggleOption fa-solid fa-angle-right"></i>
-        <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
-          placeholder="Toggle" (input)="inputPage($event,element._id)"
-          (keydown)="onKeydown($event,element._id,'toggle')">{{
-          element.content
-          }}</div>
+      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'toggle'"
+        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+        <div class="flex gap-1 items-center">
+          <i class="toggleOption fa-solid fa-angle-right"></i>
+          <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
+            placeholder="Toggle" (input)="inputPage($event,element._id)"
+            (keydown)="onKeydown($event,element._id,'toggle')">{{
+            element.content
+            }}</div>
+        </div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
       </div>
 
       <!-- Heading 1 -->
-      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'heading1'">
+      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'heading1'"
+        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading1Option workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Heading 1" (input)="inputPage($event,element._id)"
           (keydown)="onKeydown($event,element._id,'heading1')">{{
           element.content
           }}</div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
       </div>
 
       <!-- Heading 2 -->
-      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'heading2'">
+      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'heading2'"
+        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading2Option workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Heading 2" (input)="inputPage($event,element._id)"
           (keydown)="onKeydown($event,element._id,'heading2')">{{
           element.content
           }}</div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
       </div>
 
       <!-- Heading 3 -->
-      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'heading3'">
+      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'heading3'"
+        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading3Option workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Heading 3" (input)="inputPage($event,element._id)"
           (keydown)="onKeydown($event,element._id,'heading3')">{{
           element.content
           }}</div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
       </div>
 
 
