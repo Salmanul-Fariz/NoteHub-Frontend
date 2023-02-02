@@ -37,16 +37,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     // Page Details
     this.pageDataTransferSb = this.workspaceService.pageDataTransfer.subscribe(
       (data: any) => {
-        console.log('Start');
-
         // tree implementation
         if (data.page) {
           data.levelPage = null;
           this.treeService.root = data.page;
-          console.log(data.levelPage);
-          console.log(this.treeService.root);
           data.levelPage = this.treeService.ChangeDatatolevel();
-          console.log(data.levelPage);
         }
 
         this.pagesDetails = data;
@@ -225,6 +220,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
               );
               this.workspaceService.pageDataTransfer.emit(response.data.data);
               document.body.style.cursor = 'auto';
+
               // Put caret cursor
               setTimeout(() => {
                 const newDiv = document.getElementById(response.data.id);
@@ -279,8 +275,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           )
           .subscribe({
             next: (response) => {
-              console.log(response);
-
               this.workspaceService.updatePageArray(
                 this.pagesDetails._id,
                 response.data.data
@@ -289,7 +283,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
               document.body.style.cursor = 'auto';
               // Put caret cursor
               setTimeout(() => {
-                const newDiv = document.getElementById(response.data.id);
+                const newDiv = document.getElementById(pageSecId);
                 if (newDiv) {
                   newDiv.focus();
                 }
@@ -465,8 +459,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       .UpdateWorkspaceSecContent(pageContent, pageSecId, pageId)
       .subscribe({
         next: (response) => {
-          console.log(response.data);
-
           this.isSavingContent = false;
 
           this.workspaceService.updatePageArray(pageId, response.data);
