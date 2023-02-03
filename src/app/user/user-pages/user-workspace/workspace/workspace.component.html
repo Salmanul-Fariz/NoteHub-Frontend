@@ -105,7 +105,8 @@
 
       <!-- text options -->
       <div id="main-{{element._id}}" class="handleHover flex flex-col gap-1 items-center"
-        *ngIf="element.type === 'text' && element.toggleInc > 0" [ngStyle]="{width:element.level,display:'none'}"
+        *ngIf="element.type === 'text' && element.toggleInc > 0"
+        [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Type '/' for commands" (input)="inputPage($event,element._id)"
@@ -157,7 +158,8 @@
         [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div class="flex gap-1 items-center">
           <i id="toggle-{{element._id}}" class="toggleOption fa-solid fa-angle-right"
-            (click)="toggleOption(i,element._id)"></i>
+            (click)="toggleOption(i,element._id)"
+            [ngStyle]="{transform:element.isToggle?'rotate(90deg)':'rotate(0)'}"></i>
           <div id=" {{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
             placeholder="Toggle" (input)="inputPage($event,element._id)"
             (keydown)="onKeydown($event,element._id,'toggle')">{{
@@ -173,11 +175,13 @@
 
       <!-- toggle options -->
       <div id="main-{{element._id}}" *ngIf="element.type === 'toggle' && element.toggleInc > 0"
-        class="handleHover flex gap-1 items-center" [ngStyle]="{width:element.level,display:'none'}"
+        class="handleHover flex gap-1 items-center"
+        [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div class="flex gap-1 items-center">
           <i id="toggle-{{element._id}}" class="toggleOption fa-solid fa-angle-right"
-            (click)="toggleOption(i,element._id)" style="transform: rotate(90deg);"></i>
+            (click)="toggleOption(i,element._id)"
+            [ngStyle]="{transform:element.isToggle?'rotate(90deg)':'rotate(0)'}"></i>
           <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
             placeholder="Toggle" (input)="inputPage($event,element._id)"
             (keydown)="onKeydown($event,element._id,'toggle')">{{

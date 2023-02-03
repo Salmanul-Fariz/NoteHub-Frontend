@@ -511,51 +511,40 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   // Toggle options
   toggleOption(index: string, id: string) {
     document.body.style.cursor = 'wait';
-
-    const toggle = document.getElementById(`toggle-${id}`) as HTMLElement;
-    let openToggle = false;
     const optionToggle = this.pagesDetails.levelPage[index];
-    console.log(optionToggle.isToggle);
-
-    if (!optionToggle.isToggle) {
-      console.log('STart');
-
-      toggle.style.transform = 'rotate(90deg)';
-      openToggle = true;
-    } else {
-      toggle.style.transform = 'rotate(0)';
-    }
-
     optionToggle.isToggle = !optionToggle.isToggle;
 
-    const percentage: number = Number(
-      this.pagesDetails.levelPage[index].level.split('%')[0]
-    );
+    this.workspaceService
+      .UpdateWorkspaceSecToggleOption(
+        optionToggle.isToggle,
+        optionToggle._id,
+        this.pagesDetails._id
+      )
+      .subscribe({
+        next: (response) => {
+          this.workspaceService.updatePageArray(
+            optionToggle._id,
+            response.data
+          );
+          this.workspaceService.pageDataTransfer.emit(response.data);
 
-    let elIndex = Number(index);
-    let stop = false;
-    while (!stop) {
-      elIndex++;
-      const el = this.pagesDetails.levelPage[elIndex];
+          // For focus the cursor
+          // setTimeout(() => {
+          //   const currentDiv = document.getElementById(
+          //     this.pageSectionId
+          //   ) as HTMLElement;
+          //   currentDiv.focus();
+          // }, 0);
 
-      const curPercent = el?.level.split('%')[0];
-
-      if (
-        percentage === Number(curPercent) ||
-        percentage < Number(curPercent) ||
-        this.pagesDetails.levelPage.length === elIndex
-      ) {
-        stop = true;
-      } else {
-        const div = document.getElementById(`main-${el._id}`) as HTMLElement;
-        if (openToggle) {
-          div.style.display = 'block';
-        } else {
-          div.style.display = 'none';
-        }
-      }
-      document.body.style.cursor = 'auto';
-    }
+          document.body.style.cursor = 'auto';
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
   }
 
   ngOnDestroy(): void {

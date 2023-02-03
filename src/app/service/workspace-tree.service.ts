@@ -7,6 +7,45 @@ export class WorkspaceTreeService {
   isToggleLevel: number[] = [];
   root: any[] = [];
   toggleInc: number = 0;
+  toggleOpen: null | string = null;
+
+  // #_toggleOption(array: any) {
+  //   // optionToggle.isToggle = !optionToggle.isToggle;
+
+  //   // const percentage: number = Number(
+  //   //   this.pagesDetails.levelPage[index].level.split('%')[0]
+  //   // );
+  //   const parent: number[]=[0];
+  //   const
+  //   for (let i = 0; i < array.length; i++) {
+  //     if(parent[parent.length-1]>array[i].)
+  //   }
+
+  //   let elIndex = Number(index);
+  //   let stop = false;
+  //   while (!stop) {
+  //     elIndex++;
+  //     const el = this.pagesDetails.levelPage[elIndex];
+
+  //     const curPercent = el?.level.split('%')[0];
+
+  //     if (
+  //       percentage === Number(curPercent) ||
+  //       percentage < Number(curPercent) ||
+  //       this.pagesDetails.levelPage.length === elIndex
+  //     ) {
+  //       stop = true;
+  //     } else {
+  //       const div = document.getElementById(`main-${el._id}`) as HTMLElement;
+  //       if (openToggle) {
+  //         div.style.display = 'block';
+  //       } else {
+  //         div.style.display = 'none';
+  //       }
+  //     }
+  //     document.body.style.cursor = 'auto';
+  //   }
+  // }
 
   #_printAllNodes(root: any, level: string) {
     for (const data of root) {
@@ -16,7 +55,8 @@ export class WorkspaceTreeService {
         _id: data._id,
         type: data.type,
         content: data.content,
-        isToggle: false,
+        isToggle: data.isToggle,
+        childToggle: this.toggleOpen,
       };
 
       if (this.isToggle) {
@@ -37,6 +77,7 @@ export class WorkspaceTreeService {
           if (this.isToggleLevel.length === 0) {
             this.isToggle = false;
             this.toggleInc = 0;
+            this.toggleOpen = 'null';
           } else {
             this.toggleInc--;
           }
@@ -44,9 +85,9 @@ export class WorkspaceTreeService {
           dataObj.toggleInc = this.toggleInc;
         }
       }
-      if (this.toggleInc > 0) {
-        dataObj.isToggle = true;
-      }
+      // if (this.toggleInc > 0) {
+      //   dataObj.isToggle = true;
+      // }
       this.#OrderArray.push(dataObj);
       if (data.childNode.length > 0) {
         const percentage: number = Number(level.split('%')[0]);
@@ -56,6 +97,11 @@ export class WorkspaceTreeService {
           this.isToggle = true;
 
           this.toggleInc++;
+          if (data.isToggle) {
+            this.toggleOpen = 'open';
+          } else {
+            this.toggleOpen = 'close';
+          }
         }
         this.#_printAllNodes(data.childNode, `${percentage - 5}%`);
       }

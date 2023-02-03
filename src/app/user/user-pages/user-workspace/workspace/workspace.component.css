@@ -285,7 +285,8 @@ mat-menu > button {
 /* workspace option */
 .bulletOption {
   align-self: flex-start;
-  margin-top: 13px;
+  margin-top: 12px;
+  padding: 2px 5px;
   font-size: 8px;
 }
 
@@ -310,7 +311,6 @@ mat-menu > button {
   padding: 2px 5px;
   border-radius: 4px;
   background-color: transparent;
-  transform: rotate(0);
   transition-duration: 0.3s;
 }
 
