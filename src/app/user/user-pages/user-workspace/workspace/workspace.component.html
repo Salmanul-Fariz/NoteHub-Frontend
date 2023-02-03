@@ -86,7 +86,7 @@
 
   <!-- workspace content container -->
   <div class="workspace-content-container">
-    <div *ngFor="let element of pagesDetails.levelPage; let i = index" class="workspace-content-set mt-1">
+    <div *ngFor="let element of pagesDetails.levelPage; let i = index" class="workspace-content-set">
 
       <!-- text -->
       <div class="handleHover flex flex-col gap-1 items-center"
@@ -177,7 +177,7 @@
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div class="flex gap-1 items-center">
           <i id="toggle-{{element._id}}" class="toggleOption fa-solid fa-angle-right"
-            (click)="toggleOption(i,element._id)"></i>
+            (click)="toggleOption(i,element._id)" style="transform: rotate(90deg);"></i>
           <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
             placeholder="Toggle" (input)="inputPage($event,element._id)"
             (keydown)="onKeydown($event,element._id,'toggle')">{{

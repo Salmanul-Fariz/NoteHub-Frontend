@@ -24,7 +24,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   isChangeOptionClass: boolean;
   pageSectionId: string;
   isSavingContent: boolean;
-  isToggleOption: boolean;
   array = [1];
 
   constructor(
@@ -511,10 +510,14 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
   // Toggle options
   toggleOption(index: string, id: string) {
+    document.body.style.cursor = 'wait';
+
     const toggle = document.getElementById(`toggle-${id}`) as HTMLElement;
     let openToggle = false;
+    const optionToggle = this.pagesDetails.levelPage[index];
+    console.log(optionToggle.isToggle);
 
-    if (!this.isToggleOption) {
+    if (!optionToggle.isToggle) {
       console.log('STart');
 
       toggle.style.transform = 'rotate(90deg)';
@@ -523,7 +526,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       toggle.style.transform = 'rotate(0)';
     }
 
-    this.isToggleOption = !this.isToggleOption;
+    optionToggle.isToggle = !optionToggle.isToggle;
 
     const percentage: number = Number(
       this.pagesDetails.levelPage[index].level.split('%')[0]
@@ -551,6 +554,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           div.style.display = 'none';
         }
       }
+      document.body.style.cursor = 'auto';
     }
   }
 

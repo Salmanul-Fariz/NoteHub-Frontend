@@ -16,6 +16,7 @@ export class WorkspaceTreeService {
         _id: data._id,
         type: data.type,
         content: data.content,
+        isToggle: false,
       };
 
       if (this.isToggle) {
@@ -24,10 +25,14 @@ export class WorkspaceTreeService {
           percentage === this.isToggleLevel[this.isToggleLevel.length - 1] ||
           percentage > this.isToggleLevel[this.isToggleLevel.length - 1]
         ) {
-          if (percentage > this.isToggleLevel[0]) {
+          this.isToggleLevel.pop();
+
+          if (
+            percentage > this.isToggleLevel[0] ||
+            percentage === this.isToggleLevel[0]
+          ) {
             this.isToggleLevel.length = 0;
           }
-          this.isToggleLevel.pop();
 
           if (this.isToggleLevel.length === 0) {
             this.isToggle = false;
@@ -39,7 +44,9 @@ export class WorkspaceTreeService {
           dataObj.toggleInc = this.toggleInc;
         }
       }
-
+      if (this.toggleInc > 0) {
+        dataObj.isToggle = true;
+      }
       this.#OrderArray.push(dataObj);
       if (data.childNode.length > 0) {
         const percentage: number = Number(level.split('%')[0]);
