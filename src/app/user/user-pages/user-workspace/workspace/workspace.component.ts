@@ -24,6 +24,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   isChangeOptionClass: boolean;
   pageSectionId: string;
   isSavingContent: boolean;
+  isToggleOption: boolean;
   array = [1];
 
   constructor(
@@ -42,6 +43,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           data.levelPage = null;
           this.treeService.root = data.page;
           data.levelPage = this.treeService.ChangeDatatolevel();
+          console.log(data.levelPage);
         }
 
         this.pagesDetails = data;
@@ -481,7 +483,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
                 sel.removeAllRanges();
                 sel.addRange(range);
               }
-              // currentDiv.focus();
             }
           }, 0);
 
@@ -506,6 +507,51 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   noneHandle(id: string) {
     const div = document.getElementById(`handle-${id}`) as HTMLElement;
     div.style.display = 'none';
+  }
+
+  // Toggle options
+  toggleOption(index: string, id: string) {
+    const toggle = document.getElementById(`toggle-${id}`) as HTMLElement;
+    let openToggle = false;
+
+    if (!this.isToggleOption) {
+      console.log('STart');
+
+      toggle.style.transform = 'rotate(90deg)';
+      openToggle = true;
+    } else {
+      toggle.style.transform = 'rotate(0)';
+    }
+
+    this.isToggleOption = !this.isToggleOption;
+
+    const percentage: number = Number(
+      this.pagesDetails.levelPage[index].level.split('%')[0]
+    );
+
+    let elIndex = Number(index);
+    let stop = false;
+    while (!stop) {
+      elIndex++;
+      const el = this.pagesDetails.levelPage[elIndex];
+
+      const curPercent = el?.level.split('%')[0];
+
+      if (
+        percentage === Number(curPercent) ||
+        percentage < Number(curPercent) ||
+        this.pagesDetails.levelPage.length === elIndex
+      ) {
+        stop = true;
+      } else {
+        const div = document.getElementById(`main-${el._id}`) as HTMLElement;
+        if (openToggle) {
+          div.style.display = 'block';
+        } else {
+          div.style.display = 'none';
+        }
+      }
+    }
   }
 
   ngOnDestroy(): void {

@@ -178,7 +178,6 @@ mat-menu > button {
   height: 100%;
   top: 4px;
   left: -55px;
-  z-index: 2px;
   display: none;
   justify-content: flex-start;
   align-items: flex-start;
@@ -191,10 +190,6 @@ mat-menu > button {
 
 .handleHover {
   position: relative;
-}
-
-.workspace-content-handle:hover {
-  display: flex;
 }
 
 .workspace-content-handle > mat-icon {
@@ -311,5 +306,15 @@ mat-menu > button {
 
 .toggleOption {
   align-self: flex-start;
-  margin-top: 9px;
+  margin-top: 7px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: transparent;
+  transform: rotate(0);
+  transition-duration: 0.3s;
+}
+
+.toggleOption:hover {
+  background-color: #dedede;
+  cursor: pointer;
 }

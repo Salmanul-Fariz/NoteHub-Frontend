@@ -89,8 +89,24 @@
     <div *ngFor="let element of pagesDetails.levelPage; let i = index" class="workspace-content-set mt-1">
 
       <!-- text -->
-      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'text'"
-        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+      <div class="handleHover flex flex-col gap-1 items-center"
+        *ngIf="element.type === 'text' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+        <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
+          placeholder="Type '/' for commands" (input)="inputPage($event,element._id)"
+          (keydown)="onKeydown($event,element._id,'text')">{{
+          element.content
+          }}</div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
+      </div>
+
+      <!-- text options -->
+      <div id="main-{{element._id}}" class="handleHover flex flex-col gap-1 items-center"
+        *ngIf="element.type === 'text' && element.toggleInc > 0" [ngStyle]="{width:element.level,display:'none'}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Type '/' for commands" (input)="inputPage($event,element._id)"
           (keydown)="onKeydown($event,element._id,'text')">{{
@@ -103,9 +119,26 @@
       </div>
 
       <!-- bullet -->
-      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'bullet'"
+      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'bullet' && element.toggleInc === 0"
         [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
-        <div class="flex gap-1 items-center">
+        <div class="flex gap-1">
+          <i class="bulletOption fa-solid fa-circle"></i>
+          <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
+            placeholder="List" (input)="inputPage($event,element._id)"
+            (keydown)="onKeydown($event,element._id,'bullet')">{{
+            element.content
+            }}</div>
+        </div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
+      </div>
+
+      <!-- bullet options -->
+      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'bullet' && element.toggleInc > 0"
+        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+        <div class="flex gap-1">
           <i class="bulletOption fa-solid fa-circle"></i>
           <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
             placeholder="List" (input)="inputPage($event,element._id)"
@@ -120,10 +153,31 @@
       </div>
 
       <!-- toggle -->
-      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'toggle'"
+      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'toggle' && element.toggleInc === 0"
         [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div class="flex gap-1 items-center">
-          <i class="toggleOption fa-solid fa-angle-right"></i>
+          <i id="toggle-{{element._id}}" class="toggleOption fa-solid fa-angle-right"
+            (click)="toggleOption(i,element._id)"></i>
+          <div id=" {{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
+            placeholder="Toggle" (input)="inputPage($event,element._id)"
+            (keydown)="onKeydown($event,element._id,'toggle')">{{
+            element.content
+            }}
+          </div>
+        </div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
+      </div>
+
+      <!-- toggle options -->
+      <div id="main-{{element._id}}" *ngIf="element.type === 'toggle' && element.toggleInc > 0"
+        class="handleHover flex gap-1 items-center" [ngStyle]="{width:element.level,display:'none'}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+        <div class="flex gap-1 items-center">
+          <i id="toggle-{{element._id}}" class="toggleOption fa-solid fa-angle-right"
+            (click)="toggleOption(i,element._id)"></i>
           <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
             placeholder="Toggle" (input)="inputPage($event,element._id)"
             (keydown)="onKeydown($event,element._id,'toggle')">{{
@@ -137,8 +191,24 @@
       </div>
 
       <!-- Heading 1 -->
-      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'heading1'"
-        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+      <div class="handleHover flex flex-col gap-1 items-center"
+        *ngIf="element.type === 'heading1' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+        <div id="{{element._id}}" class="heading1Option workspace-content" contenteditable="true" spellcheck="true"
+          placeholder="Heading 1" (input)="inputPage($event,element._id)"
+          (keydown)="onKeydown($event,element._id,'heading1')">{{
+          element.content
+          }}</div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
+      </div>
+
+      <!-- heading 1 options -->
+      <div class="handleHover flex flex-col gap-1 items-center"
+        *ngIf="element.type === 'heading1' && element.toggleInc > 0" [ngStyle]="{width:element.level}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading1Option workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Heading 1" (input)="inputPage($event,element._id)"
           (keydown)="onKeydown($event,element._id,'heading1')">{{
@@ -151,8 +221,24 @@
       </div>
 
       <!-- Heading 2 -->
-      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'heading2'"
-        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+      <div class="handleHover flex flex-col gap-1 items-center"
+        *ngIf="element.type === 'heading2' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+        <div id="{{element._id}}" class="heading2Option workspace-content" contenteditable="true" spellcheck="true"
+          placeholder="Heading 2" (input)="inputPage($event,element._id)"
+          (keydown)="onKeydown($event,element._id,'heading2')">{{
+          element.content
+          }}</div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
+      </div>
+
+      <!-- heading 2 options -->
+      <div class="handleHover flex flex-col gap-1 items-center"
+        *ngIf="element.type === 'heading2' && element.toggleInc > 0" [ngStyle]="{width:element.level}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading2Option workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Heading 2" (input)="inputPage($event,element._id)"
           (keydown)="onKeydown($event,element._id,'heading2')">{{
@@ -165,8 +251,9 @@
       </div>
 
       <!-- Heading 3 -->
-      <div class="handleHover flex flex-col gap-1 items-center" *ngIf="element.type === 'heading3'"
-        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+      <div class="handleHover flex flex-col gap-1 items-center"
+        *ngIf="element.type === 'heading3' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading3Option workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Heading 3" (input)="inputPage($event,element._id)"
           (keydown)="onKeydown($event,element._id,'heading3')">{{
@@ -178,6 +265,20 @@
         </div>
       </div>
 
+      <!-- heading 3 options -->
+      <div class="handleHover flex flex-col gap-1 items-center"
+        *ngIf="element.type === 'heading3' && element.toggleInc > 0" [ngStyle]="{width:element.level}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+        <div id="{{element._id}}" class="heading3Option workspace-content" contenteditable="true" spellcheck="true"
+          placeholder="Heading 3" (input)="inputPage($event,element._id)"
+          (keydown)="onKeydown($event,element._id,'heading3')">{{
+          element.content
+          }}</div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
+      </div>
 
     </div>
   </div>
