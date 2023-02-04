@@ -86,6 +86,7 @@
 
   <!-- workspace content container -->
   <div class="workspace-content-container">
+
     <div *ngFor="let element of pagesDetails.levelPage; let i = index" class="workspace-content-set">
 
       <!-- text -->
@@ -99,7 +100,38 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon>drag_indicator</mat-icon>
+          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Add new child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove All Child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + w</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove a node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to parent</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
         </div>
       </div>
 
@@ -115,7 +147,38 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon>drag_indicator</mat-icon>
+          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Add new child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove All Child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + w</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove a node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to parent</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
         </div>
       </div>
 
@@ -132,13 +195,45 @@
         </div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon>drag_indicator</mat-icon>
+          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Add new child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove All Child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + w</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove a node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to parent</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
         </div>
       </div>
 
       <!-- bullet options -->
       <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'bullet' && element.toggleInc > 0"
-        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+        [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div class="flex gap-1">
           <i class="bulletOption fa-solid fa-circle"></i>
           <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
@@ -149,7 +244,38 @@
         </div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon>drag_indicator</mat-icon>
+          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Add new child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove All Child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + w</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove a node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to parent</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
         </div>
       </div>
 
@@ -169,7 +295,38 @@
         </div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon>drag_indicator</mat-icon>
+          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Add new child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove All Child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + w</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove a node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to parent</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
         </div>
       </div>
 
@@ -190,8 +347,39 @@
         </div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon>drag_indicator</mat-icon>
+          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
         </div>
+
+        <mat-menu #menu="matMenu" class="p-0">
+          <div class="workspace-content-handle-option-bar">
+            <ul>
+              <li (click)="addNewNode(element._id,element.type)">
+                <p class="text-sm justify-self-start">Add new node</p>
+                <p class="text-sm text-black opacity-50">enter</p>
+              </li>
+              <li>
+                <p class="text-sm justify-self-start">Add new child</p>
+                <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+              </li>
+              <li>
+                <p class="text-sm justify-self-start">Change to child</p>
+                <p class="text-sm text-black opacity-50">tab</p>
+              </li>
+              <li>
+                <p class="text-sm justify-self-start">Remove All Child</p>
+                <p class="text-sm text-black opacity-50">ctrl + shift + w</p>
+              </li>
+              <li>
+                <p class="text-sm justify-self-start">Remove a node</p>
+                <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+              </li>
+              <li>
+                <p class="text-sm justify-self-start">Change to parent</p>
+                <p class="text-sm text-black opacity-50">shift + tab</p>
+              </li>
+            </ul>
+          </div>
+        </mat-menu>
       </div>
 
       <!-- Heading 1 -->
@@ -205,13 +393,45 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon>drag_indicator</mat-icon>
+          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Add new child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove All Child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + w</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove a node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to parent</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
         </div>
       </div>
 
       <!-- heading 1 options -->
       <div class="handleHover flex flex-col gap-1 items-center"
-        *ngIf="element.type === 'heading1' && element.toggleInc > 0" [ngStyle]="{width:element.level}"
+        *ngIf="element.type === 'heading1' && element.toggleInc > 0"
+        [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading1Option workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Heading 1" (input)="inputPage($event,element._id)"
@@ -220,7 +440,38 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon>drag_indicator</mat-icon>
+          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Add new child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove All Child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + w</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove a node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to parent</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
         </div>
       </div>
 
@@ -235,13 +486,45 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon>drag_indicator</mat-icon>
+          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Add new child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove All Child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + w</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove a node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to parent</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
         </div>
       </div>
 
       <!-- heading 2 options -->
       <div class="handleHover flex flex-col gap-1 items-center"
-        *ngIf="element.type === 'heading2' && element.toggleInc > 0" [ngStyle]="{width:element.level}"
+        *ngIf="element.type === 'heading2' && element.toggleInc > 0"
+        [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading2Option workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Heading 2" (input)="inputPage($event,element._id)"
@@ -250,7 +533,38 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon>drag_indicator</mat-icon>
+          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Add new child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove All Child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + w</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove a node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to parent</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
         </div>
       </div>
 
@@ -265,13 +579,45 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon>drag_indicator</mat-icon>
+          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Add new child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove All Child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + w</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove a node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to parent</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
         </div>
       </div>
 
       <!-- heading 3 options -->
       <div class="handleHover flex flex-col gap-1 items-center"
-        *ngIf="element.type === 'heading3' && element.toggleInc > 0" [ngStyle]="{width:element.level}"
+        *ngIf="element.type === 'heading3' && element.toggleInc > 0"
+        [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading3Option workspace-content" contenteditable="true" spellcheck="true"
           placeholder="Heading 3" (input)="inputPage($event,element._id)"
@@ -280,11 +626,42 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon>drag_indicator</mat-icon>
+          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Add new child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove All Child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + w</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Remove a node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+                <li>
+                  <p class="text-sm justify-self-start">Change to parent</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
         </div>
       </div>
-
     </div>
+
   </div>
 </section>
 

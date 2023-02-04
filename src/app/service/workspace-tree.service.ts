@@ -77,7 +77,7 @@ export class WorkspaceTreeService {
           if (this.isToggleLevel.length === 0) {
             this.isToggle = false;
             this.toggleInc = 0;
-            this.toggleOpen = 'null';
+            this.toggleOpen = null;
           } else {
             this.toggleInc--;
           }
@@ -85,9 +85,7 @@ export class WorkspaceTreeService {
           dataObj.toggleInc = this.toggleInc;
         }
       }
-      // if (this.toggleInc > 0) {
-      //   dataObj.isToggle = true;
-      // }
+
       this.#OrderArray.push(dataObj);
       if (data.childNode.length > 0) {
         const percentage: number = Number(level.split('%')[0]);

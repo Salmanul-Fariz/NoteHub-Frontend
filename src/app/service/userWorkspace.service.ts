@@ -131,7 +131,7 @@ export class UserWorkspaceService {
     );
   }
 
-  // update page icon and update page array
+  // update page array
   updatePageArray(id: string, data: any) {
     const index = this.pages.findIndex((val) => {
       return val._id === id;

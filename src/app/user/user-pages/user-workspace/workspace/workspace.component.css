@@ -135,6 +135,7 @@ mat-menu > button {
 .workspace-content-container {
   width: 100%;
   padding: 6px 60px;
+  padding-bottom: 66px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -177,13 +178,16 @@ mat-menu > button {
   position: absolute;
   height: 100%;
   top: 4px;
-  left: -55px;
+  left: -53px;
   display: none;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 5px;
 }
 
+.workspace-content-handle :hover {
+  display: flex;
+}
 .handleHover:hover + .workspace-content-handle {
   display: flex;
 }
@@ -201,6 +205,36 @@ mat-menu > button {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.workspace-content-handle-option-bar {
+  background-color: #fff;
+  color: #222;
+  padding: 0px 6px;
+  z-index: 10;
+}
+
+.workspace-content-handle-option-bar ul {
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0px;
+}
+
+.workspace-content-handle-option-bar li {
+  font-size: 17px;
+  display: flex;
+  cursor: pointer;
+  justify-content: space-between;
+  padding: 4px 0;
+  align-items: center;
+  gap: 14px;
+  padding: 3px 4px;
+}
+
+.workspace-content-handle-option-bar li:hover {
+  cursor: pointer;
+  background-color: #e4dddd;
+  border-radius: 6px;
 }
 
 /* empty page */

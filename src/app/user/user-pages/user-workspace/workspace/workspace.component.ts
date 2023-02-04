@@ -177,10 +177,23 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       if (value.charCodeAt(0) === 47) {
         this.isChangeOptionClass = true;
         this.pageSectionId = pageSecId;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        if (height / 2 < cords.top) {
+          optionTab.style.top = cords.y - 200 + 'px';
+        } else {
+          optionTab.style.top = cords.y + 'px';
+        }
+
+        if (width / 2 > cords.left) {
+          optionTab.style.left = cords.x + 20 + 'px';
+        } else {
+          optionTab.style.left = cords.x - 180 + 'px';
+        }
 
         optionTab.style.display = 'flex';
-        optionTab.style.left = cords.x + 20 + 'px';
-        optionTab.style.top = cords.y + 'px';
+        // optionTab.style.top = cords.y + 'px';
       }
     } else {
       // close Option Tab  while enter / at first
@@ -523,20 +536,50 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           this.workspaceService.updatePageArray(
-            optionToggle._id,
+            this.pagesDetails._id,
             response.data
           );
           this.workspaceService.pageDataTransfer.emit(response.data);
 
-          // For focus the cursor
-          // setTimeout(() => {
-          //   const currentDiv = document.getElementById(
-          //     this.pageSectionId
-          //   ) as HTMLElement;
-          //   currentDiv.focus();
-          // }, 0);
-
           document.body.style.cursor = 'auto';
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+  }
+
+  // add New Node
+  addNewNode(pageSecId: string, pageType: string) {
+    document.body.style.cursor = 'wait';
+
+    this.workspaceService
+      .AddNewSection(
+        this.pagesDetails._id,
+        pageSecId,
+        pageType,
+        '',
+        'TopNodeInsert'
+      )
+      .subscribe({
+        next: (response) => {
+          this.workspaceService.updatePageArray(
+            this.pagesDetails._id,
+            response.data.data
+          );
+          this.workspaceService.pageDataTransfer.emit(response.data.data);
+          document.body.style.cursor = 'auto';
+
+          // Put caret cursor
+          setTimeout(() => {
+            const newDiv = document.getElementById(response.data.id);
+            if (newDiv) {
+              newDiv.focus();
+            }
+          }, 0);
         },
         error: (error) => {
           if (error.status === 408 || 400) {

@@ -14,6 +14,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -74,6 +75,7 @@ import { WorkspaceComponent } from './user/user-pages/user-workspace/workspace/w
     MatDialogModule,
     PickerModule,
     EmojiModule,
+    MatSelectModule,
   ],
   providers: [
     {
