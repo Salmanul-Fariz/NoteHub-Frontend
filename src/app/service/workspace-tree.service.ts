@@ -104,13 +104,10 @@ export class WorkspaceTreeService {
           this.toggleInc++;
           if (data.isToggle) {
             this.isToggleOpenLevel.push('open');
-            // this.toggleOpen = 'open';
           } else {
             this.isToggleOpenLevel.push('close');
-            // this.toggleOpen = 'close';
           }
         }
-        console.log(this.isToggleOpenLevel);
 
         this.#_printAllNodes(data.childNode, `${percentage - 5}%`);
       }

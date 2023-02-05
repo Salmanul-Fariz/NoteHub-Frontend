@@ -282,6 +282,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
             error: (error) => {
               if (error.status === 408 || 400) {
                 localStorage.clear();
+                document.body.style.cursor = 'auto';
                 this.router.navigate(['auth/signin']);
               }
             },
@@ -318,6 +319,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
                   document.body.style.cursor = 'auto';
                   if (error.status === 408 || 400) {
                     localStorage.clear();
+                    document.body.style.cursor = 'auto';
                     this.router.navigate(['auth/signin']);
                   }
                 },
@@ -328,6 +330,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           document.body.style.cursor = 'auto';
           if (error.status === 408 || 400) {
             localStorage.clear();
+            document.body.style.cursor = 'auto';
             this.router.navigate(['auth/signin']);
           }
         },
@@ -369,6 +372,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         document.body.style.cursor = 'auto';
         if (error.status === 408 || 400) {
           localStorage.clear();
+          document.body.style.cursor = 'auto';
           this.router.navigate(['auth/signin']);
         }
       },
@@ -406,6 +410,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         error: (error) => {
           if (error.status === 408 || 400) {
             localStorage.clear();
+            document.body.style.cursor = 'auto';
             this.router.navigate(['auth/signin']);
           }
         },
@@ -449,6 +454,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         error: (error) => {
           if (error.status === 408 || 400) {
             localStorage.clear();
+            document.body.style.cursor = 'auto';
             this.router.navigate(['auth/signin']);
           }
         },
@@ -492,6 +498,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         error: (error) => {
           if (error.status === 408 || 400) {
             localStorage.clear();
+            document.body.style.cursor = 'auto';
             this.router.navigate(['auth/signin']);
           }
         },
@@ -530,6 +537,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         error: (error) => {
           if (error.status === 408 || 400) {
             localStorage.clear();
+            document.body.style.cursor = 'auto';
             this.router.navigate(['auth/signin']);
           }
         },
@@ -568,6 +576,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         error: (error) => {
           if (error.status === 408 || 400) {
             localStorage.clear();
+            document.body.style.cursor = 'auto';
             this.router.navigate(['auth/signin']);
           }
         },
@@ -605,6 +614,45 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         error: (error) => {
           if (error.status === 408 || 400) {
             localStorage.clear();
+            document.body.style.cursor = 'auto';
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+  }
+
+  // Change the node to parent node
+  changeParentNode(pageSecId: string, pageType: string) {
+    document.body.style.cursor = 'wait';
+
+    this.workspaceService
+      .AddNewSection(
+        this.pagesDetails._id,
+        pageSecId,
+        pageType,
+        '',
+        'NodeAndChangeToParentNode'
+      )
+      .subscribe({
+        next: (response) => {
+          this.workspaceService.updatePageArray(
+            this.pagesDetails._id,
+            response.data.data
+          );
+          this.workspaceService.pageDataTransfer.emit(response.data.data);
+          document.body.style.cursor = 'auto';
+          // Put caret cursor
+          setTimeout(() => {
+            const newDiv = document.getElementById(pageSecId);
+            if (newDiv) {
+              newDiv.focus();
+            }
+          }, 0);
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            document.body.style.cursor = 'auto';
             this.router.navigate(['auth/signin']);
           }
         },
