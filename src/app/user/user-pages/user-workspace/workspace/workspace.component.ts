@@ -216,42 +216,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     if (event.key === 'Enter') {
       event.preventDefault();
       if (!this.isChangeOptionClass) {
-        document.body.style.cursor = 'wait';
-
-        this.workspaceService
-          .AddNewSection(
-            this.pagesDetails._id,
-            pageSecId,
-            pageType,
-            '',
-            'TopNodeInsert'
-          )
-          .subscribe({
-            next: (response) => {
-              this.workspaceService.updatePageArray(
-                this.pagesDetails._id,
-                response.data.data
-              );
-              this.workspaceService.pageDataTransfer.emit(response.data.data);
-              document.body.style.cursor = 'auto';
-
-              // Put caret cursor
-              setTimeout(() => {
-                const newDiv = document.getElementById(response.data.id);
-                if (newDiv) {
-                  newDiv.focus();
-                }
-              }, 0);
-            },
-            error: (error) => {
-              if (error.status === 408 || 400) {
-                localStorage.clear();
-                this.router.navigate(['auth/signin']);
-              }
-            },
-          });
+        this.addNewNodeWithChild(pageSecId, pageType);
       }
-    } else if (event.key === 'Backspace') {
+    }
+
+    if (event.key === 'Backspace') {
       const sel = window.getSelection();
       if (sel) {
         const range = sel.getRangeAt(0);
@@ -285,7 +254,9 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
     // Add new node Without child (ctrl + shift + Q)
     if (event.ctrlKey && event.shiftKey && event.keyCode === 81) {
-      this.addNewNode(pageSecId, pageType);
+      if (!this.isChangeOptionClass) {
+        this.addNewNode(pageSecId, pageType);
+      }
     }
   }
 
@@ -603,7 +574,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       });
   }
 
-  // change to child
+  // Change to new child with it's own child
   changeToChild(pageSecId: string, pageType: string) {
     document.body.style.cursor = 'wait';
 
