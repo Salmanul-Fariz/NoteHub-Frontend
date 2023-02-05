@@ -141,6 +141,7 @@ mat-menu > button {
   display: flex;
   flex-direction: column;
   min-height: calc(60vh - 92px);
+  row-gap: 2px;
 }
 
 .workspace-content-set {
@@ -352,4 +353,9 @@ mat-menu > button {
 .toggleOption:hover {
   background-color: #dedede;
   cursor: pointer;
+}
+
+.divClick {
+  background-color: rgb(224 237 251);
+  border-radius: 6px;
 }

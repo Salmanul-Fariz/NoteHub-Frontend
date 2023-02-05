@@ -755,6 +755,29 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       });
   }
 
+  // Add div section color globally
+  globalClickColor() {
+    console.log('clicked');
+    const allDivs = document.querySelectorAll('.handleHover') as any;
+    for (const div of allDivs) {
+      div.classList.add('divClick');
+    }
+    setTimeout(() => {
+      for (const div of allDivs) {
+        div.classList.remove('divClick');
+      }
+    }, 1500);
+  }
+
+  showDivBar(id: string) {
+    console.log('Login');
+    const div = document.querySelectorAll(`.showDivBar-${id}`) as any;
+    div[0].classList.add('divClick');
+    setTimeout(() => {
+      div[0].classList.remove('divClick');
+    }, 1500);
+  }
+
   ngOnDestroy(): void {
     this.pageDataTransferSb.unsubscribe();
   }

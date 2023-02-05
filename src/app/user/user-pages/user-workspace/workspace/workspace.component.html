@@ -16,7 +16,8 @@
             <mat-icon class="text-lg">cloud_done</mat-icon>
           </div>
         </div>
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <button mat-icon-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
@@ -85,12 +86,12 @@
   </div>
 
   <!-- workspace content container -->
-  <div class="workspace-content-container">
+  <div class="workspace-content-container" (dblclick)="globalClickColor()">
 
     <div *ngFor="let element of pagesDetails.levelPage; let i = index" class="workspace-content-set">
 
       <!-- text -->
-      <div class="handleHover flex flex-col gap-1 items-center"
+      <div class="handleHover showDivBar-{{element._id}} flex flex-col gap-1 items-center"
         *ngIf="element.type === 'text' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
@@ -100,7 +101,7 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
 
           <mat-menu #menu="matMenu" class="p-0">
             <div class="workspace-content-handle-option-bar">
@@ -136,7 +137,7 @@
       </div>
 
       <!-- text options -->
-      <div id="main-{{element._id}}" class="handleHover flex flex-col gap-1 items-center"
+      <div id="main-{{element._id}}" class="handleHover showDivBar-{{element._id}} flex flex-col gap-1 items-center"
         *ngIf="element.type === 'text' && element.toggleInc > 0"
         [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
@@ -147,7 +148,7 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
 
           <mat-menu #menu="matMenu" class="p-0">
             <div class="workspace-content-handle-option-bar">
@@ -183,8 +184,9 @@
       </div>
 
       <!-- bullet -->
-      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'bullet' && element.toggleInc === 0"
-        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+      <div class="handleHover showDivBar-{{element._id}} flex gap-1 items-center"
+        *ngIf="element.type === 'bullet' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div class="flex gap-1">
           <i class="bulletOption fa-solid fa-circle"></i>
           <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
@@ -195,7 +197,7 @@
         </div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
 
           <mat-menu #menu="matMenu" class="p-0">
             <div class="workspace-content-handle-option-bar">
@@ -231,7 +233,8 @@
       </div>
 
       <!-- bullet options -->
-      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'bullet' && element.toggleInc > 0"
+      <div class="handleHover showDivBar-{{element._id}} flex gap-1 items-center"
+        *ngIf="element.type === 'bullet' && element.toggleInc > 0"
         [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div class="flex gap-1">
@@ -244,7 +247,7 @@
         </div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
 
           <mat-menu #menu="matMenu" class="p-0">
             <div class="workspace-content-handle-option-bar">
@@ -280,8 +283,9 @@
       </div>
 
       <!-- toggle -->
-      <div class="handleHover flex gap-1 items-center" *ngIf="element.type === 'toggle' && element.toggleInc === 0"
-        [ngStyle]="{width:element.level}" (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+      <div class="handleHover showDivBar-{{element._id}} flex gap-1 items-center"
+        *ngIf="element.type === 'toggle' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div class="flex gap-1 items-center">
           <i id="toggle-{{element._id}}" class="toggleOption fa-solid fa-angle-right"
             (click)="toggleOption(i,element._id)"
@@ -294,7 +298,7 @@
         </div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
 
           <mat-menu #menu="matMenu" class="p-0">
             <div class="workspace-content-handle-option-bar">
@@ -331,7 +335,7 @@
 
       <!-- toggle options -->
       <div id="main-{{element._id}}" *ngIf="element.type === 'toggle' && element.toggleInc > 0"
-        class="handleHover flex gap-1 items-center"
+        class="handleHover showDivBar-{{element._id}} flex gap-1 items-center"
         [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div class="flex gap-1 items-center">
@@ -346,7 +350,7 @@
         </div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
         </div>
 
         <mat-menu #menu="matMenu" class="p-0">
@@ -382,7 +386,7 @@
       </div>
 
       <!-- Heading 1 -->
-      <div class="handleHover flex flex-col gap-1 items-center"
+      <div class="handleHover showDivBar-{{element._id}} flex flex-col gap-1 items-center"
         *ngIf="element.type === 'heading1' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading1Option workspace-content" contenteditable="true" spellcheck="true"
@@ -392,7 +396,7 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
 
           <mat-menu #menu="matMenu" class="p-0">
             <div class="workspace-content-handle-option-bar">
@@ -428,7 +432,7 @@
       </div>
 
       <!-- heading 1 options -->
-      <div class="handleHover flex flex-col gap-1 items-center"
+      <div class="handleHover showDivBar-{{element._id}} flex flex-col gap-1 items-center"
         *ngIf="element.type === 'heading1' && element.toggleInc > 0"
         [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
@@ -439,7 +443,7 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
 
           <mat-menu #menu="matMenu" class="p-0">
             <div class="workspace-content-handle-option-bar">
@@ -475,7 +479,7 @@
       </div>
 
       <!-- Heading 2 -->
-      <div class="handleHover flex flex-col gap-1 items-center"
+      <div class="handleHover showDivBar-{{element._id}} flex flex-col gap-1 items-center"
         *ngIf="element.type === 'heading2' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading2Option workspace-content" contenteditable="true" spellcheck="true"
@@ -485,7 +489,7 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
 
           <mat-menu #menu="matMenu" class="p-0">
             <div class="workspace-content-handle-option-bar">
@@ -521,7 +525,7 @@
       </div>
 
       <!-- heading 2 options -->
-      <div class="handleHover flex flex-col gap-1 items-center"
+      <div class="handleHover showDivBar-{{element._id}} flex flex-col gap-1 items-center"
         *ngIf="element.type === 'heading2' && element.toggleInc > 0"
         [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
@@ -532,7 +536,7 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
 
           <mat-menu #menu="matMenu" class="p-0">
             <div class="workspace-content-handle-option-bar">
@@ -568,7 +572,7 @@
       </div>
 
       <!-- Heading 3 -->
-      <div class="handleHover flex flex-col gap-1 items-center"
+      <div class="handleHover showDivBar-{{element._id}} flex flex-col gap-1 items-center"
         *ngIf="element.type === 'heading3' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading3Option workspace-content" contenteditable="true" spellcheck="true"
@@ -578,7 +582,7 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
 
           <mat-menu #menu="matMenu" class="p-0">
             <div class="workspace-content-handle-option-bar">
@@ -614,7 +618,7 @@
       </div>
 
       <!-- heading 3 options -->
-      <div class="handleHover flex flex-col gap-1 items-center"
+      <div class="handleHover showDivBar-{{element._id}} flex flex-col gap-1 items-center"
         *ngIf="element.type === 'heading3' && element.toggleInc > 0"
         [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
@@ -625,7 +629,7 @@
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
-          <mat-icon mat-button [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
 
           <mat-menu #menu="matMenu" class="p-0">
             <div class="workspace-content-handle-option-bar">
