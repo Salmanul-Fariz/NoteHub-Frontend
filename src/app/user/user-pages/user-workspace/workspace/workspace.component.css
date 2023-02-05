@@ -114,6 +114,7 @@ mat-menu > button {
 
 .workspace-title-container input {
   background-color: #fafafa;
+  height: 100%;
 }
 
 .workspace-title-container input:focus {

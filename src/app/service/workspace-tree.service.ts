@@ -5,9 +5,9 @@ export class WorkspaceTreeService {
   #OrderArray: any[] = [];
   isToggle: boolean;
   isToggleLevel: number[] = [];
+  isToggleOpenLevel: string[] = [];
   root: any[] = [];
   toggleInc: number = 0;
-  toggleOpen: null | string = null;
 
   // #_toggleOption(array: any) {
   //   // optionToggle.isToggle = !optionToggle.isToggle;
@@ -56,7 +56,7 @@ export class WorkspaceTreeService {
         type: data.type,
         content: data.content,
         isToggle: data.isToggle,
-        childToggle: this.toggleOpen,
+        childToggle: '',
       };
 
       if (this.isToggle) {
@@ -66,18 +66,19 @@ export class WorkspaceTreeService {
           percentage > this.isToggleLevel[this.isToggleLevel.length - 1]
         ) {
           this.isToggleLevel.pop();
+          this.isToggleOpenLevel.pop();
 
           if (
             percentage > this.isToggleLevel[0] ||
             percentage === this.isToggleLevel[0]
           ) {
             this.isToggleLevel.length = 0;
+            this.isToggleOpenLevel.length = 0;
           }
 
           if (this.isToggleLevel.length === 0) {
             this.isToggle = false;
             this.toggleInc = 0;
-            this.toggleOpen = null;
           } else {
             this.toggleInc--;
           }
@@ -86,21 +87,31 @@ export class WorkspaceTreeService {
         }
       }
 
+      if (this.isToggleOpenLevel.length === 0) {
+        dataObj.childToggle = 'null';
+      } else {
+        dataObj.childToggle =
+          this.isToggleOpenLevel[this.isToggleOpenLevel.length - 1];
+      }
+
       this.#OrderArray.push(dataObj);
       if (data.childNode.length > 0) {
         const percentage: number = Number(level.split('%')[0]);
         if (data.type === 'toggle') {
           this.isToggleLevel.push(percentage);
-
           this.isToggle = true;
 
           this.toggleInc++;
           if (data.isToggle) {
-            this.toggleOpen = 'open';
+            this.isToggleOpenLevel.push('open');
+            // this.toggleOpen = 'open';
           } else {
-            this.toggleOpen = 'close';
+            this.isToggleOpenLevel.push('close');
+            // this.toggleOpen = 'close';
           }
         }
+        console.log(this.isToggleOpenLevel);
+
         this.#_printAllNodes(data.childNode, `${percentage - 5}%`);
       }
     }

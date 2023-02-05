@@ -275,42 +275,17 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           // }
         }
       }
-    } else if (event.key === 'Tab') {
-      if (!this.isChangeOptionClass) {
-        document.body.style.cursor = 'wait';
+    }
 
-        this.workspaceService
-          .AddNewSection(
-            this.pagesDetails._id,
-            pageSecId,
-            pageType,
-            '',
-            'ParentInsert'
-          )
-          .subscribe({
-            next: (response) => {
-              this.workspaceService.updatePageArray(
-                this.pagesDetails._id,
-                response.data.data
-              );
-              this.workspaceService.pageDataTransfer.emit(response.data.data);
-              document.body.style.cursor = 'auto';
-              // Put caret cursor
-              setTimeout(() => {
-                const newDiv = document.getElementById(pageSecId);
-                if (newDiv) {
-                  newDiv.focus();
-                }
-              }, 0);
-            },
-            error: (error) => {
-              if (error.status === 408 || 400) {
-                localStorage.clear();
-                this.router.navigate(['auth/signin']);
-              }
-            },
-          });
+    if (event.key === 'Tab') {
+      if (!this.isChangeOptionClass) {
+        this.changeToChild(pageSecId, pageType);
       }
+    }
+
+    // Add new node Without child (ctrl + shift + Q)
+    if (event.ctrlKey && event.shiftKey && event.keyCode === 81) {
+      this.addNewNode(pageSecId, pageType);
     }
   }
 
@@ -552,8 +527,8 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       });
   }
 
-  // add New Node
-  addNewNode(pageSecId: string, pageType: string) {
+  // Add new node with child
+  addNewNodeWithChild(pageSecId: string, pageType: string) {
     document.body.style.cursor = 'wait';
 
     this.workspaceService
@@ -576,6 +551,81 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           // Put caret cursor
           setTimeout(() => {
             const newDiv = document.getElementById(response.data.id);
+            if (newDiv) {
+              newDiv.focus();
+            }
+          }, 0);
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+  }
+
+  // Add New Node
+  addNewNode(pageSecId: string, pageType: string) {
+    document.body.style.cursor = 'wait';
+
+    this.workspaceService
+      .AddNewSection(
+        this.pagesDetails._id,
+        pageSecId,
+        pageType,
+        '',
+        'AddNewNodeWithTopNode'
+      )
+      .subscribe({
+        next: (response) => {
+          this.workspaceService.updatePageArray(
+            this.pagesDetails._id,
+            response.data.data
+          );
+          this.workspaceService.pageDataTransfer.emit(response.data.data);
+          document.body.style.cursor = 'auto';
+
+          // Put caret cursor
+          setTimeout(() => {
+            const newDiv = document.getElementById(response.data.id);
+            if (newDiv) {
+              newDiv.focus();
+            }
+          }, 0);
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+  }
+
+  // change to child
+  changeToChild(pageSecId: string, pageType: string) {
+    document.body.style.cursor = 'wait';
+
+    this.workspaceService
+      .AddNewSection(
+        this.pagesDetails._id,
+        pageSecId,
+        pageType,
+        '',
+        'ParentInsert'
+      )
+      .subscribe({
+        next: (response) => {
+          this.workspaceService.updatePageArray(
+            this.pagesDetails._id,
+            response.data.data
+          );
+          this.workspaceService.pageDataTransfer.emit(response.data.data);
+          document.body.style.cursor = 'auto';
+          // Put caret cursor
+          setTimeout(() => {
+            const newDiv = document.getElementById(pageSecId);
             if (newDiv) {
               newDiv.focus();
             }
