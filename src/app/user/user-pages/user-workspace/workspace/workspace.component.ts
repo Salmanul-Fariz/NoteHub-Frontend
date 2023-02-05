@@ -42,7 +42,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           data.levelPage = null;
           this.treeService.root = data.page;
           data.levelPage = this.treeService.ChangeDatatolevel();
-          console.log(data.levelPage);
+          // console.log(data.levelPage);
         }
 
         this.pagesDetails = data;
@@ -213,8 +213,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   }
 
   onKeydown(event: any, pageSecId: any, pageType: string) {
-    console.log(event);
-
     if (event.key === 'Enter') {
       event.preventDefault();
       if (!this.isChangeOptionClass) {
@@ -243,6 +241,13 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           //   myDiv.focus();
           // }
         }
+      }
+    }
+
+    // Remove a node without child (ctrl + shift + e)
+    else if (event.ctrlKey && event.shiftKey && event.keyCode === 69) {
+      if (!this.isChangeOptionClass) {
+        this.removeNodeWithOutChild(pageSecId, pageType);
       }
     }
 
@@ -685,6 +690,44 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         pageType,
         '',
         'RemoveNodeWithChild'
+      )
+      .subscribe({
+        next: (response) => {
+          this.workspaceService.updatePageArray(
+            this.pagesDetails._id,
+            response.data.data
+          );
+          this.workspaceService.pageDataTransfer.emit(response.data.data);
+          document.body.style.cursor = 'auto';
+          // Put caret cursor
+          setTimeout(() => {
+            const newDiv = document.getElementById(pageSecId);
+            if (newDiv) {
+              newDiv.focus();
+            }
+          }, 0);
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            document.body.style.cursor = 'auto';
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+  }
+
+  // Remove a node with out child
+  removeNodeWithOutChild(pageSecId: string, pageType: string) {
+    document.body.style.cursor = 'wait';
+
+    this.workspaceService
+      .AddNewSection(
+        this.pagesDetails._id,
+        pageSecId,
+        pageType,
+        '',
+        'RemoveNodeWithOutChild'
       )
       .subscribe({
         next: (response) => {
