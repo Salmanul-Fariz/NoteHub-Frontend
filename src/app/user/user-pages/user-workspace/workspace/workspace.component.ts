@@ -218,9 +218,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       if (!this.isChangeOptionClass) {
         this.addNewNodeWithChild(pageSecId, pageType);
       }
-    }
-
-    if (event.key === 'Backspace') {
+    } else if (event.key === 'Backspace') {
       const sel = window.getSelection();
       if (sel) {
         const range = sel.getRangeAt(0);
@@ -246,14 +244,22 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (event.key === 'Tab') {
+    // Change the node to parent node (shift + tab)
+    else if (event.shiftKey && event.key === 'Tab') {
+      if (!this.isChangeOptionClass) {
+        this.changeParentNode(pageSecId, pageType);
+      }
+    }
+
+    // Change to new child with it's own child
+    else if (event.key === 'Tab') {
       if (!this.isChangeOptionClass) {
         this.changeToChild(pageSecId, pageType);
       }
     }
 
     // Add new node Without child (ctrl + shift + Q)
-    if (event.ctrlKey && event.shiftKey && event.keyCode === 81) {
+    else if (event.ctrlKey && event.shiftKey && event.keyCode === 81) {
       if (!this.isChangeOptionClass) {
         this.addNewNode(pageSecId, pageType);
       }
