@@ -213,6 +213,8 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   }
 
   onKeydown(event: any, pageSecId: any, pageType: string) {
+    console.log(event);
+
     if (event.key === 'Enter') {
       event.preventDefault();
       if (!this.isChangeOptionClass) {
@@ -241,6 +243,13 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           //   myDiv.focus();
           // }
         }
+      }
+    }
+
+    // Remove a node with child (ctrl + shift + a)
+    else if (event.ctrlKey && event.shiftKey && event.keyCode === 65) {
+      if (!this.isChangeOptionClass) {
+        this.removeNodeWithChild(pageSecId, pageType);
       }
     }
 
@@ -638,6 +647,44 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         pageType,
         '',
         'NodeAndChangeToParentNode'
+      )
+      .subscribe({
+        next: (response) => {
+          this.workspaceService.updatePageArray(
+            this.pagesDetails._id,
+            response.data.data
+          );
+          this.workspaceService.pageDataTransfer.emit(response.data.data);
+          document.body.style.cursor = 'auto';
+          // Put caret cursor
+          setTimeout(() => {
+            const newDiv = document.getElementById(pageSecId);
+            if (newDiv) {
+              newDiv.focus();
+            }
+          }, 0);
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            document.body.style.cursor = 'auto';
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+  }
+
+  // Remove a node with child
+  removeNodeWithChild(pageSecId: string, pageType: string) {
+    document.body.style.cursor = 'wait';
+
+    this.workspaceService
+      .AddNewSection(
+        this.pagesDetails._id,
+        pageSecId,
+        pageType,
+        '',
+        'RemoveNodeWithChild'
       )
       .subscribe({
         next: (response) => {
