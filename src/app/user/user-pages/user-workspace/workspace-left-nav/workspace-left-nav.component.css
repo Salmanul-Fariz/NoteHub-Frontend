@@ -19,10 +19,7 @@ ngx-emoji {
   background-color: rgb(255, 255, 255);
   padding: 6px 8px;
   align-items: center;
-}
-
-.workspace:hover {
-  cursor: pointer;
+  cursor: default;
 }
 
 .workspace-name {
@@ -67,11 +64,7 @@ ngx-emoji {
   padding: 4px 0;
   border-radius: 7px;
   transition: 0.5s;
-}
-
-.workspace-pages-new:hover {
   cursor: pointer;
-  margin-top: 5px;
 }
 
 .workspace-pages-new > * {
