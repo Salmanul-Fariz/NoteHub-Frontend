@@ -104,3 +104,28 @@ emoji-mart {
   z-index: 15;
   cursor: pointer;
 }
+
+/* image Upload Label */
+.imageUploadLabel {
+  background-color: #ebe6e6;
+  padding: 6px 0px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+
+.iu-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 1;
+  cursor: pointer;
+}
+
+.imageUploadLabel:hover {
+  background-color: #d6d6d6;
+}

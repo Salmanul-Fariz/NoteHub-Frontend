@@ -152,7 +152,6 @@ mat-menu > button {
 }
 
 .workspace-content {
-  /* display: inline; */
   width: 100%;
   min-width: 100%;
   font-size: 1.14em;
@@ -161,6 +160,46 @@ mat-menu > button {
   caret-color: #5f5f5f;
   padding: 3px 2px;
   min-height: 1em;
+}
+
+.workspace-content-image-container {
+  width: 100%;
+  padding: 6px 5px;
+}
+
+.workspace-content-image-container img {
+  max-width: 100%;
+  max-height: 530px;
+  height: auto;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.workspace-content-image-changeSize {
+  padding: 9px 0px;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.workspace-content-image-changeSize input {
+  -webkit-appearance: none;
+  width: 220px;
+  height: 9px;
+  background-color: #d0d0d0;
+  border-radius: 20px;
+}
+
+.workspace-content-image-changeSize button {
+  padding: 2px 10px;
+  background-color: #cacacade;
+  border-radius: 9px;
+}
+
+.workspace-content-image-container .image {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 [placeholder]:empty::before {

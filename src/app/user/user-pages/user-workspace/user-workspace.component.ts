@@ -13,6 +13,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { S3BucketService } from 'src/app/service/s3-bucket.service';
 
 @Component({
   selector: 'app-user-workspace',
@@ -26,18 +27,25 @@ export class UserWorkspaceComponent
   sidenav!: MatSidenav;
   modalSubscribtion: Subscription;
   editTitleEmojiSubscribtion: Subscription;
+  imageUploadModalSubscription: Subscription;
   workspace: { name: string; icon: string } = { name: '', icon: '' };
   isModal: boolean | unknown;
   isEmojiBar: boolean;
   titleEmojiEdit: { bol: boolean; id: string } = { bol: false, id: '' };
   workSpaceNameUpdate: string;
   isWorkSpaceNameUpdate: boolean = false;
+  isImageUpload: { bol: boolean; id: string; pageId: string } = {
+    bol: false,
+    id: '',
+    pageId: '',
+  };
   workspaceNameForm: FormGroup;
 
   constructor(
     private observer: BreakpointObserver,
     private router: Router,
-    private workspaceService: UserWorkspaceService
+    private workspaceService: UserWorkspaceService,
+    private s3Service: S3BucketService
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +75,12 @@ export class UserWorkspaceComponent
     this.modalSubscribtion =
       this.workspaceService.isModalDataTransfer.subscribe((data) => {
         this.isModal = data;
+      });
+
+    // image upload modal
+    this.imageUploadModalSubscription =
+      this.workspaceService.isImageUpploadDataTransfer.subscribe((data) => {
+        this.isImageUpload = data;
       });
 
     // Form Setup
@@ -189,8 +203,82 @@ export class UserWorkspaceComponent
     });
   }
 
+  // close Image Upload Modal
+  closeImageUploadModal() {
+    this.isImageUpload = { bol: false, id: '', pageId: '' };
+
+    // close Option Tab  while enter / at first
+    const optionTab = document.querySelector(
+      '.workspace-content-menu-block'
+    ) as HTMLElement;
+
+    optionTab.style.display = 'none';
+    optionTab.style.left = '0px';
+    optionTab.style.top = '0px';
+
+    document.body.style.cursor = 'auto';
+  }
+
+  // upload image
+  uploadCover(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      document.body.style.cursor = 'wait';
+
+      // get a seccure url from a server
+      this.s3Service.createUploadUrlToSecImage().subscribe({
+        next: (response) => {
+          const url = response.data;
+
+          // post the image directly to the s3 bucket
+          this.s3Service.uploadpageCoverImg(url, file).then((data) => {
+            const imageUrl = data.url.split('?')[0];
+
+            // post req to server to save any data
+            this.workspaceService
+              .UpdateWorkspaceSecImage(
+                imageUrl,
+                this.isImageUpload.pageId,
+                this.isImageUpload.id
+              )
+              .subscribe({
+                next: (response) => {
+                  this.workspaceService.updatePageArray(
+                    this.isImageUpload.pageId,
+                    response.data
+                  );
+                  this.workspaceService.pageDataTransfer.emit(response.data);
+
+                  this.closeImageUploadModal();
+
+                  document.body.style.cursor = 'auto';
+                },
+                error: (error) => {
+                  document.body.style.cursor = 'auto';
+                  if (error.status === 408 || 400) {
+                    localStorage.clear();
+                    document.body.style.cursor = 'auto';
+                    this.router.navigate(['auth/signin']);
+                  }
+                },
+              });
+          });
+        },
+        error: (error) => {
+          document.body.style.cursor = 'auto';
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            document.body.style.cursor = 'auto';
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+    }
+  }
+
   ngOnDestroy(): void {
     this.modalSubscribtion.unsubscribe();
     this.editTitleEmojiSubscribtion.unsubscribe();
+    this.imageUploadModalSubscription.unsubscribe();
   }
 }

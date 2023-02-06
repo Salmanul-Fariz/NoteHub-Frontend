@@ -7,6 +7,11 @@ import { environment } from '../environments/environment';
 export class UserWorkspaceService {
   pagesDataTransfer = new EventEmitter<string[]>();
   isModalDataTransfer = new EventEmitter<boolean>();
+  isImageUpploadDataTransfer = new EventEmitter<{
+    bol: boolean;
+    id: string;
+    pageId: string;
+  }>();
   titleIconEditDataTransfer = new EventEmitter<{ bol: boolean; id: string }>();
   pageDataTransfer = new EventEmitter<{}>();
   pages: any[];
@@ -128,6 +133,30 @@ export class UserWorkspaceService {
     return this.http.patch<any>(
       `${environment.baseUrl}/workspaces/user-workspace/page/toggle`,
       { isToggle: isToggle, pageSectionId: pageSectionId, pageId: pageId }
+    );
+  }
+
+  // Update workspace page Cover imageUrl
+  UpdateWorkspaceSecImage(
+    imageUrl: string | undefined,
+    pageId: string,
+    pageSectionId: string
+  ) {
+    return this.http.post<any>(
+      `${environment.baseUrl}/workspaces/user-workspace/page/section-image`,
+      { imageUrl: imageUrl, pageId: pageId, pageSectionId: pageSectionId }
+    );
+  }
+
+  // Update workspace page Cover imageSize
+  UpdateWorkspaceSecImageSize(
+    imgSize: string | undefined,
+    pageId: string,
+    pageSectionId: string
+  ) {
+    return this.http.patch<any>(
+      `${environment.baseUrl}/workspaces/user-workspace/page/section-image`,
+      { imgSize: imgSize, pageId: pageId, pageSectionId: pageSectionId }
     );
   }
 

@@ -86,7 +86,7 @@
   </div>
 
   <!-- workspace content container -->
-  <div class="workspace-content-container" (dblclick)="globalClickColor()">
+  <div class="workspace-content-container" (click)="globalClickClear()" (dblclick)="globalClickColor()">
 
     <div *ngFor="let element of pagesDetails.levelPage; let i = index" class="workspace-content-set">
 
@@ -146,6 +146,103 @@
           (keydown)="onKeydown($event,element._id,'text')">{{
           element.content
           }}</div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNodeWithChild(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node with child</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li (click)="changeToChild(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li (click)="changeParentNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Change to parent node</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+                <li (click)="removeNodeWithChild(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Remove a node with child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + a</p>
+                </li>
+                <li (click)="removeNodeWithOutChild(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Remove a node without child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
+        </div>
+      </div>
+
+      <!-- image -->
+      <div class="handleHover showDivBar-{{element._id}} flex flex-col gap-1 items-center"
+        *ngIf="element.type === 'image' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+        <div class="workspace-content-image-container">
+          <img [src]="element.content" alt="" [ngStyle]="{width:element.imgPosition}">
+          <div class="workspace-content-image-changeSize">
+            <input (input)="dragImageSize($event,element._id,i)" type="range" min="0" max="100" />
+            <button (click)="updateImageSize(element._id, 'auto')">Auto</button>
+          </div>
+        </div>
+        <div id="handle-{{element._id}}" class="workspace-content-handle">
+          <mat-icon>add</mat-icon>
+          <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
+
+          <mat-menu #menu="matMenu" class="p-0">
+            <div class="workspace-content-handle-option-bar">
+              <ul>
+                <li (click)="addNewNodeWithChild(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node with child</p>
+                  <p class="text-sm text-black opacity-50">enter</p>
+                </li>
+                <li (click)="addNewNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Add new node</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + q</p>
+                </li>
+                <li (click)="changeToChild(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Change to child</p>
+                  <p class="text-sm text-black opacity-50">tab</p>
+                </li>
+                <li (click)="changeParentNode(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Change to parent node</p>
+                  <p class="text-sm text-black opacity-50">shift + tab</p>
+                </li>
+                <li (click)="removeNodeWithChild(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Remove a node with child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + a</p>
+                </li>
+                <li (click)="removeNodeWithOutChild(element._id,element.type)">
+                  <p class="text-sm justify-self-start">Remove a node without child</p>
+                  <p class="text-sm text-black opacity-50">ctrl + shift + e</p>
+                </li>
+              </ul>
+            </div>
+          </mat-menu>
+        </div>
+      </div>
+
+      <!-- image options -->
+      <div id="main-{{element._id}}" class="handleHover showDivBar-{{element._id}} flex flex-col gap-1 items-center"
+        *ngIf="element.type === 'image' && element.toggleInc > 0"
+        [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
+        (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
+        <div class="workspace-content-image-container">
+          <img [src]="element.content" alt="" [ngStyle]="{width:element.imgPosition}">
+          <div class="workspace-content-image-changeSize">
+            <input (input)="dragImageSize($event,element._id,i)" type="range" min="0" max="100" />
+            <button (click)="updateImageSize(element._id, 'auto')">Auto</button>
+          </div>
+        </div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
           <mat-icon>add</mat-icon>
           <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
@@ -685,6 +782,10 @@
       (click)="updateSecType(pagesDetails._id,'toggle')">
       <mat-icon>arrow_right</mat-icon>
       <option>Toggle list</option>
+    </li>
+    <li class="workspace-content-menu-block-list" (mouseover)="closeActiveOption()" (click)="imageUpload()">
+      <mat-icon>image</mat-icon>
+      <option>Image</option>
     </li>
     <li class="workspace-content-menu-block-list" (mouseover)="closeActiveOption()"
       (click)="updateSecType(pagesDetails._id,'heading1')">

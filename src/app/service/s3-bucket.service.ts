@@ -12,6 +12,12 @@ export class S3BucketService {
     );
   }
 
+  createUploadUrlToSecImage() {
+    return this.http.get<any>(
+      `${environment.baseUrl}/s3/page-section/generate-url`
+    );
+  }
+
   // post the image directly to the s3 bucket userWorkspace page cover
   async uploadpageCoverImg(url: string, file: string) {
     return await fetch(url, {

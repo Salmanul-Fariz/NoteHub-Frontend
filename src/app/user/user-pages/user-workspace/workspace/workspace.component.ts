@@ -24,6 +24,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   isChangeOptionClass: boolean;
   pageSectionId: string;
   isSavingContent: boolean;
+  pageSectionImgSize: string;
   array = [1];
 
   constructor(
@@ -98,19 +99,26 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
               pageType = 'toggle';
               break;
             case 3:
-              pageType = 'heading1';
+              pageType = 'image';
               break;
             case 4:
-              pageType = 'heading2';
+              pageType = 'heading1';
               break;
             case 5:
+              pageType = 'heading2';
+              break;
+            case 6:
               pageType = 'heading3';
               break;
             default:
               break;
           }
 
-          this.updateSecType(this.pagesDetails._id, pageType);
+          if (pageType === 'image') {
+            this.imageUpload();
+          } else {
+            this.updateSecType(this.pagesDetails._id, pageType);
+          }
         }
       }
     });
@@ -757,7 +765,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
   // Add div section color globally
   globalClickColor() {
-    console.log('clicked');
     const allDivs = document.querySelectorAll('.handleHover') as any;
     for (const div of allDivs) {
       div.classList.add('divClick');
@@ -769,13 +776,72 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     }, 1500);
   }
 
+  // Add div section color locally
   showDivBar(id: string) {
-    console.log('Login');
     const div = document.querySelectorAll(`.showDivBar-${id}`) as any;
     div[0].classList.add('divClick');
     setTimeout(() => {
       div[0].classList.remove('divClick');
     }, 1500);
+  }
+
+  // global Click Clear
+  globalClickClear() {
+    // close Option Tab  while enter / at first
+    const optionTab = document.querySelector(
+      '.workspace-content-menu-block'
+    ) as HTMLElement;
+
+    optionTab.style.display = 'none';
+    optionTab.style.left = '0px';
+    optionTab.style.top = '0px';
+  }
+
+  // image upload EventEmitter
+  imageUpload() {
+    this.isChangeOptionClass = false;
+    this.workspaceService.isImageUpploadDataTransfer.emit({
+      bol: true,
+      id: this.pageSectionId,
+      pageId: this.pagesDetails._id,
+    });
+  }
+
+  dragImageSize(event: any, pageSectionId: string, index: number) {
+    this.pageSectionImgSize = `${event.target.value}%`;
+    this.pagesDetails.levelPage[index].imgPosition = this.pageSectionImgSize;
+    setTimeout(() => {
+      this.updateImageSize(pageSectionId, this.pageSectionImgSize);
+    }, 1000);
+  }
+
+  updateImageSize(pageSectionId: string, imageSize: string) {
+    // post req to server to save any data
+    this.workspaceService
+      .UpdateWorkspaceSecImageSize(
+        imageSize,
+        this.pagesDetails._id,
+        pageSectionId
+      )
+      .subscribe({
+        next: (response) => {
+          this.workspaceService.updatePageArray(
+            this.pagesDetails._id,
+            response.data
+          );
+          this.workspaceService.pageDataTransfer.emit(response.data);
+
+          document.body.style.cursor = 'auto';
+        },
+        error: (error) => {
+          document.body.style.cursor = 'auto';
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            document.body.style.cursor = 'auto';
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
   }
 
   ngOnDestroy(): void {

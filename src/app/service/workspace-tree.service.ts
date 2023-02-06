@@ -54,6 +54,7 @@ export class WorkspaceTreeService {
         toggleInc: this.toggleInc,
         _id: data._id,
         type: data.type,
+        imgPosition: data.imgPosition,
         content: data.content,
         isToggle: data.isToggle,
         childToggle: '',
