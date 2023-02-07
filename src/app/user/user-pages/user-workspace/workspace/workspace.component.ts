@@ -126,6 +126,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     });
   }
 
+  // trackBy
+  trackByFn(index: number, value: any) {
+    return value._id;
+  }
+
   // Change the options with arrow key
   changeOptionArrow(
     addIndex: number,
