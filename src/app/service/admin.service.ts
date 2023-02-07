@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../environments/environment';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AdminService {
   constructor(private http: HttpClient) {}
 

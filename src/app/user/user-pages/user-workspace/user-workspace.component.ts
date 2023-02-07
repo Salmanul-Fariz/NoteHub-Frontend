@@ -9,16 +9,18 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { debounceTime, delay, filter, map } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
-import { pipe, Subscription } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { S3BucketService } from 'src/app/service/s3-bucket.service';
+import { WorkspaceTreeService } from 'src/app/service/workspace-tree.service';
 
 @Component({
   selector: 'app-user-workspace',
   templateUrl: './user-workspace.component.html',
   styleUrls: ['./user-workspace.component.css'],
+  providers: [S3BucketService, UserWorkspaceService, WorkspaceTreeService],
 })
 export class UserWorkspaceComponent
   implements OnInit, AfterViewInit, OnDestroy

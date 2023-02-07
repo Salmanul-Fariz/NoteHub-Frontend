@@ -7,9 +7,7 @@ import { environment } from '../environments/environment';
 type SignUpData = { userName: string; email: string; password: string };
 type SignInData = { usernameOrEmail: string; password: string };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthenticationService {
   constructor(private http: HttpClient) {}
 

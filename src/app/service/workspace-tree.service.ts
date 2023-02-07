@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class WorkspaceTreeService {
   #OrderArray: any[] = [];
   isToggle: boolean;
@@ -9,43 +9,6 @@ export class WorkspaceTreeService {
   root: any[] = [];
   toggleInc: number = 0;
 
-  // #_toggleOption(array: any) {
-  //   // optionToggle.isToggle = !optionToggle.isToggle;
-
-  //   // const percentage: number = Number(
-  //   //   this.pagesDetails.levelPage[index].level.split('%')[0]
-  //   // );
-  //   const parent: number[]=[0];
-  //   const
-  //   for (let i = 0; i < array.length; i++) {
-  //     if(parent[parent.length-1]>array[i].)
-  //   }
-
-  //   let elIndex = Number(index);
-  //   let stop = false;
-  //   while (!stop) {
-  //     elIndex++;
-  //     const el = this.pagesDetails.levelPage[elIndex];
-
-  //     const curPercent = el?.level.split('%')[0];
-
-  //     if (
-  //       percentage === Number(curPercent) ||
-  //       percentage < Number(curPercent) ||
-  //       this.pagesDetails.levelPage.length === elIndex
-  //     ) {
-  //       stop = true;
-  //     } else {
-  //       const div = document.getElementById(`main-${el._id}`) as HTMLElement;
-  //       if (openToggle) {
-  //         div.style.display = 'block';
-  //       } else {
-  //         div.style.display = 'none';
-  //       }
-  //     }
-  //     document.body.style.cursor = 'auto';
-  //   }
-  // }
 
   #_printAllNodes(root: any, level: string) {
     for (const data of root) {
