@@ -7,11 +7,11 @@ import {
 } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
-import { delay, filter } from 'rxjs/operators';
+import { debounceTime, delay, filter, map } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
-import { Subscription } from 'rxjs';
+import { pipe, Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { S3BucketService } from 'src/app/service/s3-bucket.service';
 
@@ -185,22 +185,25 @@ export class UserWorkspaceComponent
   }
 
   nameUpdate(data: any) {
-    this.workspaceService.UpdateWorkspaceName(data).subscribe({
-      next: (response) => {
-        this.isEmojiBar = false;
-        this.isWorkSpaceNameUpdate = false;
-        this.workspaceService.isModalDataTransfer.emit(false);
+    this.workspaceService
+      .UpdateWorkspaceName(data)
+      .pipe(debounceTime(1000))
+      .subscribe({
+        next: (response) => {
+          this.isEmojiBar = false;
+          this.isWorkSpaceNameUpdate = false;
+          this.workspaceService.isModalDataTransfer.emit(false);
 
-        this.workSpaceNameUpdate = data.data;
-        this.workspace.name = data.data;
-      },
-      error: (error) => {
-        if (error.status === 408 || 400) {
-          localStorage.clear();
-          this.router.navigate(['auth/signin']);
-        }
-      },
-    });
+          this.workSpaceNameUpdate = data.data;
+          this.workspace.name = data.data;
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
   }
 
   // close Image Upload Modal

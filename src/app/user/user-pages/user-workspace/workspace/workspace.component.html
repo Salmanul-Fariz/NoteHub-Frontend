@@ -81,7 +81,7 @@
 
   <!-- title container -->
   <div class="workspace-title-container">
-    <input (input)="pageNameUpdate($event, pagesDetails._id)" maxlength="20" value="{{ pagesDetails.title }}"
+    <input (input)="savePageNameSubject.next($event.target.value)" maxlength="20" value="{{ pagesDetails.title }}"
       class="text-3xl w-full md:w-1/2 md:text-4xl" />
   </div>
 
@@ -95,7 +95,7 @@
         *ngIf="element.type === 'text' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
-          placeholder="Type '/' for commands" (input)="inputPage($event,element._id)"
+          placeholder="Type '/' for commands" (input)="inputPage($event,element._id,i)"
           (keydown)="onKeydown($event,element._id,'text')">{{
           element.content
           }}</div>
@@ -142,7 +142,7 @@
         [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
-          placeholder="Type '/' for commands" (input)="inputPage($event,element._id)"
+          placeholder="Type '/' for commands" (input)="inputPage($event,element._id,i)"
           (keydown)="onKeydown($event,element._id,'text')">{{
           element.content
           }}</div>
@@ -287,7 +287,7 @@
         <div class="flex gap-1">
           <i class="bulletOption fa-solid fa-circle"></i>
           <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
-            placeholder="List" (input)="inputPage($event,element._id)"
+            placeholder="List" (input)="inputPage($event,element._id,i)"
             (keydown)="onKeydown($event,element._id,'bullet')">{{
             element.content
             }}</div>
@@ -337,7 +337,7 @@
         <div class="flex gap-1">
           <i class="bulletOption fa-solid fa-circle"></i>
           <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
-            placeholder="List" (input)="inputPage($event,element._id)"
+            placeholder="List" (input)="inputPage($event,element._id,i)"
             (keydown)="onKeydown($event,element._id,'bullet')">{{
             element.content
             }}</div>
@@ -388,7 +388,7 @@
             (click)="toggleOption(i,element._id)"
             [ngStyle]="{transform:element.isToggle?'rotate(90deg)':'rotate(0)'}"></i>
           <div id=" {{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
-            placeholder="Toggle" (input)="inputPage($event,element._id)"
+            placeholder="Toggle" (input)="inputPage($event,element._id,i)"
             (keydown)="onKeydown($event,element._id,'toggle')">{{
             element.content
             }}</div>
@@ -440,7 +440,7 @@
             (click)="toggleOption(i,element._id)"
             [ngStyle]="{transform:element.isToggle?'rotate(90deg)':'rotate(0)'}"></i>
           <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
-            placeholder="Toggle" (input)="inputPage($event,element._id)"
+            placeholder="Toggle" (input)="inputPage($event,element._id,i)"
             (keydown)="onKeydown($event,element._id,'toggle')">{{
             element.content
             }}</div>
@@ -487,7 +487,7 @@
         *ngIf="element.type === 'heading1' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading1Option workspace-content" contenteditable="true" spellcheck="true"
-          placeholder="Heading 1" (input)="inputPage($event,element._id)"
+          placeholder="Heading 1" (input)="inputPage($event,element._id,i)"
           (keydown)="onKeydown($event,element._id,'heading1')">{{
           element.content
           }}</div>
@@ -534,7 +534,7 @@
         [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading1Option workspace-content" contenteditable="true" spellcheck="true"
-          placeholder="Heading 1" (input)="inputPage($event,element._id)"
+          placeholder="Heading 1" (input)="inputPage($event,element._id,i)"
           (keydown)="onKeydown($event,element._id,'heading1')">{{
           element.content
           }}</div>
@@ -580,7 +580,7 @@
         *ngIf="element.type === 'heading2' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading2Option workspace-content" contenteditable="true" spellcheck="true"
-          placeholder="Heading 2" (input)="inputPage($event,element._id)"
+          placeholder="Heading 2" (input)="inputPage($event,element._id,i)"
           (keydown)="onKeydown($event,element._id,'heading2')">{{
           element.content
           }}</div>
@@ -627,7 +627,7 @@
         [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading2Option workspace-content" contenteditable="true" spellcheck="true"
-          placeholder="Heading 2" (input)="inputPage($event,element._id)"
+          placeholder="Heading 2" (input)="inputPage($event,element._id,i)"
           (keydown)="onKeydown($event,element._id,'heading2')">{{
           element.content
           }}</div>
@@ -673,7 +673,7 @@
         *ngIf="element.type === 'heading3' && element.toggleInc === 0" [ngStyle]="{width:element.level}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading3Option workspace-content" contenteditable="true" spellcheck="true"
-          placeholder="Heading 3" (input)="inputPage($event,element._id)"
+          placeholder="Heading 3" (input)="inputPage($event,element._id,i)"
           (keydown)="onKeydown($event,element._id,'heading3')">{{
           element.content
           }}</div>
@@ -720,7 +720,7 @@
         [ngStyle]="{width:element.level,display:element.childToggle==='open'?'block':'none'}"
         (mouseover)="displayHandle(element._id)" (mouseout)="noneHandle(element._id)">
         <div id="{{element._id}}" class="heading3Option workspace-content" contenteditable="true" spellcheck="true"
-          placeholder="Heading 3" (input)="inputPage($event,element._id)"
+          placeholder="Heading 3" (input)="inputPage($event,element._id,i)"
           (keydown)="onKeydown($event,element._id,'heading3')">{{
           element.content
           }}</div>

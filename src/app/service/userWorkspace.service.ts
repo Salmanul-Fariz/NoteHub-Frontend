@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
+import { switchMap } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
@@ -99,10 +100,27 @@ export class UserWorkspaceService {
     pageSectionId: string,
     pageId: string
   ) {
-    return this.http.patch<any>(
-      `${environment.baseUrl}/workspaces/user-workspace/page/content`,
-      { pageContent: pageContent, pageSectionId: pageSectionId, pageId: pageId }
-    );
+    return this.http
+      .patch<any>(
+        `${environment.baseUrl}/workspaces/user-workspace/page/content`,
+        {
+          pageContent: pageContent,
+          pageSectionId: pageSectionId,
+          pageId: pageId,
+        }
+      )
+      .pipe(
+        switchMap((url) => {
+          return this.http.patch<any>(
+            `${environment.baseUrl}/workspaces/user-workspace/page/content`,
+            {
+              pageContent: pageContent,
+              pageSectionId: pageSectionId,
+              pageId: pageId,
+            }
+          );
+        })
+      );
   }
 
   // Add new section

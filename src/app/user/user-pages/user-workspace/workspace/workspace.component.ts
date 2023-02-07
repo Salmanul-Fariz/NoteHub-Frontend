@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { debounceTime, Subject, Subscription } from 'rxjs';
 import { S3BucketService } from 'src/app/service/s3-bucket.service';
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
 import { WorkspaceTreeService } from 'src/app/service/workspace-tree.service';
@@ -15,8 +15,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   pageDataTransferSb: Subscription;
   pageEmpty: boolean = true;
   pagesDetails: any;
-  setTimerUpdateName: ReturnType<typeof setTimeout>;
-  setTimerUpdateContent: ReturnType<typeof setTimeout>;
   backgroundPositionY: string;
   backgroundImage: string;
   cursor: string = 'auto';
@@ -25,6 +23,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   pageSectionId: string;
   isSavingContent: boolean;
   pageSectionImgSize: string;
+  savePageNameSubject = new Subject<string>();
   array = [1];
 
   constructor(
@@ -35,6 +34,10 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.savePageNameSubject.pipe(debounceTime(500)).subscribe((value) => {
+      this.pageNameUpdate(value, this.pagesDetails._id);
+    });
+
     // Page Details
     this.pageDataTransferSb = this.workspaceService.pageDataTransfer.subscribe(
       (data: any) => {
@@ -43,7 +46,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           data.levelPage = null;
           this.treeService.root = data.page;
           data.levelPage = this.treeService.ChangeDatatolevel();
-          // console.log(data.levelPage);
         }
 
         this.pagesDetails = data;
@@ -163,7 +165,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     });
   }
 
-  inputPage(event: any, pageSecId: string) {
+  inputPage(event: any, pageSecId: string, index: number) {
     this.isChangeOptionClass = false;
     this.closeActiveOption();
 
@@ -212,11 +214,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
     if (!this.isChangeOptionClass) {
       // Update user Workspace page content
-      clearTimeout(this.setTimerUpdateContent);
-      this.isSavingContent = true;
-      this.setTimerUpdateContent = setTimeout(() => {
-        this.updateSecContent(value, this.pagesDetails._id, pageSecId);
-      }, 1000);
+      this.updateSecContent(value, this.pagesDetails._id, pageSecId);
     }
   }
 
@@ -294,28 +292,23 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   }
 
   // Upadte Page name
-  pageNameUpdate(event: any, id: string) {
-    clearTimeout(this.setTimerUpdateName);
-    if (event.target.value.length < 20) {
-      this.setTimerUpdateName = setTimeout(() => {
-        document.body.style.cursor = 'wait';
-        this.workspaceService
-          .UpdateWorkspacePageName(event.target.value, id)
-          .subscribe({
-            next: (response) => {
-              this.workspaceService.updatePageArray(id, response.data);
-              this.workspaceService.pageDataTransfer.emit(response.data);
-              document.body.style.cursor = 'auto';
-            },
-            error: (error) => {
-              if (error.status === 408 || 400) {
-                localStorage.clear();
-                document.body.style.cursor = 'auto';
-                this.router.navigate(['auth/signin']);
-              }
-            },
-          });
-      }, 1000);
+  pageNameUpdate(value: string, id: string) {
+    if (value.length < 20) {
+      document.body.style.cursor = 'wait';
+      this.workspaceService.UpdateWorkspacePageName(value, id).subscribe({
+        next: (response) => {
+          this.workspaceService.updatePageArray(id, response.data);
+          this.pagesDetails.title = value;
+          document.body.style.cursor = 'auto';
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            document.body.style.cursor = 'auto';
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
     }
   }
 
@@ -447,37 +440,14 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
   // update user Workspace page content
   updateSecContent(pageContent: string, pageId: string, pageSecId: string) {
-    document.body.style.cursor = 'wait';
+    this.isSavingContent = true;
+
     this.workspaceService
       .UpdateWorkspaceSecContent(pageContent, pageSecId, pageId)
       .subscribe({
         next: (response) => {
           this.isSavingContent = false;
-
           this.workspaceService.updatePageArray(pageId, response.data);
-          this.workspaceService.pageDataTransfer.emit(response.data);
-
-          // For focus the cursor
-          setTimeout(() => {
-            const currentDiv = document.getElementById(
-              pageSecId
-            ) as HTMLElement;
-            const range = document.createRange();
-            const sel = window.getSelection();
-            if (currentDiv && sel) {
-              if (currentDiv.innerText.length !== 0) {
-                range.setStart(
-                  currentDiv.childNodes[0],
-                  currentDiv.innerText.length
-                );
-                range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
-              }
-            }
-          }, 0);
-
-          document.body.style.cursor = 'auto';
         },
         error: (error) => {
           if (error.status === 408 || 400) {
