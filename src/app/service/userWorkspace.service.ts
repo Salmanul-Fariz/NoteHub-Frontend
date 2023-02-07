@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { debounceTime, switchMap } from 'rxjs';
+import { debounceTime, map, switchMap } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
@@ -110,7 +110,7 @@ export class UserWorkspaceService {
         }
       )
       .pipe(
-        switchMap((url) => {
+        switchMap((data) => {
           return this.http.patch<any>(
             `${environment.baseUrl}/workspaces/user-workspace/page/content`,
             {

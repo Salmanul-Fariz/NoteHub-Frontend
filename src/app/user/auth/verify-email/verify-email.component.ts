@@ -50,10 +50,10 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
       }
     });
 
-    sendIntervalRequest.subscribe();
+    this.sendIntervalRequest = sendIntervalRequest.subscribe();
   }
 
   ngOnDestroy(): void {
-    // this.sendIntervalRequest.unsubscribe();
+    this.sendIntervalRequest.unsubscribe();
   }
 }

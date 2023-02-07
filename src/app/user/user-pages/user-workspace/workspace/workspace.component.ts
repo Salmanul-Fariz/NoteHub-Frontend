@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { debounceTime, Subject, Subscription } from 'rxjs';
+import { jsPDF } from 'jspdf';
+
 import { S3BucketService } from 'src/app/service/s3-bucket.service';
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
 import { WorkspaceTreeService } from 'src/app/service/workspace-tree.service';
-import { jsPDF } from 'jspdf';
 
 @Component({
   selector: 'app-workspace',
@@ -26,6 +27,8 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   pageSectionImgSize: string;
   savePageNameSubject = new Subject<string>();
   savePageContentSubject = new Subject<string>();
+  setTimerUpdateContent: ReturnType<typeof setTimeout>;
+  setUpdateContent: any;
   array = [1];
 
   constructor(
@@ -221,11 +224,25 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     }
 
     if (!this.isChangeOptionClass) {
-      this.savePageContentSubject.pipe(debounceTime(1000)).subscribe((el) => {
-        this.updateSecContent(value, this.pagesDetails._id, pageSecId);
-      });
+      // Update user Workspace page content
+      this.setUpdateContent = {
+        value,
+        pageDetails: this.pagesDetails._id,
+        pageSecId,
+      };
 
-      this.savePageContentSubject.next('true');
+      clearTimeout(this.setTimerUpdateContent);
+      this.isSavingContent = true;
+      this.setTimerUpdateContent = setTimeout(() => {
+        this.setUpdateContent = null;
+        this.updateSecContent(value, this.pagesDetails._id, pageSecId);
+      }, 300);
+
+      // this.savePageContentSubject.pipe(debounceTime(1000)).subscribe((el) => {
+      //   this.updateSecContent(value, this.pagesDetails._id, pageSecId);
+      // });
+
+      // this.savePageContentSubject.next('true');
     }
   }
 
@@ -233,6 +250,14 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     if (event.key === 'Enter') {
       event.preventDefault();
       if (!this.isChangeOptionClass) {
+        if (this.setUpdateContent !== null) {
+          this.updateSecContent(
+            this.setUpdateContent.value,
+            this.pagesDetails._id,
+            this.setUpdateContent.pageSecId
+          );
+          this.setUpdateContent = null;
+        }
         this.addNewNodeWithChild(pageSecId, pageType);
       }
     } else if (event.key === 'Backspace') {
@@ -767,6 +792,8 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
   // Add div section color globally
   globalClickColor() {
+    console.log('global');
+
     const allDivs = document.querySelectorAll('.handleHover') as any;
     for (const div of allDivs) {
       div.classList.add('divClick');
@@ -778,14 +805,14 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     }, 1500);
   }
 
-  // Add div section color locally
-  showDivBar(id: string) {
-    const div = document.querySelectorAll(`.showDivBar-${id}`) as any;
-    div[0].classList.add('divClick');
-    setTimeout(() => {
-      div[0].classList.remove('divClick');
-    }, 1500);
-  }
+  // // Add div section color locally
+  // showDivBar(id: string) {
+  //   const div = document.querySelectorAll(`.showDivBar-${id}`) as any;
+  //   div[0].classList.add('divClick');
+  //   setTimeout(() => {
+  //     div[0].classList.remove('divClick');
+  //   }, 1500);
+  // }
 
   // global Click Clear
   globalClickClear() {
@@ -797,6 +824,15 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     optionTab.style.display = 'none';
     optionTab.style.left = '0px';
     optionTab.style.top = '0px';
+  }
+
+  showDivBar(id: string) {
+    console.log('Login');
+    const div = document.querySelectorAll(`.showDivBar-${id}`) as any;
+    div[0].classList.add('divClick');
+    setTimeout(() => {
+      div[0].classList.remove('divClick');
+    }, 1500);
   }
 
   // image upload EventEmitter
@@ -846,19 +882,62 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       });
   }
 
-  dowload() {
-    const doc = new jsPDF();
-
-    const pdfjs = document.getElementById('dowloader') as any;
-
-    // Convert HTML to PDF in JavaScript
-    doc.html(pdfjs, {
-      callback: function (doc) {
-        doc.save('output.pdf');
-      },
-      x: 10,
-      y: 10,
+  // Dowload Pdf file
+  dowloadPdf() {
+    const doc = new jsPDF({
+      orientation: 'p',
+      unit: 'mm',
+      format: 'a4',
+      putOnlyUsedFonts: true,
     });
+
+    doc.setFontSize(22);
+    doc.text(this.pagesDetails.title, 20, 20, undefined, 'center');
+
+    let data: any;
+    for (const val of this.pagesDetails.levelPage) {
+      let space = '';
+      if (val.type !== 'image') {
+        if (val.type === 'text') {
+          for (let i = 0; i < val.pdfLevel; i++) {
+            space += '    ';
+          }
+          data += `${space}${val.content} \n`;
+        } else if (val.type === 'bullet') {
+          for (let i = 0; i < val.pdfLevel; i++) {
+            space += '    ';
+          }
+          data += `${space}• ${val.content} \n`;
+        } else if (val.type === 'toggle') {
+          for (let i = 0; i < val.pdfLevel; i++) {
+            space += '    ';
+          }
+          data += `${space}=> ${val.content} \n`;
+        } else if (val.type === 'heading1') {
+          for (let i = 0; i < val.pdfLevel; i++) {
+            space += '    ';
+          }
+          data += `${space}➤ ${val.content} \n\n`;
+        } else if (val.type === 'heading2') {
+          for (let i = 0; i < val.pdfLevel; i++) {
+            space += '    ';
+          }
+          data += `${space}➤ ${val.content} \n\n`;
+        } else if (val.type === 'heading3') {
+          for (let i = 0; i < val.pdfLevel; i++) {
+            space += '    ';
+          }
+          data += `${space}➤ ${val.content} \n\n`;
+        }
+      }
+    }
+
+    doc.setFontSize(14);
+    const splitTitle = doc.splitTextToSize(data, 180);
+
+    doc.text(splitTitle, 8, 40);
+
+    doc.save('output.pdf');
   }
 
   ngOnDestroy(): void {

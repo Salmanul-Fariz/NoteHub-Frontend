@@ -9,11 +9,11 @@ export class WorkspaceTreeService {
   root: any[] = [];
   toggleInc: number = 0;
 
-
-  #_printAllNodes(root: any, level: string) {
+  #_printAllNodes(root: any, level: string, pdfLevel: number) {
     for (const data of root) {
       const dataObj = {
         level: level,
+        pdfLevel: pdfLevel,
         toggleInc: this.toggleInc,
         _id: data._id,
         type: data.type,
@@ -73,14 +73,18 @@ export class WorkspaceTreeService {
           }
         }
 
-        this.#_printAllNodes(data.childNode, `${percentage - 5}%`);
+        this.#_printAllNodes(
+          data.childNode,
+          `${percentage - 5}%`,
+          pdfLevel + 1
+        );
       }
     }
   }
 
   ChangeDatatolevel() {
     const tree = new WorkspaceTreeService();
-    tree.#_printAllNodes(this.root, '100%');
+    tree.#_printAllNodes(this.root, '100%', 0);
 
     return tree.#OrderArray;
   }
