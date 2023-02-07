@@ -4,6 +4,7 @@ import { debounceTime, Subject, Subscription } from 'rxjs';
 import { S3BucketService } from 'src/app/service/s3-bucket.service';
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
 import { WorkspaceTreeService } from 'src/app/service/workspace-tree.service';
+import { jsPDF } from 'jspdf';
 
 @Component({
   selector: 'app-workspace',
@@ -24,6 +25,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   isSavingContent: boolean;
   pageSectionImgSize: string;
   savePageNameSubject = new Subject<string>();
+  savePageContentSubject = new Subject<string>();
   array = [1];
 
   constructor(
@@ -34,6 +36,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    // Update user Workspace page content
     this.savePageNameSubject.pipe(debounceTime(500)).subscribe((value) => {
       this.pageNameUpdate(value, this.pagesDetails._id);
     });
@@ -218,8 +221,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     }
 
     if (!this.isChangeOptionClass) {
-      // Update user Workspace page content
-      this.updateSecContent(value, this.pagesDetails._id, pageSecId);
+      this.savePageContentSubject.pipe(debounceTime(1000)).subscribe((el) => {
+        this.updateSecContent(value, this.pagesDetails._id, pageSecId);
+      });
+
+      this.savePageContentSubject.next('true');
     }
   }
 
@@ -453,6 +459,27 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.isSavingContent = false;
           this.workspaceService.updatePageArray(pageId, response.data);
+          this.workspaceService.pageDataTransfer.emit(response.data);
+
+          // For focus the cursor
+          setTimeout(() => {
+            const currentDiv = document.getElementById(
+              pageSecId
+            ) as HTMLElement;
+            const range = document.createRange();
+            const sel = window.getSelection();
+            if (currentDiv && sel) {
+              if (currentDiv.innerText.length !== 0) {
+                range.setStart(
+                  currentDiv.childNodes[0],
+                  currentDiv.innerText.length
+                );
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+              }
+            }
+          }, 0);
         },
         error: (error) => {
           if (error.status === 408 || 400) {
@@ -817,6 +844,21 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           }
         },
       });
+  }
+
+  dowload() {
+    const doc = new jsPDF();
+
+    const pdfjs = document.getElementById('dowloader') as any;
+
+    // Convert HTML to PDF in JavaScript
+    doc.html(pdfjs, {
+      callback: function (doc) {
+        doc.save('output.pdf');
+      },
+      x: 10,
+      y: 10,
+    });
   }
 
   ngOnDestroy(): void {

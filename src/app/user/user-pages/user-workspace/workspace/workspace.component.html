@@ -86,7 +86,8 @@
   </div>
 
   <!-- workspace content container -->
-  <div class="workspace-content-container" (click)="globalClickClear()" (dblclick)="globalClickColor()">
+  <div class="workspace-content-container" (click)="globalClickClear()" (dblclick)="globalClickColor()" id="dowloader">
+    <div (click)="dowload()">Download</div>
 
     <div *ngFor="let element of pagesDetails.levelPage; trackBy:trackByFn ;let i = index" class="workspace-content-set">
 
