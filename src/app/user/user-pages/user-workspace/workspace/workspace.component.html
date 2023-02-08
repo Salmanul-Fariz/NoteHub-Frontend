@@ -88,7 +88,7 @@
   <div class="workspace-content-container" (click)="globalClickClear()" (dblclick)="globalClickColor()">
 
 
-    <div *ngFor="let element of pagesDetails.levelPage;let i = index" class="workspace-content-set">
+    <div *ngFor="let element of pagesDetails.levelPage;trackBy:trackByFn;let i = index" class="workspace-content-set">
 
       <!-- text -->
       <div class="handleHover showDivBar-{{element._id}} flex flex-col gap-1 items-center"
@@ -100,7 +100,7 @@
           element.content
           }}</div>
         <div id="handle-{{element._id}}" class="workspace-content-handle">
-          <mat-icon>add</mat-icon>
+          <mat-icon (click)="addNewNodeWithChild(element._id,element.type)">add</mat-icon>
           <mat-icon mat-button (click)="showDivBar(element._id)" [matMenuTriggerFor]="menu">drag_indicator</mat-icon>
 
           <mat-menu #menu="matMenu" class="p-0">

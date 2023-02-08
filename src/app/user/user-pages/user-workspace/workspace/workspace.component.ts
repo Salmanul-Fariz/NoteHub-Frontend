@@ -41,12 +41,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.deletePageSubscribtion =
-    this.workspaceService.deleteDataTransfer.subscribe((data) => {
-      if(data.bol === false){
-        this.pageEmpty = true;
-      }
-    });
-
+      this.workspaceService.deleteDataTransfer.subscribe((data) => {
+        if (data.bol === false) {
+          this.pageEmpty = true;
+        }
+      });
 
     // Update user Workspace page content
     this.savePageNameSubject.pipe(debounceTime(500)).subscribe((value) => {
@@ -278,19 +277,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           // when toggle is no there remove other type
           this.pageSectionId = pageSecId;
           this.updateSecType(this.pagesDetails._id, 'text');
-
-          // const myDiv = document.getElementById(`${id.element}-${id.i - 1}`);
-          // const range = document.createRange();
-          // const sel = window.getSelection();
-          // if (myDiv && sel) {
-          //   if (myDiv.innerText.length !== 0) {
-          //     range.setStart(myDiv.childNodes[0], myDiv.innerText.length);
-          //     range.collapse(true);
-          //     sel.removeAllRanges();
-          //     sel.addRange(range);
-          //   }
-          //   myDiv.focus();
-          // }
         }
       }
     }
@@ -492,14 +478,14 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           this.isSavingContent = false;
+          const currentDiv = document.getElementById(pageSecId) as HTMLElement;
+          currentDiv.innerHTML = '';
+          currentDiv.innerText = pageContent;
+
           this.workspaceService.updatePageArray(pageId, response.data);
-          this.workspaceService.pageDataTransfer.emit(response.data);
 
           // For focus the cursor
           setTimeout(() => {
-            const currentDiv = document.getElementById(
-              pageSecId
-            ) as HTMLElement;
             const range = document.createRange();
             const sel = window.getSelection();
             if (currentDiv && sel) {
@@ -814,15 +800,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     }, 1500);
   }
 
-  // // Add div section color locally
-  // showDivBar(id: string) {
-  //   const div = document.querySelectorAll(`.showDivBar-${id}`) as any;
-  //   div[0].classList.add('divClick');
-  //   setTimeout(() => {
-  //     div[0].classList.remove('divClick');
-  //   }, 1500);
-  // }
-
   // global Click Clear
   globalClickClear() {
     // close Option Tab  while enter / at first
@@ -903,7 +880,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     doc.setFontSize(22);
     doc.text(this.pagesDetails.title, 20, 20, undefined, 'center');
 
-    let data: any;
+    let data: any = '';
     for (const val of this.pagesDetails.levelPage) {
       let space = '';
       if (val.type !== 'image') {
@@ -926,12 +903,12 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           for (let i = 0; i < val.pdfLevel; i++) {
             space += '    ';
           }
-          data += `${space}➤ ${val.content} \n\n`;
+          data += `${space}${val.content} \n\n`;
         } else if (val.type === 'heading2') {
           for (let i = 0; i < val.pdfLevel; i++) {
             space += '    ';
           }
-          data += `${space}➤ ${val.content} \n\n`;
+          data += `${space}${val.content} \n\n`;
         } else if (val.type === 'heading3') {
           for (let i = 0; i < val.pdfLevel; i++) {
             space += '    ';
@@ -946,7 +923,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
     doc.text(splitTitle, 8, 40);
 
-    doc.save('output.pdf');
+    doc.save('NoteHub.pdf');
   }
 
   // Delete Workspace page
