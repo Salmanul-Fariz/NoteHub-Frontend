@@ -43,7 +43,6 @@ import { WorkspaceLeftNavComponent } from './user/user-pages/user-workspace/work
 import { WorkspaceComponent } from './user/user-pages/user-workspace/workspace/workspace.component';
 import { ProjectWorkspaceComponent } from './user/user-pages/project-workspace/project-workspace.component';
 import { ProWorkspaceComponent } from './user/user-pages/project-workspace/pro-workspace/pro-workspace.component';
-import { ProWorkspaceLeftNavComponent } from './user/user-pages/project-workspace/pro-workspace-left-nav/pro-workspace-left-nav.component';
 import { LeftProWorkspaceNavComponent } from './user/user-pages/project-workspace/left-pro-workspace-nav/left-pro-workspace-nav.component';
 
 @NgModule({
@@ -66,7 +65,6 @@ import { LeftProWorkspaceNavComponent } from './user/user-pages/project-workspac
     WorkspaceComponent,
     ProjectWorkspaceComponent,
     ProWorkspaceComponent,
-    ProWorkspaceLeftNavComponent,
     LeftProWorkspaceNavComponent,
   ],
   imports: [

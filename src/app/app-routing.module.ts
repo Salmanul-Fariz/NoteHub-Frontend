@@ -14,6 +14,7 @@ import { SigninComponent } from './user/auth/signin/signin.component';
 import { UserPagesComponent } from './user/user-pages/user-pages.component';
 import { UserWorkspaceComponent } from './user/user-pages/user-workspace/user-workspace.component';
 import { AuthComponent } from './user/auth/auth.component';
+import { ProjectWorkspaceComponent } from './user/user-pages/project-workspace/project-workspace.component';
 
 import { DashboardComponent } from './admin/admin-pages/dashboard/dashboard.component';
 import { AdminPagesComponent } from './admin/admin-pages/admin-pages.component';
@@ -31,9 +32,18 @@ const appRoutes: Routes = [
         children: [
           { path: '', component: HomeComponent },
           {
-            path: 'workspaces/user-workspace',
+            path: 'workspaces',
             canActivate: [UserAutherizationGuard],
-            component: UserWorkspaceComponent,
+            children: [
+              {
+                path: 'user-workspace',
+                component: UserWorkspaceComponent,
+              },
+              {
+                path: 'project-workspace',
+                component: ProjectWorkspaceComponent,
+              },
+            ],
           },
         ],
       },
