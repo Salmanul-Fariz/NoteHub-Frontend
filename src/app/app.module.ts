@@ -37,13 +37,14 @@ import { AuthAdminComponent } from './admin/auth/auth-admin.component';
 import { AdminSigninComponent } from './admin/auth/admin-signin/admin-signin.component';
 import { AdminAuthGuard } from './guards/adminAuth.guard';
 import { AdminSigninGuard } from './guards/adminSignin.guard';
-import { UserWorkspaceComponent } from './user/user-pages/user-workspace/user-workspace.component';
+import { UserWorkspaceComponent } from './user/main-workspaces/user-workspace/user-workspace.component';
 import { UserAutherizationGuard } from './guards/userAutherization.guard';
-import { WorkspaceLeftNavComponent } from './user/user-pages/user-workspace/workspace-left-nav/workspace-left-nav.component';
-import { WorkspaceComponent } from './user/user-pages/user-workspace/workspace/workspace.component';
-import { ProjectWorkspaceComponent } from './user/user-pages/project-workspace/project-workspace.component';
-import { ProWorkspaceComponent } from './user/user-pages/project-workspace/pro-workspace/pro-workspace.component';
-import { LeftProWorkspaceNavComponent } from './user/user-pages/project-workspace/left-pro-workspace-nav/left-pro-workspace-nav.component';
+import { WorkspaceLeftNavComponent } from './user/main-workspaces/user-workspace/workspace-left-nav/workspace-left-nav.component';
+import { WorkspaceComponent } from './user/main-workspaces/user-workspace/workspace/workspace.component';
+import { ProjectWorkspaceComponent } from './user/main-workspaces/project-workspace/project-workspace.component';
+import { ProWorkspaceComponent } from './user/main-workspaces/project-workspace/pro-workspace/pro-workspace.component';
+import { LeftProWorkspaceNavComponent } from './user/main-workspaces/project-workspace/left-pro-workspace-nav/left-pro-workspace-nav.component';
+import { MainWorkspacesComponent } from './user/main-workspaces/main-workspaces.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { LeftProWorkspaceNavComponent } from './user/user-pages/project-workspac
     ProjectWorkspaceComponent,
     ProWorkspaceComponent,
     LeftProWorkspaceNavComponent,
+    MainWorkspacesComponent,
   ],
   imports: [
     BrowserModule,

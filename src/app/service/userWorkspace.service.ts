@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { debounceTime, map, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
 
 import { environment } from '../environments/environment';
 

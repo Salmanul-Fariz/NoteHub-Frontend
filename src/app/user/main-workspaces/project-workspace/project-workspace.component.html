@@ -1,0 +1,20 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav">
+
+    <!-- navbar -->
+    <app-left-pro-workspace-nav></app-left-pro-workspace-nav>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="workspace-container">
+      <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+        <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+        <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+      </button>
+
+      <!-- workspace -->
+      <app-pro-workspace></app-pro-workspace>
+
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

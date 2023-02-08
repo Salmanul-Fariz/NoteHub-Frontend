@@ -4,17 +4,16 @@ mat-sidenav {
   border-right: none;
   background: #0e1525;
   border-radius: 6px;
-  padding: 10px;
   text-align: center;
   box-shadow: 3px 5px 20px rgb(0 0 0 / 22%);
 }
 
 mat-sidenav-container {
-  height: calc(100vh - 75px);
+  height: calc(100vh - 64px);
 }
 
 .workspace-container {
-  height: calc(100vh - 92px);
+  height: calc(100vh - 77px);
   border-radius: 10px;
   margin: 6px;
   margin-left: 18px;

@@ -12,14 +12,15 @@ import { HomeComponent } from './user/user-pages/home/home.component';
 import { VerifyEmailComponent } from './user/auth/verify-email/verify-email.component';
 import { SigninComponent } from './user/auth/signin/signin.component';
 import { UserPagesComponent } from './user/user-pages/user-pages.component';
-import { UserWorkspaceComponent } from './user/user-pages/user-workspace/user-workspace.component';
+import { UserWorkspaceComponent } from './user/main-workspaces/user-workspace/user-workspace.component';
 import { AuthComponent } from './user/auth/auth.component';
-import { ProjectWorkspaceComponent } from './user/user-pages/project-workspace/project-workspace.component';
+import { ProjectWorkspaceComponent } from './user/main-workspaces/project-workspace/project-workspace.component';
 
 import { DashboardComponent } from './admin/admin-pages/dashboard/dashboard.component';
 import { AdminPagesComponent } from './admin/admin-pages/admin-pages.component';
 import { AuthAdminComponent } from './admin/auth/auth-admin.component';
 import { AdminSigninComponent } from './admin/auth/admin-signin/admin-signin.component';
+import { MainWorkspacesComponent } from './user/main-workspaces/main-workspaces.component';
 
 const appRoutes: Routes = [
   // user pages
@@ -29,21 +30,21 @@ const appRoutes: Routes = [
       {
         path: '',
         component: UserPagesComponent,
+        children: [{ path: '', component: HomeComponent }],
+      },
+      // User Workspace Component
+      {
+        path: 'workspaces',
+        canActivate: [UserAutherizationGuard],
+        component: MainWorkspacesComponent,
         children: [
-          { path: '', component: HomeComponent },
           {
-            path: 'workspaces',
-            canActivate: [UserAutherizationGuard],
-            children: [
-              {
-                path: 'user-workspace',
-                component: UserWorkspaceComponent,
-              },
-              {
-                path: 'project-workspace',
-                component: ProjectWorkspaceComponent,
-              },
-            ],
+            path: 'user-workspace',
+            component: UserWorkspaceComponent,
+          },
+          {
+            path: 'project-workspace',
+            component: ProjectWorkspaceComponent,
           },
         ],
       },

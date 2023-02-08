@@ -2,6 +2,9 @@ hr {
   color: #616161;
   margin: 12px 0;
 }
+section {
+  padding: 8px;
+}
 
 ngx-emoji {
   display: block;

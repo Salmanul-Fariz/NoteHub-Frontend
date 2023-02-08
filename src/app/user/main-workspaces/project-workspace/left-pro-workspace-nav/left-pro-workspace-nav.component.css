@@ -1,0 +1,50 @@
+section {
+  padding: 6px;
+}
+
+hr {
+  color: #616161;
+  margin: 12px 0;
+}
+
+.workspace {
+  border-radius: 6px;
+  background-color: rgb(255, 255, 255);
+  padding: 6px 8px;
+  align-items: center;
+  cursor: default;
+}
+
+.workspace-name {
+  font-size: 18px;
+  width: 100%;
+  overflow: hidden;
+  padding-left: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: start;
+}
+
+.workspace-settings {
+  display: flex;
+  flex-direction: column;
+  column-gap: 0.5rem;
+}
+
+.workspace-settings-tool {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  gap: 0.8rem;
+}
+
+.workspace-settings-tool:hover {
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.068);
+}
+
+.workspace-settings-tool > * {
+  color: #fff;
+  font-size: 18px;
+}
