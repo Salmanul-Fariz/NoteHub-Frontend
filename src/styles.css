@@ -58,7 +58,7 @@ html {
 /* Scroll bar */
 ::-webkit-scrollbar {
   height: 12px;
-  width: 10px;
+  width: 6px;
   background: #000;
 }
 

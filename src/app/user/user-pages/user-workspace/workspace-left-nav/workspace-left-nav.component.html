@@ -1,34 +1,29 @@
-<div class="workspace w-full flex justify-start gap-2">
-  <ngx-emoji emoji="{{workspace.icon}}" size="24"></ngx-emoji>
-  <p class="workspace-name">{{ workspace.name }}</p>
-</div>
-
-<div class="mt-3 workspace-settings">
-  <div class="workspace-settings-tool" (click)="openModal()">
-    <i class="fa-solid fa-gear"></i>
-    <h5>Settings</h5>
+<section>
+  <div class="workspace w-full flex justify-start gap-2">
+    <ngx-emoji emoji="{{workspace.icon}}" size="24"></ngx-emoji>
+    <p class="workspace-name">{{ workspace.name }}</p>
   </div>
-</div>
-<hr>
-<div class="workspace-pages-container" *ngIf="pagesEmpty">
-  <div class="workspace-pages-bar" *ngFor="let page of pagesDetails;let pgIndex=index"
-    (click)="sendPageDetails(pgIndex)">
-    <ngx-emoji emoji="{{page.icon}}" size="24"></ngx-emoji>
-    <p class="workspace-pages-name">{{page.title}}</p>
+
+  <div class="mt-3 workspace-settings">
+    <div class="workspace-settings-tool" (click)="openModal()">
+      <i class="fa-solid fa-gear"></i>
+      <h5>Settings</h5>
+    </div>
   </div>
-</div>
+  <hr>
+  <div class="w-full pb-2">
+    <p class="text-start text-sm text-opacity-90 ml-1 text-white">Pages :</p>
+  </div>
+  <div class="workspace-pages-container" *ngIf="pagesEmpty">
+    <div class="workspace-pages-bar" *ngFor="let page of pagesDetails;let pgIndex=index"
+      (click)="sendPageDetails(pgIndex)">
+      <ngx-emoji emoji="{{page.icon}}" size="24"></ngx-emoji>
+      <p class="workspace-pages-name">{{page.title}}</p>
+    </div>
+  </div>
 
-<div mat-icon-button [matMenuTriggerFor]="newPageMenu" aria-label="Example icon-button with a new page menu"
-  class="mt-3 workspace-pages-new gap-2 mb-4">
-  <i class="fa-solid fa-plus"></i>
-  <h5>New</h5>
-</div>
-
-<mat-menu #newPageMenu="matMenu">
-  <button mat-menu-item (click)="createPage()">
-    <span class="text-sm py-0">Add a page</span>
-  </button>
-  <button mat-menu-item>
-    <span class="text-sm py-0">Add an agenda</span>
-  </button>
-</mat-menu>
+  <div (click)="createPage()" class="mt-3 workspace-pages-new gap-2 mb-4">
+    <i class="fa-solid fa-plus"></i>
+    <h5>New</h5>
+  </div>
+</section>
