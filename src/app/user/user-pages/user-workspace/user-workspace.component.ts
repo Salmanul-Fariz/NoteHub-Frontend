@@ -30,10 +30,12 @@ export class UserWorkspaceComponent
   modalSubscribtion: Subscription;
   editTitleEmojiSubscribtion: Subscription;
   imageUploadModalSubscription: Subscription;
+  deletePageSubscribtion: Subscription;
   workspace: { name: string; icon: string } = { name: '', icon: '' };
   isModal: boolean | unknown;
   isEmojiBar: boolean;
   titleEmojiEdit: { bol: boolean; id: string } = { bol: false, id: '' };
+  deletePageData: { bol: boolean; id: string } = { bol: false, id: '' };
   workSpaceNameUpdate: string;
   isWorkSpaceNameUpdate: boolean = false;
   isImageUpload: { bol: boolean; id: string; pageId: string } = {
@@ -77,6 +79,12 @@ export class UserWorkspaceComponent
     this.modalSubscribtion =
       this.workspaceService.isModalDataTransfer.subscribe((data) => {
         this.isModal = data;
+      });
+
+    this.deletePageSubscribtion =
+      this.workspaceService.deleteDataTransfer.subscribe((data) => {
+        this.deletePageData.bol = data.bol;
+        this.deletePageData.id = data.id;
       });
 
     // image upload modal
@@ -281,7 +289,37 @@ export class UserWorkspaceComponent
     }
   }
 
+  // Delete the user page
+  successDelete() {
+    document.body.style.cursor = 'wait';
+    this.workspaceService.deleteWorspacePage(this.deletePageData.id).subscribe({
+      next: (response) => {
+        this.workspaceService.deleteWorkspacePage(this.deletePageData.id);
+
+        this.workspaceService.deleteDataTransfer.emit({ bol: false, id: '' });
+
+        this.cancelPageDelete();
+
+        document.body.style.cursor = 'auto';
+      },
+      error: (error) => {
+        document.body.style.cursor = 'auto';
+        if (error.status === 408 || 400) {
+          localStorage.clear();
+          document.body.style.cursor = 'auto';
+          this.router.navigate(['auth/signin']);
+        }
+      },
+    });
+  }
+
+  // close the delelte modal
+  cancelPageDelete() {
+    this.deletePageData = { bol: false, id: '' };
+  }
+
   ngOnDestroy(): void {
+    this.deletePageSubscribtion.unsubscribe();
     this.modalSubscribtion.unsubscribe();
     this.editTitleEmojiSubscribtion.unsubscribe();
     this.imageUploadModalSubscription.unsubscribe();

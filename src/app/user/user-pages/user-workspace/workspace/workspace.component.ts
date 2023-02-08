@@ -15,6 +15,7 @@ import { WorkspaceTreeService } from 'src/app/service/workspace-tree.service';
 export class WorkspaceComponent implements OnInit, OnDestroy {
   isOpenOptionTab: boolean;
   pageDataTransferSb: Subscription;
+  deletePageSubscribtion: Subscription;
   pageEmpty: boolean = true;
   pagesDetails: any;
   backgroundPositionY: string;
@@ -39,6 +40,14 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.deletePageSubscribtion =
+    this.workspaceService.deleteDataTransfer.subscribe((data) => {
+      if(data.bol === false){
+        this.pageEmpty = true;
+      }
+    });
+
+
     // Update user Workspace page content
     this.savePageNameSubject.pipe(debounceTime(500)).subscribe((value) => {
       this.pageNameUpdate(value, this.pagesDetails._id);
@@ -938,6 +947,14 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     doc.text(splitTitle, 8, 40);
 
     doc.save('output.pdf');
+  }
+
+  // Delete Workspace page
+  deletePage() {
+    this.workspaceService.deleteDataTransfer.emit({
+      bol: true,
+      id: this.pagesDetails._id,
+    });
   }
 
   ngOnDestroy(): void {

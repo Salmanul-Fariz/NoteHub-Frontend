@@ -20,7 +20,7 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="deletePage()">
             <mat-icon class="workspace-title-menu-icon">delete</mat-icon>
             <span class="workspace-title-menu-text">Delete</span>
           </button>

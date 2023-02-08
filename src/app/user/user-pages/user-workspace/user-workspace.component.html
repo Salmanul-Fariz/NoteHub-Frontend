@@ -71,8 +71,27 @@
   </div>
 </div>
 
+<!-- page Delete Alert upload modal -->
+<div class="ws-modal w-10/12 md:w-6/12" [ngClass]="{'hidden':!deletePageData.bol}">
+  <div class="flex flex-col">
+    <div class="flex justify-end mr-4">
+      <button class="ws-close-modal" (click)="cancelPageDelete()">&times;</button>
+    </div>
+    <div class="flex flex-col justify-start mt-2 pt-2 pl-8 pr-8 pb-6 gap-y-4">
+      <div class="w-full">
+        <p class="text-xl">Do you really want to remove the page ?</p>
+      </div>
+      <div class="w-full flex justify-end gap-4 pageDeleteButton mt-2">
+        <button (click)="cancelPageDelete()">Cancel</button>
+        <button (click)="successDelete()">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <emoji-mart *ngIf="isEmojiBar" (emojiClick)="addEmoji($event)"></emoji-mart>
 <emoji-mart *ngIf="titleEmojiEdit.bol" (emojiClick)="addTitleEmoji($event,titleEmojiEdit.id)"></emoji-mart>
 <div class="ws-overlay" [ngClass]="{'hidden':!isModal }" (click)="closeModal()"></div>
 <div class="ic-overlay" [ngClass]="{'hidden':!isEmojiBar && !titleEmojiEdit.bol}" (click)="closeEmojiBar()"></div>
 <div class="iu-overlay" [ngClass]="{'hidden':!isImageUpload.bol}" (click)="closeImageUploadModal()"></div>
+<div class="iu-overlay" [ngClass]="{'hidden':!deletePageData.bol}" (click)="cancelPageDelete()"></div>

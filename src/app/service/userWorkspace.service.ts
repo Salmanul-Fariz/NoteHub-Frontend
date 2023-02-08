@@ -14,6 +14,7 @@ export class UserWorkspaceService {
     pageId: string;
   }>();
   titleIconEditDataTransfer = new EventEmitter<{ bol: boolean; id: string }>();
+  deleteDataTransfer = new EventEmitter<{ bol: boolean; id: string }>();
   pageDataTransfer = new EventEmitter<{}>();
   pages: any[];
 
@@ -178,6 +179,13 @@ export class UserWorkspaceService {
     );
   }
 
+  // Delete a user workspace page
+  deleteWorspacePage(pageId: string) {
+    return this.http.delete<any>(
+      `${environment.baseUrl}/workspaces/user-workspace?pageId=${pageId}`
+    );
+  }
+
   // update page array
   updatePageArray(id: string, data: any) {
     const index = this.pages.findIndex((val) => {
@@ -185,6 +193,15 @@ export class UserWorkspaceService {
     });
 
     this.pages.splice(index, 1, data);
+  }
+
+  // Delete the user Workspace page
+  deleteWorkspacePage(id: string) {
+    const index = this.pages.findIndex((val) => {
+      return val._id === id;
+    });
+
+    this.pages.splice(index, 1);
   }
 
   // Push createPage to array
