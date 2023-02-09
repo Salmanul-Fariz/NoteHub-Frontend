@@ -1,10 +1,10 @@
 <section>
   <div class="workspace w-full flex justify-start gap-2">
-    <p class="workspace-name">Workspace</p>
+    <p class="workspace-name" *ngIf="userDetails">{{userDetails.workSpaces.projectWorkspace.name}}</p>
   </div>
 
   <div class="mt-3 workspace-settings">
-    <div class="workspace-settings-tool">
+    <div class="workspace-settings-tool" (click)="boardSettings()">
       <i class="fa-solid fa-gear"></i>
       <h5>Settings</h5>
     </div>
