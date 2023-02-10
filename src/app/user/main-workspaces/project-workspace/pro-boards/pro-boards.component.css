@@ -1,0 +1,63 @@
+.boards-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 42px;
+  font-family: 'JosefinSans-Regular';
+}
+
+.boards-heading button {
+  font-size: 18px;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/*  Search bar */
+.boards-search {
+  padding: 12px 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.boards-search input {
+  border: solid 2px #cbcbcb;
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-size: 18px;
+}
+
+.boards-search input {
+  outline: none;
+  caret-color: #cbcbcb;
+}
+
+.boards-table-container {
+  width: 100%;
+  padding: 18px 10px;
+}
+
+table {
+  width: 100%;
+}
+
+td button {
+  font-size: 18px;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+tr * {
+  line-break: anywhere;
+}
+
+tr[mat-row]:hover {
+  background-color: rgb(235, 234, 234);
+  cursor: pointer;
+}

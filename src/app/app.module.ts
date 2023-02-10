@@ -15,6 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -45,6 +46,7 @@ import { ProjectWorkspaceComponent } from './user/main-workspaces/project-worksp
 import { ProWorkspaceComponent } from './user/main-workspaces/project-workspace/pro-workspace/pro-workspace.component';
 import { LeftProWorkspaceNavComponent } from './user/main-workspaces/project-workspace/left-pro-workspace-nav/left-pro-workspace-nav.component';
 import { MainWorkspacesComponent } from './user/main-workspaces/main-workspaces.component';
+import { ProBoardsComponent } from './user/main-workspaces/project-workspace/pro-boards/pro-boards.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,7 @@ import { MainWorkspacesComponent } from './user/main-workspaces/main-workspaces.
     ProWorkspaceComponent,
     LeftProWorkspaceNavComponent,
     MainWorkspacesComponent,
+    ProBoardsComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,6 +87,7 @@ import { MainWorkspacesComponent } from './user/main-workspaces/main-workspaces.
     PickerModule,
     EmojiModule,
     MatSelectModule,
+    MatTableModule,
   ],
   providers: [
     {

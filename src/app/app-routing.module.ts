@@ -21,6 +21,8 @@ import { AdminPagesComponent } from './admin/admin-pages/admin-pages.component';
 import { AuthAdminComponent } from './admin/auth/auth-admin.component';
 import { AdminSigninComponent } from './admin/auth/admin-signin/admin-signin.component';
 import { MainWorkspacesComponent } from './user/main-workspaces/main-workspaces.component';
+import { ProBoardsComponent } from './user/main-workspaces/project-workspace/pro-boards/pro-boards.component';
+import { ProWorkspaceComponent } from './user/main-workspaces/project-workspace/pro-workspace/pro-workspace.component';
 
 const appRoutes: Routes = [
   // user pages
@@ -45,6 +47,10 @@ const appRoutes: Routes = [
           {
             path: 'project-workspace',
             component: ProjectWorkspaceComponent,
+            children: [
+              { path: '', component: ProBoardsComponent },
+              { path: 'boards', component: ProWorkspaceComponent },
+            ],
           },
         ],
       },
