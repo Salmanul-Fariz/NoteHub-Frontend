@@ -75,3 +75,11 @@ mat-sidenav-container {
 .boardSettings input:focus {
   outline: none;
 }
+
+/* Borad Creating */
+.Board-Modal-Button {
+  font-size: 18px;
+  color: white;
+  padding: 3px 20px;
+  border-radius: 6px;
+}

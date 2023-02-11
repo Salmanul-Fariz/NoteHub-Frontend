@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ProjectWorkspaceService } from 'src/app/service/projectWorkspace.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface PeriodicElement {
   name: string;
@@ -75,11 +78,29 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './pro-boards.component.html',
   styleUrls: ['./pro-boards.component.css'],
 })
-export class ProBoardsComponent {
+export class ProBoardsComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['name', 'type', 'userId', 'lead'];
-  dataSource = ELEMENT_DATA;
+  boardDataSubscription: Subscription;
+  BoardDataSource = new MatTableDataSource<any>();
+
+  constructor(private _projectService: ProjectWorkspaceService) {}
+
+  ngOnInit(): void {
+    this.boardDataSubscription =
+      this._projectService.DetailsDataTransfer.subscribe((data) => {
+        this.BoardDataSource.data = data.boardDetails;
+      });
+  }
 
   boardsItems(data: any) {
     console.log(data);
+  }
+
+  createProject() {
+    this._projectService.CreateProjectDataTransfer.emit(true);
+  }
+
+  ngOnDestroy(): void {
+    this.boardDataSubscription.unsubscribe();
   }
 }

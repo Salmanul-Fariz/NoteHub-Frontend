@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
 import { debounceTime, delay, filter, Subject, Subscription } from 'rxjs';
@@ -23,9 +24,13 @@ export class ProjectWorkspaceComponent
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   ProjectSettingsDataTransfer: Subscription;
+  CreateProjectDataTransfer: Subscription;
   PageWorkspaceNameSubject = new Subject<string>();
   isProjectSettingsModal: boolean;
+  isCreateProjectModal: boolean;
   userDetails: any;
+  BoardCreatingForm: FormGroup;
+  boardAlreadyExist: boolean;
 
   constructor(
     private observer: BreakpointObserver,
@@ -34,6 +39,16 @@ export class ProjectWorkspaceComponent
   ) {}
 
   ngOnInit(): void {
+    // Board Creating Form
+    this.BoardCreatingForm = new FormGroup({
+      boardName: new FormControl(null, {
+        validators: [Validators.required, Validators.maxLength(25)],
+      }),
+      projectType: new FormControl(null, {
+        validators: [Validators.required, Validators.maxLength(25)],
+      }),
+    });
+
     this._projectService.viewProjectWorspacePage().subscribe({
       next: (response) => {
         this.userDetails = response.data.userDetails;
@@ -59,17 +74,23 @@ export class ProjectWorkspaceComponent
         this.isProjectSettingsModal = true;
       });
 
+    // Create Project modal open
+    this.CreateProjectDataTransfer =
+      this._projectService.CreateProjectDataTransfer.subscribe((data) => {
+        this.isCreateProjectModal = true;
+      });
+
+    // update the data by debounceTime
     this.PageWorkspaceNameSubject.pipe(debounceTime(1000)).subscribe(
       (value) => {
-        this._projectService.UpdatePProjectWorkspaceName(value).subscribe({
+        this._projectService.UpdateProjectWorkspaceName(value).subscribe({
           next: (response) => {
-            this._projectService.userDetails.workSpaces.projectWorkspace.name =value
-              this._projectService.DetailsDataTransfer.emit(
-                {
-                  userDetails: this._projectService.userDetails,
-                  boardDetails: this._projectService.boardsDetails,
-                }
-              );
+            this._projectService.userDetails.workSpaces.projectWorkspace.name =
+              value;
+            this._projectService.DetailsDataTransfer.emit({
+              userDetails: this._projectService.userDetails,
+              boardDetails: this._projectService.boardsDetails,
+            });
           },
           error: (error) => {
             if (error.status === 408 || 400) {
@@ -80,15 +101,6 @@ export class ProjectWorkspaceComponent
         });
       }
     );
-  }
-
-  projectName(event: any) {
-    this.PageWorkspaceNameSubject.next(event.target.value);
-  }
-
-  // close Board Settings modal
-  closeBoardModal() {
-    this.isProjectSettingsModal = false;
   }
 
   ngAfterViewInit() {
@@ -114,7 +126,47 @@ export class ProjectWorkspaceComponent
       });
   }
 
+  projectName(event: any) {
+    this.PageWorkspaceNameSubject.next(event.target.value);
+  }
+
+  // close Board Settings modal
+  closeBoardModal() {
+    this.isProjectSettingsModal = false;
+    this.isCreateProjectModal = false;
+  }
+
+  // Create Board
+  createBoard(formData: any) {
+    this._projectService.CreateProjectWorkspace(formData).subscribe({
+      next: (response) => {
+        this.boardAlreadyExist = false;
+
+        if (response.status === 'Existed') {
+          this.boardAlreadyExist = true;
+        } else {
+          this._projectService.boardsDetails = response.data.boardDetails;
+          this._projectService.userDetails = response.data.userDetails;
+
+          this._projectService.DetailsDataTransfer.emit({
+            userDetails: this._projectService.userDetails,
+            boardDetails: this._projectService.boardsDetails,
+          });
+
+          this.closeBoardModal();
+        }
+      },
+      error: (error) => {
+        if (error.status === 408 || 400) {
+          localStorage.clear();
+          this.router.navigate(['auth/signin']);
+        }
+      },
+    });
+  }
+
   ngOnDestroy(): void {
     this.ProjectSettingsDataTransfer.unsubscribe();
+    this.CreateProjectDataTransfer.unsubscribe();
   }
 }

@@ -1,43 +1,53 @@
 <section>
   <div class="boards-heading">
     <h2 class="text-2xl md:text-4xl">Boards</h2>
-    <button class="text-sm md:text-lg bg-primary">Create</button>
+    <button class="text-sm md:text-lg bg-primary" (click)="createProject()">Create</button>
   </div>
 
   <div class="boards-search ">
     <input class="w-8/12 sm:w-auto" type="search" placeholder="Search" #inputSearch>
   </div>
 
-  <div class="boards-table-container w-1/12">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <div class="boards-table-container">
+    <table mat-table [dataSource]="BoardDataSource" class="mat-elevation-z8"
+      *ngIf="BoardDataSource.data.length > 0 ; else elseBoard">
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Project Name </th>
-        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Project Name</th>
+        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element.boardName}} </td>
       </ng-container>
 
       <!-- Type Column -->
       <ng-container matColumnDef="type">
-        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef> Project Type </th>
-        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element.type}} </td>
+        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Project Type</th>
+        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element.projectType}} </td>
       </ng-container>
 
-      <!-- user Id Column -->
+      <!-- User Id Column -->
       <ng-container matColumnDef="userId">
-        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef> Lead user ID</th>
-        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element.userId}} </td>
+        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Lead user ID</th>
+        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element.userId.userName}} </td>
       </ng-container>
 
       <!-- Lead Column -->
       <ng-container matColumnDef="lead">
-        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef> Lead email</th>
-        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element.lead}} </td>
+        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Lead email</th>
+        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element.userId.email}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="boardsItems(row)"></tr>
     </table>
+
+    <ng-template #elseBoard>
+      <div class="empty-page-container">
+        <div class="empty-page">
+          <i class="fa-regular fa-file"></i>
+          <h3>Empty</h3>
+        </div>
+      </div>
+    </ng-template>
   </div>
 
 

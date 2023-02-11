@@ -44,5 +44,38 @@
   </div>
 </div>
 
+<!-- Board Create -->
+<div class="modal w-10/12 md:w-6/12" [ngClass]="{'hidden':!isCreateProjectModal}">
+  <div class="flex flex-col">
+    <div class="flex justify-end mr-4">
+      <button class="close-modal" (click)="closeBoardModal()">&times;</button>
+    </div>
+    <form [formGroup]="BoardCreatingForm" (ngSubmit)="createBoard(BoardCreatingForm.value)"
+      class="flex flex-col justify-start pt-2 pl-8 pr-8 pb-6 gap-y-4 boardSettings">
+      <div class="w-full flex flex-col lg:flex-row justify-between gap-2">
+        <label for="boardName">Board name :</label>
+        <input formControlName="boardName" type="text" placeholder="Enter board name">
+      </div>
+      <div class="w-full flex flex-col lg:flex-row justify-between gap-2">
+        <label for="boardName">Project type :</label>
+        <input formControlName="projectType" type="text" placeholder="Enter project type">
+      </div>
+
+      <div *ngIf="boardAlreadyExist" class="w-full flex flex-col lg:flex-row justify-start mt-3">
+        <small class="text-red">Board Already exist</small>
+      </div>
+
+      <div class="w-full flex flex-col lg:flex-row justify-end gap-2 mt-3">
+        <button [ngClass]="{'opacity-50':!BoardCreatingForm.valid,'cursor-not-allowed':!BoardCreatingForm.valid}"
+          [disabled]=" !BoardCreatingForm.valid" class="Board-Modal-Button bg-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- Board Settings Overlay -->
 <div class="overlay" [ngClass]="{'hidden':!isProjectSettingsModal }" (click)="closeBoardModal()"></div>
+
+
+<!-- Project Board create Overlay -->
+<div class="overlay" [ngClass]="{'hidden':!isCreateProjectModal }" (click)="closeBoardModal()"></div>

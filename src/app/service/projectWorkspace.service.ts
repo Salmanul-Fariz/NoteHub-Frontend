@@ -10,6 +10,7 @@ export class ProjectWorkspaceService {
     boardDetails: any;
   }>();
   ProjectSettingsDataTransfer = new EventEmitter<boolean>();
+  CreateProjectDataTransfer = new EventEmitter<boolean>();
   userDetails: any;
   boardsDetails: any[];
 
@@ -23,10 +24,18 @@ export class ProjectWorkspaceService {
   }
 
   // Update the name of project Workspace
-  UpdatePProjectWorkspaceName(newName: string) {
+  UpdateProjectWorkspaceName(newName: string) {
     return this._http.patch<any>(
       `${environment.baseUrl}/workspaces/project-workspace/name`,
       { data: newName }
+    );
+  }
+
+  // Create a new project workspace
+  CreateProjectWorkspace(formData: any) {
+    return this._http.post<any>(
+      `${environment.baseUrl}/workspaces/project-workspace`,
+      formData
     );
   }
 }

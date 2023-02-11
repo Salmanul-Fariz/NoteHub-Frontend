@@ -61,3 +61,32 @@ tr[mat-row]:hover {
   background-color: rgb(235, 234, 234);
   cursor: pointer;
 }
+
+/* empty page */
+.empty-page-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 90px 0px;
+}
+
+.empty-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.empty-page > i {
+  font-size: 50px;
+  color: #6e6e6e;
+}
+
+.empty-page > h3 {
+  font-family: 'JosefinSans-Bold';
+  font-size: 30px;
+  align-self: flex-end;
+  color: #6e6e6e;
+}
