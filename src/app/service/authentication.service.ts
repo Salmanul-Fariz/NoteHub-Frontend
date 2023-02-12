@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AbstractControl } from '@angular/forms';
 
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.dev';
 
 type SignUpData = { userName: string; email: string; password: string };
 type SignInData = { usernameOrEmail: string; password: string };

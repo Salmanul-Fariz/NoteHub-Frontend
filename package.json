@@ -35,6 +35,7 @@
     "@angular/compiler-cli": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.4",
     "@angular/platform-server": "^15.0.4",
+    "@jefiozie/ngx-aws-deploy": "^4.1.0",
     "@types/jasmine": "~4.3.0",
     "@types/jspdf": "^2.0.0",
     "@types/lodash-es": "^4.17.6",
