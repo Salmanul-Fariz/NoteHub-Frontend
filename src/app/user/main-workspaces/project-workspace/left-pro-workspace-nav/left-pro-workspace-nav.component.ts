@@ -17,9 +17,6 @@ export class LeftProWorkspaceNavComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.detailSubscribtion =
       this._projectService.DetailsDataTransfer.subscribe((data) => {
-        this._projectService.userDetails = data.userDetails;
-        this._projectService.boardsDetails = data.boardDetails;
-
         this.userDetails = this._projectService.userDetails;
         this.boardDetails = this._projectService.boardsDetails;
       });

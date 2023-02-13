@@ -38,4 +38,19 @@ export class ProjectWorkspaceService {
       formData
     );
   }
+
+  // Search the boards
+  SearchBoard(data: string) {
+    const resultArray = [];
+
+    for (const el of this.boardsDetails) {
+      const index = el.boardName.search(data);
+
+      if (index !== -1) {
+        resultArray.push(el);
+      }
+    }
+
+    return resultArray;
+  }
 }

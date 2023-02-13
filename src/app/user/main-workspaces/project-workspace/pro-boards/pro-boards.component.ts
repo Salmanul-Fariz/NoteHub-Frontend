@@ -3,76 +3,6 @@ import { Subscription } from 'rxjs';
 import { ProjectWorkspaceService } from 'src/app/service/projectWorkspace.service';
 import { MatTableDataSource } from '@angular/material/table';
 
-export interface PeriodicElement {
-  name: string;
-  type: string;
-  lead: string;
-  userId: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    userId: 'user12',
-    name: 'Hydrogen',
-    type: 'e-learning',
-    lead: 'salmanulfariz997@gmail.com',
-  },
-  {
-    userId: 'user12',
-    name: 'Helium',
-    type: 'e-learning',
-    lead: 'salmanulfariz997@gmail.com',
-  },
-  {
-    userId: 'user12',
-    name: 'Lithium',
-    type: 'e-learning',
-    lead: 'salmanulfariz997@gmail.com',
-  },
-  {
-    userId: 'user12',
-    name: 'Beryllium',
-    type: 'e-learning',
-    lead: 'salmanulfariz997@gmail.com',
-  },
-  {
-    userId: 'user12',
-    name: 'Boron',
-    type: 'e-learning',
-    lead: 'salmanulfariz997@gmail.com',
-  },
-  {
-    userId: 'user12',
-    name: 'Carbon',
-    type: 'e-learning',
-    lead: 'salmanulfariz997@gmail.com',
-  },
-  {
-    userId: 'user12',
-    name: 'Nitrogen',
-    type: 'e-learning',
-    lead: 'salmanulfariz997@gmail.com',
-  },
-  {
-    userId: 'user12',
-    name: 'Oxygen',
-    type: 'e-learning',
-    lead: 'salmanulfariz997@gmail.com',
-  },
-  {
-    userId: 'user12',
-    name: 'Fluorine',
-    type: 'e-learning',
-    lead: 'salmanulfariz997@gmail.com',
-  },
-  {
-    userId: 'user12',
-    name: 'Neon',
-    type: 'e-learning',
-    lead: 'salmanulfariz997@gmail.com',
-  },
-];
-
 @Component({
   selector: 'app-pro-boards',
   templateUrl: './pro-boards.component.html',
@@ -90,6 +20,25 @@ export class ProBoardsComponent implements OnInit, OnDestroy {
       this._projectService.DetailsDataTransfer.subscribe((data) => {
         this.BoardDataSource.data = data.boardDetails;
       });
+  }
+
+  // implements Search Functionality
+  filterBoardTable(event: any) {
+    const value: string = event.target.value;
+
+    if (value.length > 0) {
+      const data = this._projectService.SearchBoard(value);
+
+      this._projectService.DetailsDataTransfer.emit({
+        userDetails: this._projectService.userDetails,
+        boardDetails: data,
+      });
+    } else {
+      this._projectService.DetailsDataTransfer.emit({
+        userDetails: this._projectService.userDetails,
+        boardDetails: this._projectService.boardsDetails,
+      });
+    }
   }
 
   boardsItems(data: any) {

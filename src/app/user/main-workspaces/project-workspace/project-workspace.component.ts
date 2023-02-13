@@ -87,6 +87,9 @@ export class ProjectWorkspaceComponent
           next: (response) => {
             this._projectService.userDetails.workSpaces.projectWorkspace.name =
               value;
+            this._projectService.boardsDetails = response.data.boardDetails;
+            this._projectService.userDetails = response.data.userDetails;
+
             this._projectService.DetailsDataTransfer.emit({
               userDetails: this._projectService.userDetails,
               boardDetails: this._projectService.boardsDetails,
@@ -145,6 +148,16 @@ export class ProjectWorkspaceComponent
         if (response.status === 'Existed') {
           this.boardAlreadyExist = true;
         } else {
+          // Board Creating Form
+          this.BoardCreatingForm = new FormGroup({
+            boardName: new FormControl(null, {
+              validators: [Validators.required, Validators.maxLength(25)],
+            }),
+            projectType: new FormControl(null, {
+              validators: [Validators.required, Validators.maxLength(25)],
+            }),
+          });
+
           this._projectService.boardsDetails = response.data.boardDetails;
           this._projectService.userDetails = response.data.userDetails;
 
