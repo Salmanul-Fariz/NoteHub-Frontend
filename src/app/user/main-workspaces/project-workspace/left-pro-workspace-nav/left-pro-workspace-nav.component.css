@@ -48,3 +48,66 @@ hr {
   color: #fff;
   font-size: 18px;
 }
+
+.workspace-board-container {
+  width: 100%;
+  padding: 4px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+}
+
+.workspace-board-bar {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 6px;
+  margin: 1px 0px;
+  color: #444;
+}
+
+.workspace-board-bar:hover {
+  background-color: #e1e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.workspace-board-bar i {
+  font-size: 16px;
+}
+
+.workspace-board-bar h5 {
+  font-size: 17px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 
+.workspace-pages-bar {
+  width: 100%;
+  padding: 3px 2px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.workspace-pages-bar:hover {
+  background-color: #e1e0e0;
+  padding: 3px 2px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.workspace-pages-name {
+  font-size: 17px;
+  width: 100%;
+  overflow: hidden;
+  padding-left: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: start;
+} */

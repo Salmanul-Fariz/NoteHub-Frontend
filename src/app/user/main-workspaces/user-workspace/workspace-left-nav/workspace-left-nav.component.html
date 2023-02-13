@@ -11,9 +11,6 @@
     </div>
   </div>
   <hr>
-  <div class="w-full pb-2">
-    <p class="text-start text-sm text-opacity-90 ml-1 text-white">Pages :</p>
-  </div>
   <div class="workspace-pages-container" *ngIf="pagesEmpty">
     <div class="workspace-pages-bar" *ngFor="let page of pagesDetails;let pgIndex=index"
       (click)="sendPageDetails(pgIndex)">
