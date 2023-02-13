@@ -1,0 +1,79 @@
+section {
+  padding: 18px 20px;
+}
+
+/* empty page */
+.empty-page-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 90px 0px;
+}
+
+.empty-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.empty-page > i {
+  font-size: 44px;
+  color: #6e6e6e;
+  margin-top: -8px;
+}
+
+.empty-page > h3 {
+  font-family: 'JosefinSans-Bold';
+  font-size: 30px;
+  align-self: flex-end;
+  color: #6e6e6e;
+}
+
+/* title */
+.boards-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-family: 'JosefinSans-Regular';
+  user-select: none;
+}
+
+.boards-title i {
+  font-size: 22px;
+  color: #222;
+  padding: 4px 5px;
+  border-radius: 6px;
+}
+
+.boards-title i:hover {
+  cursor: pointer;
+  background-color: #dbdbdb;
+}
+
+.boards-title p {
+  font-family: 'Jaldi-Regular';
+  font-style: italic;
+  color: #444;
+  cursor: default;
+}
+
+/* boarder contributors */
+
+.boarder-contributors {
+  padding: 36px 0px;
+}
+
+.boarder-contributors div {
+  display: flex;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, #000 65%, transparent);
+}
+
+.boarder-contributors i {
+  font-size: 32px;
+  color: #444;
+}

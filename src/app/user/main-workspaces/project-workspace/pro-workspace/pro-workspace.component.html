@@ -1,42 +1,33 @@
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
-<p>pro-workspace works!</p>
+<section *ngIf="boardDetails?._id;else elseBoard_details">
+  <div class="boards-title">
+    <p class="text-lg md:text-xl">Projects / {{boardDetails?.boardName}}</p>
+    <i class="fa-solid fa-trash"></i>
+  </div>
+  <div class="boarder-contributors w-10/12 md:w-6/12">
+    <div>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+      <i class="fa-solid fa-circle-user"></i>
+    </div>
+  </div>
+</section>
+
+<ng-template #elseBoard_details>
+  <div class="empty-page-container">
+    <div class="empty-page">
+      <i class="fa-regular fa-file"></i>
+      <h3>Empty Data</h3>
+    </div>
+  </div>
+</ng-template>

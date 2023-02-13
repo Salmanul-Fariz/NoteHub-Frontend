@@ -16,6 +16,8 @@ export class ProBoardsComponent implements OnInit, OnDestroy {
   constructor(private _projectService: ProjectWorkspaceService) {}
 
   ngOnInit(): void {
+    this.BoardDataSource.data = this._projectService.boardsDetails;
+
     this.boardDataSubscription =
       this._projectService.DetailsDataTransfer.subscribe((data) => {
         this.BoardDataSource.data = data.boardDetails;

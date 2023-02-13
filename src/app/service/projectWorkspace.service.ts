@@ -9,10 +9,12 @@ export class ProjectWorkspaceService {
     userDetails: any;
     boardDetails: any;
   }>();
+  BoardDataTransfer = new EventEmitter<any>();
   ProjectSettingsDataTransfer = new EventEmitter<boolean>();
   CreateProjectDataTransfer = new EventEmitter<boolean>();
   userDetails: any;
   boardsDetails: any[];
+  board_Details: any[];
 
   constructor(private _http: HttpClient) {}
 
@@ -36,6 +38,13 @@ export class ProjectWorkspaceService {
     return this._http.post<any>(
       `${environment.baseUrl}/workspaces/project-workspace`,
       formData
+    );
+  }
+
+  // Get the board details
+  GetBoardDetails(data: string) {
+    return this._http.get<any>(
+      `${environment.baseUrl}/workspaces/project-workspace/board/${data}`
     );
   }
 

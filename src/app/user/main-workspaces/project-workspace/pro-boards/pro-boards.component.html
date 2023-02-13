@@ -37,7 +37,8 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="boardsItems(row)"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        [routerLink]="['/workspaces/project-workspace/boards/']" [queryParams]="{id:row._id}"></tr>
     </table>
 
     <ng-template #elseBoard>
