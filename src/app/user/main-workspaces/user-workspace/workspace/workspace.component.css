@@ -230,6 +230,7 @@ mat-menu > button {
 .workspace-content-handle :hover {
   display: flex;
 }
+
 .handleHover:hover + .workspace-content-handle {
   display: flex;
 }

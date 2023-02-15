@@ -1,6 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectWorkspaceService } from 'src/app/service/projectWorkspace.service';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-pro-workspace',
@@ -24,16 +29,37 @@ export class ProWorkspaceComponent implements OnInit, OnDestroy {
           this._projectService.userDetails = response.data.userDetails;
 
           this.boardDetails = this._projectService.board_Details;
-          console.log(this.boardDetails);
         },
         error: (error) => {
-          // if (error.status === 408 || 400) {
-          //   localStorage.clear();
-          //   this.router.navigate(['auth/signin']);
-          // }
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
         },
       });
     });
+  }
+
+  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
+
+  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
+  progress = ['bat', 'cat', 'hat'];
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
   }
 
   ngOnDestroy(): void {}

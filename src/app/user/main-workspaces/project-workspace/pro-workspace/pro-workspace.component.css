@@ -74,6 +74,7 @@ section {
   padding: 6px 7px;
   border-radius: 6px;
   cursor: pointer;
+  background-color: #655dd5;
 }
 
 .boarder-contributors .icons {
@@ -106,4 +107,101 @@ section {
   color: #655dd5;
   padding: 2px 9px;
   border-radius: 6px;
+}
+
+/* boarder Workspace */
+.board-workspace-container {
+  width: 100%;
+  user-select: none;
+  padding-bottom: 50px;
+}
+
+.board-workspace-drag-container {
+  background-color: #eff1f4;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.board-workspace-drag-heading {
+  font-size: 16px;
+  font-weight: 600;
+  color: #727272;
+  padding: 6px 10px;
+  overflow: hidden;
+}
+
+.board-workspace-drag-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-height: 60px;
+  cursor: pointer;
+}
+
+.board-workspace-drag-box {
+  min-height: 60px;
+  padding: 6px 6px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 1px 1.5px 1px rgba(23, 43, 77, 0.2);
+  position: relative;
+}
+
+.board-workspace-drag-box h5 {
+  padding: 8px 0;
+  font-size: 18px;
+}
+
+.board-workspace-drag-box p {
+  font-size: 13px;
+  padding: 4px 0;
+  color: #9d9d9d;
+}
+
+.board-workspace-drag-box:hover .board-workspace-drag-box-more {
+  display: block;
+}
+
+.board-workspace-drag-box-more {
+  display: none;
+  position: absolute;
+  top: 6px;
+  right: 2px;
+}
+
+.board-workspace-drag-box-more mat-icon {
+  font-size: 19px;
+}
+
+.board-workspace-drag-new {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 16px 9px;
+  border-radius: 2px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #727272;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.board-workspace-drag-new:hover {
+  background-color: #ddd;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

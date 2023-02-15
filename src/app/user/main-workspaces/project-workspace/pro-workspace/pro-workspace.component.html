@@ -21,7 +21,7 @@
       <i class="fa-solid fa-circle-user"></i>
     </div>
     <div class="w-2/12 items-center icons-list">
-      <i class="fa-solid fa-list bg-primary"></i>
+      <i class="fa-solid fa-list"></i>
     </div>
   </div>
 
@@ -88,7 +88,101 @@
         <button mat-menu-item>Ascending</button>
         <button mat-menu-item>Descending</button>
       </mat-menu>
+    </div>
+  </div>
 
+  <div class="board-workspace-container">
+    <div cdkDropListGroup class="md:flex block md:flex-row w-full gap-2 justify-center">
+
+      <!-- To do -->
+      <div class="board-workspace-drag-container flex md:block justify-center w-full  md:w-1/3 mt-4 ">
+        <div class="w-10/12 md:w-auto">
+          <h2 class="board-workspace-drag-heading">TO DO TASK</h2>
+
+          <div cdkDropList [cdkDropListData]="todo" class="board-workspace-drag-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="board-workspace-drag-box" *ngFor="let item of todo" cdkDrag>
+              <h5>{{item}}</h5>
+              <p>Edited 2 min ago</p>
+              <div class="board-workspace-drag-box-more">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <span class="text-sm">Add Flag</span>
+                  </button>
+                  <button mat-menu-item>
+                    <span class="text-sm">Delete</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+
+            <!-- Add New Button -->
+            <div class="board-workspace-drag-new">
+              <i class="fa-solid fa-plus"></i>
+              <h2>Create task</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="board-workspace-drag-container flex md:block justify-center w-full  md:w-1/3 mt-4">
+        <div class="w-10/12 md:w-auto">
+          <h2 class="board-workspace-drag-heading">IN PROGRESS</h2>
+
+          <div cdkDropList [cdkDropListData]="progress" class="board-workspace-drag-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="board-workspace-drag-box" *ngFor="let item of progress" cdkDrag>
+              <h5>{{item}}</h5>
+              <p>Edited 2 min ago</p>
+              <div class="board-workspace-drag-box-more">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <span class="text-sm">Add Flag</span>
+                  </button>
+                  <button mat-menu-item>
+                    <span class="text-sm">Delete</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compled -->
+      <div class="board-workspace-drag-container flex md:block justify-center w-full  md:w-1/3 mt-4">
+        <div class="w-10/12 md:w-auto">
+          <h2 class="board-workspace-drag-heading">DONE</h2>
+
+          <div cdkDropList [cdkDropListData]="done" class="board-workspace-drag-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="board-workspace-drag-box" *ngFor="let item of done" cdkDrag>
+              <h5>{{item}}</h5>
+              <p>Edited 2 min ago</p>
+              <div class="board-workspace-drag-box-more">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <span class="text-sm">Add Flag</span>
+                  </button>
+                  <button mat-menu-item>
+                    <span class="text-sm">Delete</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
