@@ -350,7 +350,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       document.body.style.cursor = 'wait';
 
       // get a seccure url from a server
-      this.s3Service.createUploadUrl().subscribe({
+      this.s3Service.createUploadUrl(pageId).subscribe({
         next: (response) => {
           const url = response.data;
 
@@ -932,6 +932,29 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       bol: true,
       id: this.pagesDetails._id,
     });
+  }
+
+  // insert New Node
+  insertNewNode() {
+    this.workspaceService
+      .AddNewSection(this.pagesDetails._id, '', '', '', 'InsertFirstNode')
+      .subscribe({
+        next: (response) => {
+          this.workspaceService.updatePageArray(
+            this.pagesDetails._id,
+            response.data.data
+          );
+          this.workspaceService.pageDataTransfer.emit(response.data.data);
+          document.body.style.cursor = 'auto';
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            document.body.style.cursor = 'auto';
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
   }
 
   ngOnDestroy(): void {

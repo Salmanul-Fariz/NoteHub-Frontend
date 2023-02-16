@@ -6,9 +6,9 @@ import { environment } from '../environments/environment.dev';
 export class S3BucketService {
   constructor(private http: HttpClient) {}
 
-  createUploadUrl() {
+  createUploadUrl(pageId: string) {
     return this.http.get<any>(
-      `${environment.baseUrl}/s3/page-cover/generate-url`
+      `${environment.baseUrl}/s3/page-cover/generate-url?pageId=${pageId}`
     );
   }
 
