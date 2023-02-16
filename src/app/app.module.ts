@@ -24,31 +24,25 @@ import { VerifyEmailGuard } from './guards/verifyEmail.guard';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { TokenIntercepterService } from './Intercepter/token-intercepter.service';
 
-import { HeaderComponent } from './user/user-pages/header/header.component';
-import { FooterComponent } from './user/footer/footer.component';
-import { HomeComponent } from './user/user-pages/home/home.component';
-import { SignupComponent } from './user/auth/signup/signup.component';
-import { SigninComponent } from './user/auth/signin/signin.component';
-import { VerifyEmailComponent } from './user/auth/verify-email/verify-email.component';
-import { UserPagesComponent } from './user/user-pages/user-pages.component';
-import { AuthComponent } from './user/auth/auth.component';
+import { HeaderComponent } from './user-pages/header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { HomeComponent } from './user-pages/home/home.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { SigninComponent } from './auth/signin/signin.component';
+import { VerifyEmailComponent } from './auth/verify-email/verify-email.component';
+import { UserPagesComponent } from './user-pages/user-pages.component';
+import { AuthComponent } from './auth/auth.component';
 
-import { AdminPagesComponent } from './admin/admin-pages/admin-pages.component';
-import { DashboardComponent } from './admin/admin-pages/dashboard/dashboard.component';
-import { AuthAdminComponent } from './admin/auth/auth-admin.component';
-import { AdminSigninComponent } from './admin/auth/admin-signin/admin-signin.component';
-import { AdminAuthGuard } from './guards/adminAuth.guard';
-import { AdminSigninGuard } from './guards/adminSignin.guard';
-import { UserWorkspaceComponent } from './user/main-workspaces/user-workspace/user-workspace.component';
+import { UserWorkspaceComponent } from './main-workspaces/user-workspace/user-workspace.component';
 import { UserAutherizationGuard } from './guards/userAutherization.guard';
-import { WorkspaceLeftNavComponent } from './user/main-workspaces/user-workspace/workspace-left-nav/workspace-left-nav.component';
-import { WorkspaceComponent } from './user/main-workspaces/user-workspace/workspace/workspace.component';
-import { ProjectWorkspaceComponent } from './user/main-workspaces/project-workspace/project-workspace.component';
-import { ProWorkspaceComponent } from './user/main-workspaces/project-workspace/pro-workspace/pro-workspace.component';
-import { LeftProWorkspaceNavComponent } from './user/main-workspaces/project-workspace/left-pro-workspace-nav/left-pro-workspace-nav.component';
-import { MainWorkspacesComponent } from './user/main-workspaces/main-workspaces.component';
-import { ProBoardsComponent } from './user/main-workspaces/project-workspace/pro-boards/pro-boards.component';
-import { ProSettingsComponent } from './user/main-workspaces/project-workspace/pro-settings/pro-settings.component';
+import { WorkspaceLeftNavComponent } from './main-workspaces/user-workspace/workspace-left-nav/workspace-left-nav.component';
+import { WorkspaceComponent } from './main-workspaces/user-workspace/workspace/workspace.component';
+import { ProjectWorkspaceComponent } from './main-workspaces/project-workspace/project-workspace.component';
+import { ProWorkspaceComponent } from './main-workspaces/project-workspace/pro-workspace/pro-workspace.component';
+import { LeftProWorkspaceNavComponent } from './main-workspaces/project-workspace/left-pro-workspace-nav/left-pro-workspace-nav.component';
+import { MainWorkspacesComponent } from './main-workspaces/main-workspaces.component';
+import { ProBoardsComponent } from './main-workspaces/project-workspace/pro-boards/pro-boards.component';
+import { ProSettingsComponent } from './main-workspaces/project-workspace/pro-settings/pro-settings.component';
 
 @NgModule({
   declarations: [
@@ -59,12 +53,8 @@ import { ProSettingsComponent } from './user/main-workspaces/project-workspace/p
     SignupComponent,
     SigninComponent,
     VerifyEmailComponent,
-    DashboardComponent,
-    AuthAdminComponent,
     UserPagesComponent,
-    AdminPagesComponent,
     AuthComponent,
-    AdminSigninComponent,
     UserWorkspaceComponent,
     WorkspaceLeftNavComponent,
     WorkspaceComponent,
@@ -118,8 +108,6 @@ import { ProSettingsComponent } from './user/main-workspaces/project-workspace/p
     },
     VerifyEmailGuard,
     AuthenticationGuard,
-    AdminAuthGuard,
-    AdminSigninGuard,
     UserAutherizationGuard,
   ],
   bootstrap: [AppComponent],

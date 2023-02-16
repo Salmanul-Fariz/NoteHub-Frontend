@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
-import { AuthenticationService } from '../../../service/authentication.service';
-import { ParticlesConfig } from './../../../../assets/particleJS/particles.config';
+import { AuthenticationService } from '../../service/authentication.service';
+import { ParticlesConfig } from './../../../assets/particleJS/particles.config';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/service/user.service';
 
