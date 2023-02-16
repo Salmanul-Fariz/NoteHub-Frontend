@@ -22,7 +22,7 @@ export class ProWorkspaceComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((data) => {
+    this.route.params.subscribe((data) => {
       this._projectService.GetBoardDetails(data?.['id']).subscribe({
         next: (response) => {
           this._projectService.board_Details = response.data.boardDetails;
@@ -30,12 +30,7 @@ export class ProWorkspaceComponent implements OnInit, OnDestroy {
 
           this.boardDetails = this._projectService.board_Details;
         },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            this.router.navigate(['auth/signin']);
-          }
-        },
+        error: (error) => {},
       });
     });
   }

@@ -48,6 +48,7 @@ import { ProWorkspaceComponent } from './user/main-workspaces/project-workspace/
 import { LeftProWorkspaceNavComponent } from './user/main-workspaces/project-workspace/left-pro-workspace-nav/left-pro-workspace-nav.component';
 import { MainWorkspacesComponent } from './user/main-workspaces/main-workspaces.component';
 import { ProBoardsComponent } from './user/main-workspaces/project-workspace/pro-boards/pro-boards.component';
+import { ProSettingsComponent } from './user/main-workspaces/project-workspace/pro-settings/pro-settings.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { ProBoardsComponent } from './user/main-workspaces/project-workspace/pro
     LeftProWorkspaceNavComponent,
     MainWorkspacesComponent,
     ProBoardsComponent,
+    ProSettingsComponent,
   ],
   imports: [
     BrowserModule,

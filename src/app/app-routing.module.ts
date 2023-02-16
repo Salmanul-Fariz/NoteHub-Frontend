@@ -23,6 +23,7 @@ import { AdminSigninComponent } from './admin/auth/admin-signin/admin-signin.com
 import { MainWorkspacesComponent } from './user/main-workspaces/main-workspaces.component';
 import { ProBoardsComponent } from './user/main-workspaces/project-workspace/pro-boards/pro-boards.component';
 import { ProWorkspaceComponent } from './user/main-workspaces/project-workspace/pro-workspace/pro-workspace.component';
+import { ProSettingsComponent } from './user/main-workspaces/project-workspace/pro-settings/pro-settings.component';
 
 const appRoutes: Routes = [
   // user pages
@@ -49,7 +50,11 @@ const appRoutes: Routes = [
             component: ProjectWorkspaceComponent,
             children: [
               { path: '', component: ProBoardsComponent },
-              { path: 'boards', component: ProWorkspaceComponent },
+              {
+                path: 'boards/:id',
+                component: ProWorkspaceComponent,
+              },
+              { path: 'boards/:id/settings', component: ProSettingsComponent },
             ],
           },
         ],

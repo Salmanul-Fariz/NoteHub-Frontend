@@ -19,7 +19,7 @@
   <div>
     <hr>
     <div class="workspace-board-container">
-      <div class="workspace-board-bar">
+      <div class="workspace-board-bar" [routerLink]="['/workspaces/project-workspace/boards',projectId]">
         <i class="fa-solid fa-table-columns"></i>
         <h5>Board</h5>
       </div>
@@ -31,7 +31,7 @@
         <i class="fa-solid fa-circle-info"></i>
         <h5>Project details</h5>
       </div>
-      <div class="workspace-board-bar">
+      <div class="workspace-board-bar" [routerLink]="['/workspaces/project-workspace/boards',projectId,'settings']">
         <i class="fa-solid fa-gear"></i>
         <h5>Project Settings</h5>
       </div>

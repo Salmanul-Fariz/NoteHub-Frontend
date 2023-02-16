@@ -15,6 +15,7 @@ export class ProjectWorkspaceService {
   userDetails: any;
   boardsDetails: any[];
   board_Details: any[];
+  boardSelectedId: string;
 
   constructor(private _http: HttpClient) {}
 
@@ -43,8 +44,9 @@ export class ProjectWorkspaceService {
 
   // Get the board details
   GetBoardDetails(data: string) {
+    this.boardSelectedId = data;
     return this._http.get<any>(
-      `${environment.baseUrl}/workspaces/project-workspace/board/${data}`
+      `${environment.baseUrl}/workspaces/project-workspace/boards/${data}`
     );
   }
 

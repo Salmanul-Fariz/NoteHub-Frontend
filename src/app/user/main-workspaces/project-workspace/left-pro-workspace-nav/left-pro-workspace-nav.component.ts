@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProjectWorkspaceService } from 'src/app/service/projectWorkspace.service';
 
@@ -11,8 +12,12 @@ export class LeftProWorkspaceNavComponent implements OnInit, OnDestroy {
   detailSubscribtion: Subscription;
   userDetails: any;
   boardDetails: any;
+  projectId: string;
 
-  constructor(private _projectService: ProjectWorkspaceService) {}
+  constructor(
+    private _projectService: ProjectWorkspaceService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.detailSubscribtion =
@@ -20,6 +25,20 @@ export class LeftProWorkspaceNavComponent implements OnInit, OnDestroy {
         this.userDetails = this._projectService.userDetails;
         this.boardDetails = this._projectService.boardsDetails;
       });
+
+    const url = this.router.url.split('/');
+    if (url.length >= 5) {
+      this.projectId = url[4];
+    }
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const url = event.url.split('/');
+        if (url.length >= 5) {
+          this.projectId = url[4];
+        }
+      }
+    });
   }
 
   // Board Settings
