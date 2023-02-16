@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../../service/authentication.service';
 import { ParticlesConfig } from './../../../assets/particleJS/particles.config';
 
-declare let particlesJS: any;
+// declare let particlesJS: any;
 
 @Component({
   selector: 'app-signin',
@@ -18,6 +18,7 @@ declare let particlesJS: any;
   styleUrls: ['./signin.component.css'],
 })
 export class SigninComponent implements OnInit {
+  hide = true;
   isLoading = false;
   passwordErr = false;
   userOrMailErr = false;
@@ -34,7 +35,7 @@ export class SigninComponent implements OnInit {
 
   ngOnInit() {
     // Particle JS
-    this.invokeParticles();
+    // this.invokeParticles();
 
     // Form Setup
     this.signinForm = new FormGroup({
@@ -121,9 +122,9 @@ export class SigninComponent implements OnInit {
     });
   }
 
-  // Particle JS
-  invokeParticles(): void {
-    console.log('particle');
-    particlesJS('particles-js', ParticlesConfig);
-  }
+  // // Particle JS
+  // invokeParticles(): void {
+  //   console.log('particle');
+  //   particlesJS('particles-js', ParticlesConfig);
+  // }
 }

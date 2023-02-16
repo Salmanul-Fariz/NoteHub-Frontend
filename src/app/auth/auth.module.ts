@@ -13,14 +13,11 @@ import {
   SocialLoginModule,
 } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [SharedModule, AuthRouting, SocialLoginModule],
-  declarations: [
-    SignupComponent,
-    SigninComponent,
-    VerifyEmailComponent,
-  ],
+  declarations: [SignupComponent, SigninComponent, VerifyEmailComponent],
   providers: [
     {
       provide: 'SocialAuthServiceConfig',

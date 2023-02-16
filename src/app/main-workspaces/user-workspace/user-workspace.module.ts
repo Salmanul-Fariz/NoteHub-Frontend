@@ -10,7 +10,7 @@ import { WorkspaceComponent } from './workspace/workspace.component';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  imports: [SharedModule, CommonModule, UserWorkspaceRouting],
+  imports: [SharedModule, UserWorkspaceRouting],
   declarations: [
     UserWorkspaceComponent,
     WorkspaceLeftNavComponent,

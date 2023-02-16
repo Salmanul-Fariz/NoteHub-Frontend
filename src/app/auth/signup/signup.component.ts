@@ -9,7 +9,7 @@ import { ParticlesConfig } from './../../../assets/particleJS/particles.config';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/service/user.service';
 
-declare let particlesJS: any;
+// declare let particlesJS: any;
 
 @Component({
   selector: 'app-signup',
@@ -17,6 +17,7 @@ declare let particlesJS: any;
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit, OnDestroy {
+  hide = true;
   authEmailFail = false;
   authEmailExist = false;
   isLoading = false;
@@ -35,7 +36,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Particle JS
-    this.invokeParticles();
+    // this.invokeParticles();
 
     // Form Setup
     this.signupForm = new FormGroup({
@@ -154,10 +155,10 @@ export class SignupComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Particle JS
-  invokeParticles(): void {
-    particlesJS('particles-js', ParticlesConfig);
-  }
+  // // Particle JS
+  // invokeParticles(): void {
+  //   particlesJS('particles-js', ParticlesConfig);
+  // }
 
   ngOnDestroy(): void {
     this.googleSubscription.unsubscribe();

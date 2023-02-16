@@ -39,8 +39,14 @@
       </div>
       <div class="block mt-4">
         <label for="userName">Password</label>
-        <input type="password" formControlName="password" placeholder="●●●●● "
-          class="w-full mt-2 h-10 md:h-11 authInput" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+        <div class="relative">
+          <input [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="●●●●● "
+            class="w-full mt-2 h-10 md:h-11 authInput" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+          <span class="hideButton" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </span>
+        </div>
         <small class="block text-sm pt-2"
           *ngIf="!signupForm.get('password')!.valid && signupForm.get('password')!.touched ">
           <span *ngIf="signupForm.get('password').errors['required']">Field is required ! </span>

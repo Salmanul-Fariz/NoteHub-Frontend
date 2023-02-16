@@ -11,4 +11,4 @@ import { ProSettingsComponent } from './pro-settings/pro-settings.component';
   declarations: [ProBoardsComponent, ProSettingsComponent],
   exports: [RouterModule],
 })
-export default class CommonModule {}
+export default class ProjectWorkspaceModule {}

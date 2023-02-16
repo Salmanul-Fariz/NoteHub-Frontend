@@ -12,6 +12,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
@@ -27,6 +29,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatSelectModule,
     MatTableModule,
     DragDropModule,
+    MatFormFieldModule,
+    CommonModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -41,6 +45,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatSelectModule,
     MatTableModule,
     DragDropModule,
+    MatFormFieldModule,
+    CommonModule,
   ],
 })
 export class SharedModule {}

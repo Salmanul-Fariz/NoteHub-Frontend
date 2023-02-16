@@ -135,3 +135,11 @@ button[disabled]:hover {
   position: absolute;
   z-index: 0;
 }
+
+/* hide button */
+.hideButton {
+  position: absolute;
+  top: 16px;
+  right: 10px;
+  color: #222;
+}

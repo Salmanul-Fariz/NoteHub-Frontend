@@ -7,7 +7,7 @@ import { UserPageRouting } from './user-page-routing.module';
 import { HomeComponent } from './user-pages/home/home.component';
 
 @NgModule({
-  imports: [SharedModule, CommonModule, UserPageRouting],
+  imports: [SharedModule, UserPageRouting],
   declarations: [HomeComponent],
   exports: [RouterModule],
 })
