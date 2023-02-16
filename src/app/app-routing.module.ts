@@ -1,23 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { VerifyEmailGuard } from './guards/verifyEmail.guard';
-import { AuthenticationGuard } from './guards/authentication.guard';
 import { UserAutherizationGuard } from './guards/userAutherization.guard';
 
-import { SignupComponent } from './auth/signup/signup.component';
-import { HomeComponent } from './user-pages/home/home.component';
-import { VerifyEmailComponent } from './auth/verify-email/verify-email.component';
-import { SigninComponent } from './auth/signin/signin.component';
-import { UserPagesComponent } from './user-pages/user-pages.component';
-import { UserWorkspaceComponent } from './main-workspaces/user-workspace/user-workspace.component';
+import { UserPagesComponent } from './common/user-pages/user-pages.component';
 import { AuthComponent } from './auth/auth.component';
 import { ProjectWorkspaceComponent } from './main-workspaces/project-workspace/project-workspace.component';
 
 import { MainWorkspacesComponent } from './main-workspaces/main-workspaces.component';
-import { ProBoardsComponent } from './main-workspaces/project-workspace/pro-boards/pro-boards.component';
-import { ProWorkspaceComponent } from './main-workspaces/project-workspace/pro-workspace/pro-workspace.component';
-import { ProSettingsComponent } from './main-workspaces/project-workspace/pro-settings/pro-settings.component';
+
 
 const appRoutes: Routes = [
   // user pages
@@ -27,7 +18,9 @@ const appRoutes: Routes = [
       {
         path: '',
         component: UserPagesComponent,
-        children: [{ path: '', component: HomeComponent }],
+        // Common module
+        loadChildren: () =>
+          import('./common/user-page.module').then((m) => m.default),
       },
       // User Workspace Component
       {
@@ -37,19 +30,20 @@ const appRoutes: Routes = [
         children: [
           {
             path: 'user-workspace',
-            component: UserWorkspaceComponent,
+            // user Workspace Module,
+            loadChildren: () =>
+              import(
+                './main-workspaces/user-workspace/user-workspace.module'
+              ).then((m) => m.default),
           },
           {
             path: 'project-workspace',
             component: ProjectWorkspaceComponent,
-            children: [
-              { path: '', component: ProBoardsComponent },
-              {
-                path: 'boards/:id',
-                component: ProWorkspaceComponent,
-              },
-              { path: 'boards/:id/settings', component: ProSettingsComponent },
-            ],
+            // Project Workspace Module
+            loadChildren: () =>
+              import(
+                './main-workspaces/project-workspace/project-workspace.module'
+              ).then((m) => m.default),
           },
         ],
       },
@@ -57,23 +51,8 @@ const appRoutes: Routes = [
       {
         path: 'auth',
         component: AuthComponent,
-        children: [
-          {
-            path: 'signup',
-            component: SignupComponent,
-            canActivate: [AuthenticationGuard],
-          },
-          {
-            path: 'signin',
-            component: SigninComponent,
-            canActivate: [AuthenticationGuard],
-          },
-          {
-            path: 'verify',
-            component: VerifyEmailComponent,
-            canActivate: [VerifyEmailGuard],
-          },
-        ],
+        // Auth Module
+        loadChildren: () => import('./auth/auth.module').then((m) => m.default),
       },
     ],
   },
