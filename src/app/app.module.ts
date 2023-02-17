@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared.module';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app.routing';
 import { VerifyEmailGuard } from './guards/verifyEmail.guard';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { TokenIntercepterService } from './Intercepter/token-intercepter.service';

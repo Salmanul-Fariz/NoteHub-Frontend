@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authentication.service';
 
 @Component({
@@ -18,18 +18,27 @@ export class HeaderComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
+    this.userLoggedIn = this.authService.isAuthenticated() ? true : false;
+
+    const url = this.router.url.split('/')[1];
+    this.changeRouterColor(url);
+
     // currentRoute setting
     this.router.events.subscribe((event: any) => {
-      if (event.routerEvent) {
+      if (event instanceof NavigationEnd) {
         this.userLoggedIn = this.authService.isAuthenticated() ? true : false;
-
-        const route = event.routerEvent.url.split('/')[1];
-        if (route === '') this.currentRoute = 'home';
-        else if (route === 'support') this.currentRoute = 'support';
-        else if (route === 'workspaces') this.currentRoute = 'workspaces';
-        else if (route === 'feedback') this.currentRoute = 'feedback';
+        const route = event.url.split('/')[1];
+        this.changeRouterColor(route);
       }
     });
+  }
+
+  changeRouterColor(route: string) {
+    this.currentRoute = '';
+
+    if (route === '') this.currentRoute = 'home';
+    else if (route === 'support') this.currentRoute = 'support';
+    else if (route === 'workspaces') this.currentRoute = 'workspaces';
   }
 
   ngOnChanges(changes: any) {}

@@ -8,9 +8,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../../service/authentication.service';
-import { ParticlesConfig } from './../../../assets/particleJS/particles.config';
-
-// declare let particlesJS: any;
 
 @Component({
   selector: 'app-signin',
@@ -34,9 +31,6 @@ export class SigninComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Particle JS
-    // this.invokeParticles();
-
     // Form Setup
     this.signinForm = new FormGroup({
       usernameOrEmail: new FormControl(null, {
@@ -121,10 +115,4 @@ export class SigninComponent implements OnInit {
       },
     });
   }
-
-  // // Particle JS
-  // invokeParticles(): void {
-  //   console.log('particle');
-  //   particlesJS('particles-js', ParticlesConfig);
-  // }
 }

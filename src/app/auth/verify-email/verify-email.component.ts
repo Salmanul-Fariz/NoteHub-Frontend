@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
-import { ParticlesConfig } from 'src/assets/particleJS/particles.config';
 import { AuthenticationService } from '../../service/authentication.service';
 
 @Component({

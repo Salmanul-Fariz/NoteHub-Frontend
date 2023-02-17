@@ -5,11 +5,7 @@ import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 import { AuthenticationService } from '../../service/authentication.service';
-import { ParticlesConfig } from './../../../assets/particleJS/particles.config';
 import { Subscription } from 'rxjs';
-import { UserService } from 'src/app/service/user.service';
-
-// declare let particlesJS: any;
 
 @Component({
   selector: 'app-signup',
@@ -35,9 +31,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Particle JS
-    // this.invokeParticles();
-
     // Form Setup
     this.signupForm = new FormGroup({
       userName: new FormControl(null, [
@@ -154,11 +147,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       },
     });
   }
-
-  // // Particle JS
-  // invokeParticles(): void {
-  //   particlesJS('particles-js', ParticlesConfig);
-  // }
 
   ngOnDestroy(): void {
     this.googleSubscription.unsubscribe();

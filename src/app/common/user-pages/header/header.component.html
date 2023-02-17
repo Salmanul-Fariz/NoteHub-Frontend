@@ -24,13 +24,10 @@
     <li [ngClass]="{currentRoute:currentRoute==='support'}">
       <a class="text-white">SUPPORT</a>
     </li>
-    <li [ngClass]="{currentRoute:currentRoute==='feedback'}">
-      <a class="text-white">FEEDBACK</a>
-    </li>
     <button *ngIf="!userLoggedIn" [routerLink]="['/auth/signup']" class="bg-white text-black rounded px-6 py-2 mx-4">
       Get Start
     </button>
-    <button *ngIf="userLoggedIn" class="bg-primary text-white rounded px-6 py-2 mx-4">
+    <button [routerLink]="['/profile']" *ngIf="userLoggedIn" class="bg-primary text-white rounded px-6 py-2 mx-4">
       My Account
     </button>
   </ul>
