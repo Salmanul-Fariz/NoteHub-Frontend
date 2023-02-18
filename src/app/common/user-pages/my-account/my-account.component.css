@@ -17,3 +17,48 @@ mat-sidenav-container {
   padding: 8px;
   overflow: auto;
 }
+
+/* Modals */
+.log-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.log-close-modal {
+  font-size: 35px;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.log-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 1;
+  cursor: pointer;
+}
+
+.logOutButton button:first-child {
+  background-color: #0053a6;
+}
+
+.logOutButton button {
+  padding: 2px 9px;
+  font-size: 18px;
+  color: white;
+  border: solid 1px transparent;
+  background-color: #b01d1d;
+  border-radius: 10px;
+}

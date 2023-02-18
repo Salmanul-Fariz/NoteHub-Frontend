@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { ProfileService } from 'src/app/service/profile.service';
 
 @Component({
   selector: 'app-left-nav-profile',
@@ -9,7 +10,10 @@ import { NavigationEnd, Router } from '@angular/router';
 export class LeftNavProfileComponent implements OnInit {
   currentRoute: any;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private _profileService: ProfileService
+  ) {}
 
   ngOnInit(): void {
     const url = this.router.url.split('/');
@@ -37,5 +41,9 @@ export class LeftNavProfileComponent implements OnInit {
         }
       }
     }
+  }
+
+  logoutTransfer() {
+    this._profileService.LogoutDataTransfer.emit(true);
   }
 }

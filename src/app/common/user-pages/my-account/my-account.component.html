@@ -20,3 +20,25 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<!-- Modals -->
+
+<!-- page Delete Alert upload modal -->
+<div class="log-modal w-10/12 md:w-6/12" [ngClass]="{'hidden':!isLogout}">
+  <div class="flex flex-col">
+    <div class="flex justify-end mr-4">
+      <button class="log-close-modal" (click)="cancelLogout()">&times;</button>
+    </div>
+    <div class="flex flex-col justify-start mt-2 pt-2 pl-8 pr-8 pb-6 gap-y-4">
+      <div class="w-full">
+        <p class="text-xl">Do you really want to logout ?</p>
+      </div>
+      <div class="w-full flex justify-end gap-4 logOutButton mt-2">
+        <button (click)="cancelLogout()">Cancel</button>
+        <button (click)="successLogout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="log-overlay" [ngClass]="{'hidden':!isLogout}" (click)="cancelLogout()"></div>
