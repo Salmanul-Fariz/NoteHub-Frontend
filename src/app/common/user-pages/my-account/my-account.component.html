@@ -1,71 +1,22 @@
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
-<p>my-account works!</p>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav">
+
+    <!-- navbar -->
+    <app-left-nav-profile></app-left-nav-profile>
+
+
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="workspace-container">
+      <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+        <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+        <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+      </button>
+
+      <!-- workspace -->
+      <router-outlet></router-outlet>
+
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,29 @@
+<section class="mt-4">
+  <div class="left-profile-nav-items" [routerLink]="['/profile']">
+    <div [ngStyle]="{'border-left':currentRoute==='profile'?'solid 3px #2f7fcf':'solid 3px transparent',
+      'color':currentRoute==='profile'?'#2f7fcf':'#222'}">
+      <i class="fa-solid fa-circle-user"></i>
+      <p>Your Profile</p>
+    </div>
+  </div>
+  <div class="left-profile-nav-items" [routerLink]="['/profile/pages']">
+    <div [ngStyle]="{'border-left':currentRoute==='pages'?'solid 3px #2f7fcf':'solid 3px transparent',
+      'color':currentRoute==='pages'?'#2f7fcf':'#222'}">
+      <i class="fa-solid fa-file"></i>
+      <p>Your Pages</p>
+    </div>
+  </div>
+  <div class="left-profile-nav-items" [routerLink]="['/profile/projects']">
+    <div [ngStyle]="{'border-left':currentRoute==='projects'?'solid 3px #2f7fcf':'solid 3px transparent',
+      'color':currentRoute==='projects'?'#2f7fcf':'#222'}">
+      <i class="fa-solid fa-table-columns"></i>
+      <p>Your Projects</p>
+    </div>
+  </div>
+  <div class="left-profile-nav-items">
+    <div class="logout">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      <p>Logout</p>
+    </div>
+  </div>
+</section>

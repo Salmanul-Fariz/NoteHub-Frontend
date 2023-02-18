@@ -1,0 +1,39 @@
+.left-profile-nav-items {
+  padding: 8px 5px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  border-radius: 8px;
+  user-select: none;
+}
+
+.left-profile-nav-items:hover {
+  background-color: #d5d5d5;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.left-profile-nav-items > div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  padding: 3px 8px;
+}
+
+.left-profile-nav-items p {
+  font-size: 18px;
+  overflow: hidden;
+}
+
+.left-profile-nav-items i {
+  font-size: 20px;
+  width: 25px;
+}
+
+.logout {
+  border-left: solid 3px transparent;
+}

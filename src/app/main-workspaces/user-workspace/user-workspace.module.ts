@@ -7,7 +7,6 @@ import { UserWorkspaceRouting } from './user-workspace.routing';
 import { UserWorkspaceComponent } from './user-workspace.component';
 import { WorkspaceLeftNavComponent } from './workspace-left-nav/workspace-left-nav.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
-import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [SharedModule, UserWorkspaceRouting],

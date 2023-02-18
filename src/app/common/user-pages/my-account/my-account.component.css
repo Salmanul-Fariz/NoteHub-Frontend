@@ -1,0 +1,19 @@
+mat-sidenav {
+  width: 160px;
+  background: #efefef;
+  border: none;
+  text-align: center;
+}
+
+mat-sidenav-container {
+  height: calc(100vh - 64px);
+}
+
+.workspace-container {
+  height: calc(100vh - 77px);
+  border-radius: 10px;
+  margin: 6px;
+  margin-left: 18px;
+  padding: 8px;
+  overflow: auto;
+}
