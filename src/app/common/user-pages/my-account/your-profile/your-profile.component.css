@@ -6,20 +6,29 @@
   align-items: flex-end;
 }
 
-.profile-image-section img {
+.profile-image-section div {
   border-radius: 70px;
   border: solid 1px #e7e7e7;
+  background-size: 100% auto;
+  background-position: center;
+  background-color: #cdcdcd;
+  background-repeat: no-repeat;
 }
 
-.profile-image-section button {
+.profile-image-section label {
   padding: 0px 10px;
   font-size: 16px;
   background-color: #9f9e9e;
   color: #fff;
   border-radius: 5px;
+  cursor: pointer;
 }
 
-.profile-image button:hover {
+.profile-image-section input {
+  display: none;
+}
+
+.profile-image-section label:hover {
   cursor: pointer;
   background-color: #c5c4c4;
 }
@@ -52,7 +61,6 @@
 
 .profile-info input:focus {
   outline: none;
-  border: solid 1px #c5c5c5;
   background-color: #e9e9e9;
   color: #585858;
 }

@@ -18,6 +18,11 @@ export class S3BucketService {
     );
   }
 
+  // Update the profile image
+  updateProfileImg() {
+    return this.http.get<any>(`${environment.baseUrl}/s3/profile`);
+  }
+
   // post the image directly to the s3 bucket userWorkspace page cover
   async uploadpageCoverImg(url: string, file: string) {
     return await fetch(url, {

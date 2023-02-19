@@ -1,20 +1,22 @@
 <section>
   <div class="profile-image-section">
-    <img class="w-20 md:w-22 lg:w-28 h-20 md:h-22 lg:h-28"
-      src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/cd006748061765.588d8e1a9a1a4.png"
-      alt="profile-image">
-    <button class="mb-2">Edit</button>
+    <div class="w-20 md:w-22 lg:w-28 h-20 md:h-22 lg:h-28" [ngStyle]="{'background-image':userDetails?.profilePhoto}">
+    </div>
+    <form action="">
+      <input (input)="uploadCover($event)" id="files" type="file" accept="image/*" />
+      <label for="files">Edit</label>
+    </form>
   </div>
 
   <div class="profile-info-section w-2/2 sm:w-1/2">
     <form class="flex flex-col justify-start gap-y-5 profile-info">
       <div class="w-full flex flex-col lg:flex-row justify-between gap-2">
         <label>Full name</label>
-        <input type="text" placeholder="Enter your name">
+        <input class="lg:w-2/3" type="text" placeholder="Enter your name" value="{{userDetails?.fullName}}">
       </div>
       <div class="w-full flex flex-col lg:flex-row justify-between gap-2">
         <label>User name</label>
-        <input type="text" placeholder="Enter your username">
+        <input class="lg:w-2/3" type="text" placeholder="Enter your username" value="{{userDetails?.userName}}">
       </div>
     </form>
   </div>
