@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { debounceTime, Subscription, switchMap } from 'rxjs';
 import { ProfileService } from 'src/app/service/profile.service';
 import { S3BucketService } from 'src/app/service/s3-bucket.service';
 
@@ -12,6 +13,8 @@ import { S3BucketService } from 'src/app/service/s3-bucket.service';
 export class YourProfileComponent implements OnInit, OnDestroy {
   userDetails: any;
   UserDetailsSubscribtion: Subscription;
+  FullNameControl = new FormControl();
+  requiredData: boolean;
 
   constructor(
     private _profileService: ProfileService,
@@ -28,16 +31,46 @@ export class YourProfileComponent implements OnInit, OnDestroy {
         this.userDetails = this._profileService.UserDetails;
       },
       error: (error) => {
-        // if (error.status === 408 || 400) {
-        //   localStorage.clear();
-        //   this.router.navigate(['auth/signin']);
-        // }
+        if (error.status === 408 || 400) {
+          localStorage.clear();
+          this.router.navigate(['auth/signin']);
+        }
       },
     });
 
     this.UserDetailsSubscribtion =
       this._profileService.UserDetailsDataTransfer.subscribe((data) => {
         this.userDetails = data;
+      });
+
+    // Full Name update
+    this.FullNameControl.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe((changedValue) => {
+        this.requiredData = false;
+        if (changedValue.length > 4) {
+          this._profileService.ProfileFullNameUpdate(changedValue).subscribe({
+            next: (response) => {
+              response.data.profilePhoto = `url(${response.data.profilePhoto})`;
+
+              this._profileService.UserDetails = response.data;
+              this._profileService.UserDetailsDataTransfer.emit(
+                this._profileService.UserDetails
+              );
+              document.body.style.cursor = 'auto';
+            },
+            error: (error) => {
+              document.body.style.cursor = 'auto';
+              if (error.status === 408 || 400) {
+                localStorage.clear();
+                document.body.style.cursor = 'auto';
+                this.router.navigate(['auth/signin']);
+              }
+            },
+          });
+        } else {
+          this.requiredData = true;
+        }
       });
   }
 
@@ -69,9 +102,9 @@ export class YourProfileComponent implements OnInit, OnDestroy {
               error: (error) => {
                 document.body.style.cursor = 'auto';
                 if (error.status === 408 || 400) {
-                  // localStorage.clear();
-                  // document.body.style.cursor = 'auto';
-                  // this.router.navigate(['auth/signin']);
+                  localStorage.clear();
+                  document.body.style.cursor = 'auto';
+                  this.router.navigate(['auth/signin']);
                 }
               },
             });
@@ -80,14 +113,17 @@ export class YourProfileComponent implements OnInit, OnDestroy {
         error: (error) => {
           document.body.style.cursor = 'auto';
           if (error.status === 408 || 400) {
-            // localStorage.clear();
-            // document.body.style.cursor = 'auto';
-            // this.router.navigate(['auth/signin']);
+            localStorage.clear();
+            document.body.style.cursor = 'auto';
+            this.router.navigate(['auth/signin']);
           }
         },
       });
     }
   }
+
+  // Full Name update
+  fullNameUpdate(event: any) {}
 
   ngOnDestroy(): void {
     this.UserDetailsSubscribtion.unsubscribe();

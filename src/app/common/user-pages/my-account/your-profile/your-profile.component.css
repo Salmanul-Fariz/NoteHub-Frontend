@@ -38,6 +38,10 @@
   padding: 36px 14px;
 }
 
+.profile-info-section span {
+  color: red;
+}
+
 .profile-info label {
   font-size: 20px;
   display: flex;

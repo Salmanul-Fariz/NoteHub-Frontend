@@ -22,6 +22,12 @@ export class ProfileService {
     });
   }
 
+  ProfileFullNameUpdate(value: string) {
+    return this.http.patch<any>(`${environment.baseUrl}/profile/name`, {
+      value,
+    });
+  }
+
   logout() {
     this.router.navigate(['/']);
     localStorage.clear();
