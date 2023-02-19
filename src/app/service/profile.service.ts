@@ -28,6 +28,12 @@ export class ProfileService {
     });
   }
 
+  ProfileUserNameUpdate(value: string) {
+    return this.http.patch<any>(`${environment.baseUrl}/profile/username`, {
+      value,
+    });
+  }
+
   logout() {
     this.router.navigate(['/']);
     localStorage.clear();

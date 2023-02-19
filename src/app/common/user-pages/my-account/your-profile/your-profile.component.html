@@ -10,6 +10,7 @@
 
   <div class="profile-info-section w-2/2 sm:w-1/2">
     <span *ngIf="requiredData" class="mt-2">Must Contain atleast 4 letter !</span>
+    <span *ngIf="existData" class="mt-2">User Name is required !</span>
     <form class="flex flex-col justify-start mt-3 gap-y-5 profile-info">
       <div class="w-full flex flex-col lg:flex-row justify-between gap-2">
         <label>Full name</label>
@@ -18,7 +19,8 @@
       </div>
       <div class="w-full flex flex-col lg:flex-row justify-between gap-2">
         <label>User name</label>
-        <input class="lg:w-2/3" type="text" placeholder="Enter your username" value="{{userDetails?.userName}}">
+        <input [formControl]="UserNameControl" class="lg:w-2/3" type="text" placeholder="Enter your username"
+          value="{{userDetails?.userName}}">
       </div>
     </form>
   </div>

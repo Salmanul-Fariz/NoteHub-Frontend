@@ -14,7 +14,9 @@ export class YourProfileComponent implements OnInit, OnDestroy {
   userDetails: any;
   UserDetailsSubscribtion: Subscription;
   FullNameControl = new FormControl();
+  UserNameControl = new FormControl();
   requiredData: boolean;
+  existData: boolean;
 
   constructor(
     private _profileService: ProfileService,
@@ -48,15 +50,61 @@ export class YourProfileComponent implements OnInit, OnDestroy {
       .pipe(debounceTime(500))
       .subscribe((changedValue) => {
         this.requiredData = false;
+        this.existData = false;
+
         if (changedValue.length > 4) {
           this._profileService.ProfileFullNameUpdate(changedValue).subscribe({
             next: (response) => {
-              response.data.profilePhoto = `url(${response.data.profilePhoto})`;
+              if (response.status === 'Null data') {
+                this.requiredData = true;
+              } else {
+                response.data.profilePhoto = `url(${response.data.profilePhoto})`;
 
-              this._profileService.UserDetails = response.data;
-              this._profileService.UserDetailsDataTransfer.emit(
-                this._profileService.UserDetails
-              );
+                this._profileService.UserDetails = response.data;
+                this._profileService.UserDetailsDataTransfer.emit(
+                  this._profileService.UserDetails
+                );
+              }
+              document.body.style.cursor = 'auto';
+            },
+            error: (error) => {
+              document.body.style.cursor = 'auto';
+              if (error.status === 408 || 400) {
+                localStorage.clear();
+                document.body.style.cursor = 'auto';
+                this.router.navigate(['auth/signin']);
+              }
+            },
+          });
+        } else {
+          this.requiredData = true;
+        }
+      });
+
+    // User Name update
+    this.UserNameControl.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe((changedValue) => {
+        this.requiredData = false;
+        this.existData = false;
+
+        if (changedValue.length > 4) {
+          this._profileService.ProfileUserNameUpdate(changedValue).subscribe({
+            next: (response) => {
+              console.log(response);
+
+              if (response.status === 'Null data') {
+                this.requiredData = true;
+              } else if (response.status === 'Exist data') {
+                this.existData = true;
+              } else {
+                response.data.profilePhoto = `url(${response.data.profilePhoto})`;
+
+                this._profileService.UserDetails = response.data;
+                this._profileService.UserDetailsDataTransfer.emit(
+                  this._profileService.UserDetails
+                );
+              }
               document.body.style.cursor = 'auto';
             },
             error: (error) => {
