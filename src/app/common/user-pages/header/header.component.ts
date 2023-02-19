@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   changeRouterColor(route: string) {
     this.currentRoute = '';
+    this.status = 'close';
 
     if (route === '') this.currentRoute = 'home';
     else if (route === 'support') this.currentRoute = 'support';
