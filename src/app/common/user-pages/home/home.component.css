@@ -1,0 +1,258 @@
+main {
+  background: #0e1525;
+}
+
+section {
+  width: 95%;
+  margin: 0 auto;
+}
+
+/* section 2 */
+.section-1-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 800px;
+  padding: 120px 0px;
+  row-gap: 5px;
+}
+
+.section-1-container div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-1-container h2 {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-style: normal;
+  font-weight: 400;
+  color: #ffffff;
+  font-family: 'JosefinSans-Regular';
+}
+
+.section-1-container h6 {
+  font-style: normal;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+  line-height: 42px;
+  max-width: 475px;
+}
+
+.section-1-container button {
+  padding: 8px 22px;
+  color: #fff;
+  background-color: #0053a6;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.section-1-container button:hover {
+  background-color: #fff;
+  color: #262626;
+}
+
+/* section 2 */
+.section-2-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 800px;
+  padding: 60px 0px;
+  row-gap: 30px;
+}
+
+.section-2-container div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-2-container h2 {
+  display: flex;
+  align-items: center;
+  text-align: start;
+  font-style: normal;
+  font-weight: 400;
+  color: #ffffff;
+  font-family: 'JosefinSans-Regular';
+}
+
+.section-2-container h6 {
+  font-style: normal;
+  font-weight: 400;
+  text-align: start;
+  color: #ffffff;
+  line-height: 42px;
+}
+
+.section-2-container span {
+  color: #71cf7b;
+  font-weight: 800;
+}
+
+/* section 3 */
+.section-3-container .left-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 800px;
+  padding: 100px 0px;
+  row-gap: 30px;
+}
+
+.section-3-container .left-bar div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-3-container .left-bar h2 {
+  display: flex;
+  align-items: center;
+  text-align: start;
+  font-style: normal;
+  font-weight: 400;
+  color: #ffffff;
+  font-family: 'JosefinSans-Regular';
+}
+
+.section-3-container .left-bar h6 {
+  font-style: normal;
+  font-weight: 400;
+  text-align: start;
+  color: #ffffff;
+  line-height: 42px;
+  max-width: 350px;
+}
+
+.section-3-container .left-bar span {
+  color: #71cf7b;
+  font-weight: 800;
+}
+
+.section-3-container .left-bar button {
+  background: #48b154;
+  border-radius: 10px;
+  color: #fff;
+  padding: 6px 26px;
+  font-size: 20px;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.section-3-container .left-bar button:hover {
+  background-color: #fff;
+  color: #262626;
+}
+
+/* section 4 */
+.section-4-container .right-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 800px;
+  padding: 100px 0px;
+  row-gap: 30px;
+}
+
+.section-4-container > div {
+  gap: 30px;
+}
+
+.section-4-container .right-bar div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-4-container .right-bar h2 {
+  display: flex;
+  align-items: center;
+  text-align: start;
+  font-style: normal;
+  font-weight: 400;
+  color: #ffffff;
+  font-family: 'JosefinSans-Regular';
+}
+
+.section-4-container .right-bar h6 {
+  font-style: normal;
+  font-weight: 400;
+  text-align: start;
+  color: #ffffff;
+  line-height: 42px;
+  max-width: 440px;
+}
+
+.section-4-container .right-bar span {
+  color: #71cf7b;
+  font-weight: 800;
+}
+
+.section-4-container .image {
+  background-color: antiquewhite;
+  width: 100%;
+  /* height: auto; */
+  height: 100px;
+}
+
+/* section 5 */
+.section-5-container .right-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 800px;
+  padding: 100px 0px;
+  row-gap: 30px;
+}
+
+.section-5-container > div {
+  gap: 30px;
+}
+
+.section-5-container .right-bar div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-5-container .right-bar h2 {
+  display: flex;
+  align-items: center;
+  text-align: start;
+  font-style: normal;
+  font-weight: 400;
+  color: #ffffff;
+  font-family: 'JosefinSans-Regular';
+}
+
+.section-5-container .right-bar h6 {
+  font-style: normal;
+  font-weight: 400;
+  text-align: start;
+  color: #ffffff;
+  line-height: 42px;
+  max-width: 440px;
+}
+
+.section-5-container .right-bar span {
+  color: #71cf7b;
+  font-weight: 800;
+}
+
+.section-5-container .image {
+  background-color: antiquewhite;
+  width: 100%;
+  /* height: auto; */
+  height: 100px;
+}
