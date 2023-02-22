@@ -5,10 +5,15 @@ import { ProjectWorkspaceRouting } from './project-workspace.routing';
 
 import { ProBoardsComponent } from './pro-boards/pro-boards.component';
 import { ProSettingsComponent } from './pro-settings/pro-settings.component';
+import { ProWorkspaceComponent } from './pro-workspace/pro-workspace.component';
 
 @NgModule({
   imports: [SharedModule, ProjectWorkspaceRouting],
-  declarations: [ProBoardsComponent, ProSettingsComponent],
+  declarations: [
+    ProBoardsComponent,
+    ProSettingsComponent,
+    ProWorkspaceComponent,
+  ],
   exports: [RouterModule],
 })
 export default class ProjectWorkspaceModule {}

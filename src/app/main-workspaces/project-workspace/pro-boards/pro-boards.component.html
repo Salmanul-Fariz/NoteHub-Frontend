@@ -10,7 +10,7 @@
 
   <div class="boards-table-container">
     <table mat-table [dataSource]="BoardDataSource" class="mat-elevation-z8"
-      *ngIf="BoardDataSource.data.length > 0 ; else elseBoard">
+      *ngIf="BoardDataSource?.data.length > 0 ; else elseBoard">
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">

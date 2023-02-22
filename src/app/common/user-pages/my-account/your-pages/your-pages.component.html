@@ -1,1 +1,42 @@
-<p>your-pages works!</p>
+<section>
+  <div class="page-title-container">
+    <button [routerLink]="['/workspaces/user-workspace']">Go to Pages</button>
+  </div>
+  <div class="pages-table-container">
+    <table mat-table [dataSource]="PagesDataSource" class="mat-elevation-z8"
+      *ngIf="PagesDataSource.data.length > 0 ; else elseBoard">
+
+      <!-- Pages icon Column -->
+      <ng-container matColumnDef="pageIcon">
+        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Pages Icon</th>
+        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element">
+          <ngx-emoji emoji="{{ element.icon }}" size="32"></ngx-emoji>
+        </td>
+      </ng-container>
+
+      <!-- Pages name Column -->
+      <ng-container matColumnDef="pageName">
+        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Pages Name</th>
+        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element.title}} </td>
+      </ng-container>
+
+      <!-- Pages Id Column -->
+      <ng-container matColumnDef="Id">
+        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Pages ID</th>
+        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element._id}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <ng-template #elseBoard>
+      <div class="empty-page-container">
+        <div class="empty-page">
+          <i class="fa-regular fa-file"></i>
+          <h3>Empty</h3>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</section>

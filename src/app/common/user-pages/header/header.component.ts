@@ -20,26 +20,30 @@ export class HeaderComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.userLoggedIn = this.authService.isAuthenticated() ? true : false;
 
-    const url = this.router.url.split('/')[1];
+    const url = this.router.url.split('/');
     this.changeRouterColor(url);
 
     // currentRoute setting
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.userLoggedIn = this.authService.isAuthenticated() ? true : false;
-        const route = event.url.split('/')[1];
+        const route = event.url.split('/');
         this.changeRouterColor(route);
       }
     });
   }
 
-  changeRouterColor(route: string) {
+  changeRouterColor(route: string[]) {
     this.currentRoute = '';
     this.status = 'close';
 
-    if (route === '') this.currentRoute = 'home';
-    else if (route === 'support') this.currentRoute = 'support';
-    else if (route === 'workspaces') this.currentRoute = 'workspaces';
+    if (route[1] === '') this.currentRoute = 'home';
+    else if (route[1] === 'support') this.currentRoute = 'support';
+    else if (route[1] === 'workspaces') {
+      if (route[2] === 'user-workspace') this.currentRoute = 'noteWorkspace';
+      if (route[2] === 'project-workspace')
+        this.currentRoute = 'projectWorkspace';
+    }
   }
 
   ngOnChanges(changes: any) {}

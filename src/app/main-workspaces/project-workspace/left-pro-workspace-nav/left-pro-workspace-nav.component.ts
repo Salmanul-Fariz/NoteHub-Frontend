@@ -10,6 +10,7 @@ import { ProjectWorkspaceService } from 'src/app/service/projectWorkspace.servic
 })
 export class LeftProWorkspaceNavComponent implements OnInit, OnDestroy {
   detailSubscribtion: Subscription;
+  projectRouteColor: string;
   userDetails: any;
   boardDetails: any;
   projectId: string;
@@ -27,6 +28,7 @@ export class LeftProWorkspaceNavComponent implements OnInit, OnDestroy {
       });
 
     const url = this.router.url.split('/');
+    this.routerColor(url);
     if (url.length >= 5) {
       this.projectId = url[4];
     }
@@ -34,11 +36,23 @@ export class LeftProWorkspaceNavComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const url = event.url.split('/');
+        this.routerColor(url);
         if (url.length >= 5) {
           this.projectId = url[4];
         }
       }
     });
+  }
+
+  routerColor(url: string[]) {
+    this.projectRouteColor = '';
+    if (url[url.length - 1] === 'settings') this.projectRouteColor = 'settings';
+    else if (url[url.length - 1] === 'details')
+      this.projectRouteColor = 'details';
+    else if (url[url.length - 1] === 'contributors')
+      this.projectRouteColor = 'contributors';
+    else if (url[url.length - 2] === 'boards')
+      this.projectRouteColor = 'boards';
   }
 
   // Board Settings

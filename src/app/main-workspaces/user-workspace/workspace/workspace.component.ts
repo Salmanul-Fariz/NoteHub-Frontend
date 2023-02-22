@@ -324,7 +324,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
   // Upadte Page name
   pageNameUpdate(value: string, id: string) {
-    if (value.length < 20) {
+    if (value.length < 20 && value.length > 0) {
       document.body.style.cursor = 'wait';
       this.workspaceService.UpdateWorkspacePageName(value, id).subscribe({
         next: (response) => {

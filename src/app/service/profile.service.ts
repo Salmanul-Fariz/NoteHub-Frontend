@@ -9,6 +9,7 @@ export class ProfileService {
   LogoutDataTransfer = new EventEmitter<boolean>();
   UserDetailsDataTransfer = new EventEmitter<any>();
   UserDetails: any;
+  PagesDetails: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -32,6 +33,11 @@ export class ProfileService {
     return this.http.patch<any>(`${environment.baseUrl}/profile/username`, {
       value,
     });
+  }
+
+  // Pages details in Profile Pages
+  ProfilePageDetailsGet() {
+    return this.http.get<any>(`${environment.baseUrl}/profile/pages`);
   }
 
   logout() {
