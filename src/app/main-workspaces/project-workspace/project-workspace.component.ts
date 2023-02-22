@@ -87,8 +87,6 @@ export class ProjectWorkspaceComponent
           next: (response) => {
             this._projectService.userDetails.workSpaces.projectWorkspace.name =
               value;
-            this._projectService.boardsDetails = response.data.boardDetails;
-            this._projectService.userDetails = response.data.userDetails;
 
             this._projectService.DetailsDataTransfer.emit({
               userDetails: this._projectService.userDetails,
