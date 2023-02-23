@@ -1,1 +1,31 @@
-<p>pro-contributors works!</p>
+<section *ngIf="boardDetails?._id;else elseBoard_details">
+  <div class="contributors-roles-container">
+    <div class="contributors-roles-head">
+      <h3 class="text-3xl sm:text-4xl">Roles</h3>
+      <i *ngIf="boardDetails?.roles.length > 0" class="fa-solid fa-circle-plus" (click)="addNewRole()"></i>
+    </div>
+    <div class="plus-icon" *ngIf="boardDetails?.roles.length === 0" (click)="addNewRole()">
+      <button>Add role</button>
+    </div>
+    <div class="contributors-roles" *ngIf="boardDetails?.roles.length > 0">
+
+      <div class="roles w-4/12 sm:w-2/12 " *ngFor="let element of boardDetails.roles">
+        <span [ngStyle]="{'background-color': element.color}"></span>
+        <p>{{element.name}}</p>
+        <div class="w-full h-full">
+          <i class="fa-solid fa-trash"></i>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<ng-template #elseBoard_details>
+  <div class="empty-page-container">
+    <div class="empty-page">
+      <i class="fa-regular fa-file"></i>
+      <h3>Select a Board</h3>
+    </div>
+  </div>
+</ng-template>

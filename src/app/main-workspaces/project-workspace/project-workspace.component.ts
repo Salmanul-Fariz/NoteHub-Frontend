@@ -25,12 +25,16 @@ export class ProjectWorkspaceComponent
   sidenav!: MatSidenav;
   ProjectSettingsDataTransfer: Subscription;
   CreateProjectDataTransfer: Subscription;
+  CreateRoleDataTransfer: Subscription;
   PageWorkspaceNameSubject = new Subject<string>();
   isProjectSettingsModal: boolean;
   isCreateProjectModal: boolean;
+  isCreateRoleModal: boolean;
   userDetails: any;
   BoardCreatingForm: FormGroup;
+  RoleCreatingForm: FormGroup;
   boardAlreadyExist: boolean;
+  roleAlreadyExist: boolean;
 
   constructor(
     private observer: BreakpointObserver,
@@ -46,6 +50,16 @@ export class ProjectWorkspaceComponent
       }),
       projectType: new FormControl(null, {
         validators: [Validators.required, Validators.maxLength(25)],
+      }),
+    });
+
+    // Role Creating Form
+    this.RoleCreatingForm = new FormGroup({
+      roleName: new FormControl(null, {
+        validators: [Validators.required, Validators.maxLength(25)],
+      }),
+      color: new FormControl(null, {
+        validators: [Validators.required],
       }),
     });
 
@@ -78,6 +92,12 @@ export class ProjectWorkspaceComponent
     this.CreateProjectDataTransfer =
       this._projectService.CreateProjectDataTransfer.subscribe((data) => {
         this.isCreateProjectModal = true;
+      });
+
+    // Create new project role
+    this.CreateRoleDataTransfer =
+      this._projectService.CreateRoleDataTransfer.subscribe((data) => {
+        this.isCreateRoleModal = true;
       });
 
     // update the data by debounceTime
@@ -135,6 +155,7 @@ export class ProjectWorkspaceComponent
   closeBoardModal() {
     this.isProjectSettingsModal = false;
     this.isCreateProjectModal = false;
+    this.isCreateRoleModal = false;
   }
 
   // Create Board
@@ -176,8 +197,48 @@ export class ProjectWorkspaceComponent
     });
   }
 
+  createRole(formData: any) {
+    const url = this.router.url.split('/');
+    this._projectService
+      .CreateProjectRole(formData, url[url.length - 2])
+      .subscribe({
+        next: (response) => {
+          this.roleAlreadyExist = false;
+
+          if (response.status === 'Existed') {
+            this.roleAlreadyExist = true;
+          } else {
+            // Role Creating Form
+            this.RoleCreatingForm = new FormGroup({
+              roleName: new FormControl(null, {
+                validators: [Validators.required, Validators.maxLength(25)],
+              }),
+              color: new FormControl(null, {
+                validators: [Validators.required],
+              }),
+            });
+
+            this._projectService.board_Details = response.data;
+
+            this._projectService.BoardDataTransfer.emit(
+              this._projectService.board_Details
+            );
+
+            this.closeBoardModal();
+          }
+        },
+        error: (error) => {
+          // if (error.status === 408 || 400) {
+          //   localStorage.clear();
+          //   this.router.navigate(['auth/signin']);
+          // }
+        },
+      });
+  }
+
   ngOnDestroy(): void {
     this.ProjectSettingsDataTransfer.unsubscribe();
     this.CreateProjectDataTransfer.unsubscribe();
+    this.CreateRoleDataTransfer.unsubscribe();
   }
 }

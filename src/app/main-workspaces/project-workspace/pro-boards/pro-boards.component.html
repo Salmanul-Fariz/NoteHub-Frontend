@@ -4,7 +4,7 @@
     <button class="text-sm md:text-lg bg-primary" (click)="createProject()">Create</button>
   </div>
 
-  <div class="boards-search ">
+  <div class="boards-search " *ngIf="BoardDataSource?.data.length > 0">
     <input class="w-8/12 sm:w-auto" type="search" placeholder="Search" (input)="filterBoardTable($event)">
   </div>
 
@@ -50,7 +50,5 @@
       </div>
     </ng-template>
   </div>
-
-
 
 </section>
