@@ -91,3 +91,16 @@ mat-sidenav-container {
   padding: 3px 20px;
   border-radius: 6px;
 }
+
+.pageDeleteButton button:first-child {
+  background-color: #0053a6;
+}
+
+.pageDeleteButton button {
+  padding: 2px 9px;
+  font-size: 18px;
+  color: white;
+  border: solid 1px transparent;
+  background-color: #b01d1d;
+  border-radius: 10px;
+}

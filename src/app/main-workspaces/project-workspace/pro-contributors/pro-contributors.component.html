@@ -55,8 +55,9 @@
 
         <!-- Remove Column -->
         <ng-container matColumnDef="remove">
-          <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Remove</th>
-          <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> <i class="fa-solid fa-trash"></i>
+          <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef></th>
+          <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element">
+            <i (click)="removeContributor(boardDetails._id,element.userId._id)" class="fa-solid fa-user-slash"></i>
           </td>
         </ng-container>
 

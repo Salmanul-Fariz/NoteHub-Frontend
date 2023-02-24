@@ -27,11 +27,13 @@ export class ProjectWorkspaceComponent
   CreateProjectDataTransfer: Subscription;
   CreateRoleDataTransfer: Subscription;
   CreateContributorsDataTransfer: Subscription;
+  RemoveContributorsDataTransfer: Subscription;
   PageWorkspaceNameSubject = new Subject<string>();
   isProjectSettingsModal: boolean;
   isCreateProjectModal: boolean;
   isCreateRoleModal: boolean;
   isCreateContributorsModal: boolean;
+  isRemoveContributorsModal: { userId: string; projectId: string };
   userDetails: any;
   BoardCreatingForm: FormGroup;
   RoleCreatingForm: FormGroup;
@@ -87,6 +89,12 @@ export class ProjectWorkspaceComponent
     this.CreateRoleDataTransfer =
       this._projectService.CreateRoleDataTransfer.subscribe((data) => {
         this.isCreateRoleModal = true;
+      });
+
+    // Remove the contributor
+    this.RemoveContributorsDataTransfer =
+      this._projectService.RemoveContributorsDataTransfer.subscribe((data) => {
+        this.isRemoveContributorsModal = data;
       });
 
     // Create a new contributors
@@ -194,6 +202,7 @@ export class ProjectWorkspaceComponent
     this.isCreateProjectModal = false;
     this.isCreateRoleModal = false;
     this.isCreateContributorsModal = false;
+    this.isRemoveContributorsModal = { userId: '', projectId: '' };
 
     this.boardAlreadyExist = false;
     this.roleAlreadyExist = false;
@@ -293,6 +302,25 @@ export class ProjectWorkspaceComponent
             this.router.navigate(['auth/signin']);
           }
         },
+      });
+  }
+
+  successDeleteContributor() {
+    this._projectService
+      .RemoveProjectContributor(
+        this.isRemoveContributorsModal.projectId,
+        this.isRemoveContributorsModal.userId
+      )
+      .subscribe({
+        next: (response) => {
+          this._projectService.board_Details = response.data;
+          this._projectService.BoardDataTransfer.emit(
+            this._projectService.board_Details
+          );
+
+          this.closeBoardModal();
+        },
+        error: (error) => {},
       });
   }
 

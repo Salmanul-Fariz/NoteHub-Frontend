@@ -141,6 +141,26 @@
   </div>
 </div>
 
+<!-- Remove the Contributor Modal -->
+<div class="modal w-10/12 md:w-6/12"
+  [ngClass]="{'hidden':isRemoveContributorsModal?.userId ===''|| !isRemoveContributorsModal}">
+  <div class="flex flex-col">
+    <div class="flex justify-end mr-4">
+      <button class="close-modal" (click)="closeBoardModal()">&times;</button>
+    </div>
+    <div class="flex flex-col justify-start mt-2 pt-2 pl-8 pr-8 pb-6 gap-y-4">
+      <div class="w-full">
+        <p class="text-xl">Do you really want to remove the contributor ?</p>
+      </div>
+      <div class="w-full flex justify-end gap-4 pageDeleteButton mt-2">
+        <button (click)="closeBoardModal()">Cancel</button>
+        <button (click)="successDeleteContributor()">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- Board Settings Overlay -->
 <div class="overlay" [ngClass]="{'hidden':!isProjectSettingsModal }" (click)="closeBoardModal()"></div>
 
@@ -152,3 +172,7 @@
 
 <!-- Project new Contributorscreate Overlay -->
 <div class="overlay" [ngClass]="{'hidden':!isCreateContributorsModal }" (click)="closeBoardModal()"></div>
+
+<!-- Remove Contributorscreate Overlay -->
+<div class="overlay" [ngClass]="{'hidden':isRemoveContributorsModal?.userId ===''|| !isRemoveContributorsModal }"
+  (click)="closeBoardModal()"></div>

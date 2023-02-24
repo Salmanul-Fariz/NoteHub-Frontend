@@ -14,6 +14,10 @@ export class ProjectWorkspaceService {
   CreateProjectDataTransfer = new EventEmitter<boolean>();
   CreateRoleDataTransfer = new EventEmitter<boolean>();
   CreateContributorsDataTransfer = new EventEmitter<string>();
+  RemoveContributorsDataTransfer = new EventEmitter<{
+    userId: string;
+    projectId: string;
+  }>();
   userDetails: any;
   boardsDetails: any[];
   board_Details: any[];
@@ -65,6 +69,13 @@ export class ProjectWorkspaceService {
         contributorName: formData.contributorName,
         projectId: projectId,
       }
+    );
+  }
+
+  // Remove project contributors
+  RemoveProjectContributor(projectId: string, userId: string) {
+    return this._http.delete<any>(
+      `${environment.baseUrl}/workspaces/project-workspace/contributor?projectId=${projectId}&userId=${userId}`
     );
   }
 

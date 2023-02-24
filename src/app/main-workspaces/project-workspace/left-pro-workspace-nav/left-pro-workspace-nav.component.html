@@ -16,7 +16,7 @@
       <h5>Boards</h5>
     </div>
   </div>
-  <div>
+  <div *ngIf="projectId">
     <hr>
     <div class="workspace-board-container">
       <div [ngStyle]="{'color':projectRouteColor==='boards'?'#2f7fcf':'#222'}" class="workspace-board-bar"

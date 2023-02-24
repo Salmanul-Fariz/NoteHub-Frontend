@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProjectWorkspaceService } from 'src/app/service/projectWorkspace.service';
 
@@ -10,6 +10,7 @@ import { ProjectWorkspaceService } from 'src/app/service/projectWorkspace.servic
 })
 export class LeftProWorkspaceNavComponent implements OnInit, OnDestroy {
   detailSubscribtion: Subscription;
+  BoardIDSubscribtion: Subscription;
   projectRouteColor: string;
   userDetails: any;
   boardDetails: any;
@@ -17,7 +18,8 @@ export class LeftProWorkspaceNavComponent implements OnInit, OnDestroy {
 
   constructor(
     private _projectService: ProjectWorkspaceService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -62,5 +64,6 @@ export class LeftProWorkspaceNavComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.detailSubscribtion.unsubscribe();
+    this.BoardIDSubscribtion.unsubscribe();
   }
 }

@@ -36,7 +36,6 @@ export class ProContributorsComponent implements OnInit {
         this.ContributorsDataSource.data = this.boardDetails?.contributors;
       });
     });
-    console.log(this.ContributorsDataSource);
   }
 
   addNewRole() {
@@ -45,5 +44,12 @@ export class ProContributorsComponent implements OnInit {
 
   addNewContributors(id: string) {
     this._projectService.CreateContributorsDataTransfer.emit(id);
+  }
+
+  removeContributor(projectId: string, userId: string) {
+    this._projectService.RemoveContributorsDataTransfer.emit({
+      projectId: projectId,
+      userId: userId,
+    });
   }
 }

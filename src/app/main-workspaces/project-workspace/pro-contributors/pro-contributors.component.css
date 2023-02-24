@@ -161,6 +161,11 @@ tr[mat-row]:hover {
   user-select: none;
 }
 
+td i {
+  cursor: pointer;
+  font-size: 20px;
+}
+
 /* empty page */
 .empty-page-container {
   width: 100%;
