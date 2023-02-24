@@ -13,6 +13,7 @@ export class ProjectWorkspaceService {
   ProjectSettingsDataTransfer = new EventEmitter<boolean>();
   CreateProjectDataTransfer = new EventEmitter<boolean>();
   CreateRoleDataTransfer = new EventEmitter<boolean>();
+  CreateContributorsDataTransfer = new EventEmitter<string>();
   userDetails: any;
   boardsDetails: any[];
   board_Details: any[];
@@ -50,6 +51,18 @@ export class ProjectWorkspaceService {
       {
         roleName: formData.roleName,
         color: formData.color,
+        projectId: projectId,
+      }
+    );
+  }
+
+  // Create a new project contributors
+  CreateProjectContributor(formData: any, projectId: string) {
+    return this._http.post<any>(
+      `${environment.baseUrl}/workspaces/project-workspace/contributor`,
+      {
+        roleName: formData.roleName,
+        contributorName: formData.contributorName,
         projectId: projectId,
       }
     );

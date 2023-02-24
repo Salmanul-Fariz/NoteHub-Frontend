@@ -102,12 +102,53 @@
   </div>
 </div>
 
+<!-- Create new Contributors -->
+<div class="modal w-10/12 md:w-6/12" [ngClass]="{'hidden':!isCreateContributorsModal}">
+  <div class="flex flex-col">
+    <div class="flex justify-end mr-4">
+      <button class="close-modal" (click)="closeBoardModal()">&times;</button>
+    </div>
+    <form [formGroup]="ContributorsCreatingForm" (ngSubmit)="createContributor(ContributorsCreatingForm.value)"
+      class="flex flex-col justify-start pt-2 pl-8 pr-8 pb-6 gap-y-4 boardSettings">
+      <div class="w-full flex flex-col lg:flex-row justify-between gap-2">
+        <label>Username</label>
+        <input class="boardInput" formControlName="contributorName" type="text" placeholder="Enter username">
+      </div>
+      <div class="w-full flex flex-col lg:flex-row justify-between gap-2">
+        <label>Role</label>
+        <select formControlName="roleName">
+          <option value="null" disabled>Select Option</option>
+          <option *ngFor="let val of boardDetails?.roles" value="{{val.name}}">{{val.name}}</option>
+        </select>
+      </div>
+
+      <div *ngIf="ContributorAlreadyExist" class="w-full flex flex-col lg:flex-row justify-start mt-3">
+        <small class="text-red">Contributor Already exist</small>
+      </div>
+      <div *ngIf="ContributorNotExist" class="w-full flex flex-col lg:flex-row justify-start mt-3">
+        <small class="text-red">Please enter valid Contributor user name !</small>
+      </div>
+      <div *ngIf="ContributorAdmin" class="w-full flex flex-col lg:flex-row justify-start mt-3">
+        <small class="text-red">User name matched to admin !</small>
+      </div>
+
+      <div class="w-full flex flex-col lg:flex-row justify-end gap-2 mt-3">
+        <button
+          [ngClass]="{'opacity-50':!ContributorsCreatingForm.valid,'cursor-not-allowed':!ContributorsCreatingForm.valid}"
+          [disabled]=" !ContributorsCreatingForm.valid" class="Board-Modal-Button bg-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- Board Settings Overlay -->
 <div class="overlay" [ngClass]="{'hidden':!isProjectSettingsModal }" (click)="closeBoardModal()"></div>
-
 
 <!-- Project Board create Overlay -->
 <div class="overlay" [ngClass]="{'hidden':!isCreateProjectModal }" (click)="closeBoardModal()"></div>
 
 <!-- Project new role create Overlay -->
 <div class="overlay" [ngClass]="{'hidden':!isCreateRoleModal }" (click)="closeBoardModal()"></div>
+
+<!-- Project new Contributorscreate Overlay -->
+<div class="overlay" [ngClass]="{'hidden':!isCreateContributorsModal }" (click)="closeBoardModal()"></div>

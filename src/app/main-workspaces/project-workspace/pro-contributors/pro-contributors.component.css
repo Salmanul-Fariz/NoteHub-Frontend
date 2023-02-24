@@ -93,6 +93,74 @@ section {
   display: flex;
 }
 
+/* add user and list users */
+.contributors-container {
+  width: 100%;
+  padding: 40px 0;
+}
+
+.contributors-head {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.contributors-head i {
+  font-size: 25px;
+  color: #6c6c6c;
+  transition: 0.3s;
+}
+
+.contributors-head i:hover {
+  cursor: pointer;
+  color: #222;
+}
+
+.contributors {
+  padding: 15px 0;
+  width: 100%;
+}
+
+.plus-icon {
+  padding: 15px 0;
+}
+
+.plus-icon button {
+  font-size: 18px;
+  cursor: pointer;
+  color: #fff;
+  background-color: #0053a6;
+  padding: 4px 9px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.plus-icon button:hover {
+  cursor: pointer;
+  background-color: #222;
+}
+
+table {
+  width: 100%;
+}
+
+td button {
+  font-size: 18px;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+tr * {
+  line-break: anywhere;
+}
+
+tr[mat-row]:hover {
+  user-select: none;
+}
+
 /* empty page */
 .empty-page-container {
   width: 100%;

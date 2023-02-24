@@ -12,10 +12,7 @@ export class YourPagesComponent implements OnInit {
   displayedColumns: string[] = ['pageIcon', 'pageName', 'Id'];
   PagesDataSource = new MatTableDataSource<any>();
 
-  constructor(
-    private _profileService: ProfileService,
-    private router: Router
-  ) {}
+  constructor(private _profileService: ProfileService) {}
 
   ngOnInit(): void {
     this.PagesDataSource.data = this._profileService.PagesDetails;
@@ -24,8 +21,6 @@ export class YourPagesComponent implements OnInit {
       next: (response) => {
         this._profileService.PagesDetails =
           response.data.workSpaces.userWorkspace.pages;
-
-        console.log(this._profileService.PagesDetails);
 
         this.PagesDataSource.data = this._profileService.PagesDetails;
       },

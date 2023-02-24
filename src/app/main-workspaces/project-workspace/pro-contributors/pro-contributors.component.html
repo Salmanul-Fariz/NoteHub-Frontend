@@ -19,6 +19,52 @@
 
     </div>
   </div>
+
+  <div class="contributors-container">
+    <div class="contributors-head">
+      <h3 class="text-3xl sm:text-4xl">Contributors</h3>
+      <i *ngIf="boardDetails?.roles.length > 0" class="fa-solid fa-circle-plus"
+        (click)="addNewContributors(boardDetails?._id)"></i>
+    </div>
+    <div class="plus-icon" *ngIf="boardDetails?.contributors.length === 0">
+      <button (click)="addNewContributors(boardDetails?._id)">Add Contributors</button>
+    </div>
+    <div class="contributors" *ngIf="boardDetails?.contributors.length > 0">
+      <table mat-table [dataSource]="ContributorsDataSource" class="mat-elevation-z8">
+
+        <!-- User Name Column -->
+        <ng-container matColumnDef="name">
+          <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Name</th>
+          <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element">
+            <p *ngIf="element.userId.fullName !==('' || null) ">{{ element.userId.fullName }} </p>
+            <p *ngIf="element.userId.fullName ===('' || null) ">Name empty</p>
+          </td>
+        </ng-container>
+
+        <!-- User ID Column -->
+        <ng-container matColumnDef="userName">
+          <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Username</th>
+          <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element.userId.userName}} </td>
+        </ng-container>
+
+        <!-- Role Column -->
+        <ng-container matColumnDef="role">
+          <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Role</th>
+          <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element.role}} </td>
+        </ng-container>
+
+        <!-- Remove Column -->
+        <ng-container matColumnDef="remove">
+          <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Remove</th>
+          <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> <i class="fa-solid fa-trash"></i>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
 </section>
 
 <ng-template #elseBoard_details>

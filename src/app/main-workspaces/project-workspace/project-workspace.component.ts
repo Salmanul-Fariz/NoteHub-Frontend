@@ -26,15 +26,22 @@ export class ProjectWorkspaceComponent
   ProjectSettingsDataTransfer: Subscription;
   CreateProjectDataTransfer: Subscription;
   CreateRoleDataTransfer: Subscription;
+  CreateContributorsDataTransfer: Subscription;
   PageWorkspaceNameSubject = new Subject<string>();
   isProjectSettingsModal: boolean;
   isCreateProjectModal: boolean;
   isCreateRoleModal: boolean;
+  isCreateContributorsModal: boolean;
   userDetails: any;
   BoardCreatingForm: FormGroup;
   RoleCreatingForm: FormGroup;
+  ContributorsCreatingForm: FormGroup;
   boardAlreadyExist: boolean;
   roleAlreadyExist: boolean;
+  ContributorNotExist: boolean;
+  ContributorAlreadyExist: boolean;
+  ContributorAdmin: boolean;
+  boardDetails: any;
 
   constructor(
     private observer: BreakpointObserver,
@@ -43,25 +50,7 @@ export class ProjectWorkspaceComponent
   ) {}
 
   ngOnInit(): void {
-    // Board Creating Form
-    this.BoardCreatingForm = new FormGroup({
-      boardName: new FormControl(null, {
-        validators: [Validators.required, Validators.maxLength(25)],
-      }),
-      projectType: new FormControl(null, {
-        validators: [Validators.required, Validators.maxLength(25)],
-      }),
-    });
-
-    // Role Creating Form
-    this.RoleCreatingForm = new FormGroup({
-      roleName: new FormControl(null, {
-        validators: [Validators.required, Validators.maxLength(25)],
-      }),
-      color: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-    });
+    this.setForms();
 
     this._projectService.viewProjectWorspacePage().subscribe({
       next: (response) => {
@@ -98,6 +87,22 @@ export class ProjectWorkspaceComponent
     this.CreateRoleDataTransfer =
       this._projectService.CreateRoleDataTransfer.subscribe((data) => {
         this.isCreateRoleModal = true;
+      });
+
+    // Create a new contributors
+    this.CreateContributorsDataTransfer =
+      this._projectService.CreateContributorsDataTransfer.subscribe((data) => {
+        this.isCreateContributorsModal = true;
+
+        this._projectService.GetBoardDetails(data).subscribe({
+          next: (response) => {
+            this._projectService.board_Details = response.data.boardDetails;
+            this._projectService.userDetails = response.data.userDetails;
+
+            this.boardDetails = this._projectService.board_Details;
+          },
+          error: (error) => {},
+        });
       });
 
     // update the data by debounceTime
@@ -147,6 +152,38 @@ export class ProjectWorkspaceComponent
       });
   }
 
+  setForms() {
+    // Board Creating Form
+    this.BoardCreatingForm = new FormGroup({
+      boardName: new FormControl(null, {
+        validators: [Validators.required, Validators.maxLength(25)],
+      }),
+      projectType: new FormControl(null, {
+        validators: [Validators.required, Validators.maxLength(25)],
+      }),
+    });
+
+    // Role Creating Form
+    this.RoleCreatingForm = new FormGroup({
+      roleName: new FormControl(null, {
+        validators: [Validators.required, Validators.maxLength(25)],
+      }),
+      color: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+    });
+
+    // contributors Creating Form
+    this.ContributorsCreatingForm = new FormGroup({
+      contributorName: new FormControl(null, {
+        validators: [Validators.required, Validators.maxLength(25)],
+      }),
+      roleName: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+    });
+  }
+
   projectName(event: any) {
     this.PageWorkspaceNameSubject.next(event.target.value);
   }
@@ -156,6 +193,14 @@ export class ProjectWorkspaceComponent
     this.isProjectSettingsModal = false;
     this.isCreateProjectModal = false;
     this.isCreateRoleModal = false;
+    this.isCreateContributorsModal = false;
+
+    this.boardAlreadyExist = false;
+    this.roleAlreadyExist = false;
+    this.ContributorNotExist = false;
+    this.ContributorAlreadyExist = false;
+    this.ContributorAdmin = false;
+    this.setForms();
   }
 
   // Create Board
@@ -167,16 +212,6 @@ export class ProjectWorkspaceComponent
         if (response.status === 'Existed') {
           this.boardAlreadyExist = true;
         } else {
-          // Board Creating Form
-          this.BoardCreatingForm = new FormGroup({
-            boardName: new FormControl(null, {
-              validators: [Validators.required, Validators.maxLength(25)],
-            }),
-            projectType: new FormControl(null, {
-              validators: [Validators.required, Validators.maxLength(25)],
-            }),
-          });
-
           this._projectService.boardsDetails = response.data.boardDetails;
           this._projectService.userDetails = response.data.userDetails;
 
@@ -208,16 +243,6 @@ export class ProjectWorkspaceComponent
           if (response.status === 'Existed') {
             this.roleAlreadyExist = true;
           } else {
-            // Role Creating Form
-            this.RoleCreatingForm = new FormGroup({
-              roleName: new FormControl(null, {
-                validators: [Validators.required, Validators.maxLength(25)],
-              }),
-              color: new FormControl(null, {
-                validators: [Validators.required],
-              }),
-            });
-
             this._projectService.board_Details = response.data;
 
             this._projectService.BoardDataTransfer.emit(
@@ -228,10 +253,45 @@ export class ProjectWorkspaceComponent
           }
         },
         error: (error) => {
-          // if (error.status === 408 || 400) {
-          //   localStorage.clear();
-          //   this.router.navigate(['auth/signin']);
-          // }
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+  }
+
+  createContributor(formData: any) {
+    const url = this.router.url.split('/');
+    this._projectService
+      .CreateProjectContributor(formData, url[url.length - 2])
+      .subscribe({
+        next: (response) => {
+          this.ContributorNotExist = false;
+          this.ContributorAlreadyExist = false;
+          this.ContributorAdmin = false;
+
+          if (response.status === 'Existed') {
+            this.ContributorAlreadyExist = true;
+          } else if (response.status === 'no-user-exist') {
+            this.ContributorNotExist = true;
+          } else if (response.status === 'Admin') {
+            this.ContributorAdmin = true;
+          } else {
+            this._projectService.board_Details = response.data;
+
+            this._projectService.BoardDataTransfer.emit(
+              this._projectService.board_Details
+            );
+
+            this.closeBoardModal();
+          }
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
         },
       });
   }
@@ -240,5 +300,6 @@ export class ProjectWorkspaceComponent
     this.ProjectSettingsDataTransfer.unsubscribe();
     this.CreateProjectDataTransfer.unsubscribe();
     this.CreateRoleDataTransfer.unsubscribe();
+    this.CreateContributorsDataTransfer.unsubscribe();
   }
 }

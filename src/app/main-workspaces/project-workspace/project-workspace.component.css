@@ -72,6 +72,14 @@ mat-sidenav-container {
   cursor: not-allowed;
 }
 
+.boardSettings select {
+  padding: 5px 6px;
+}
+
+.boardSettings select:focus {
+  outline: none;
+}
+
 .boardSettings input:focus {
   outline: none;
 }
