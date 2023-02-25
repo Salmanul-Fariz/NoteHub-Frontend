@@ -61,34 +61,6 @@ section {
   cursor: default;
 }
 
-/* boarder contributors */
-
-.boarder-contributors {
-  padding: 36px 0px;
-  align-items: center;
-}
-
-.boarder-contributors .icons-list i {
-  font-size: 16px;
-  color: #fff;
-  padding: 6px 7px;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #655dd5;
-}
-
-.boarder-contributors .icons {
-  display: flex;
-  overflow: hidden;
-  padding: 5px 0px;
-  -webkit-mask-image: linear-gradient(90deg, #000 65%, transparent);
-}
-
-.boarder-contributors i {
-  font-size: 32px;
-  color: #444;
-}
-
 /* board-filter-sort-bar */
 
 .board-filter-sort-container {

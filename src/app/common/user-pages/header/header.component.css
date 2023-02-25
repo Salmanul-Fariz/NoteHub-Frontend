@@ -27,3 +27,12 @@ li {
   border-left: solid 3px #0053a6;
   border-radius: 14px;
 }
+
+button:nth-last-child(1) {
+  transition: 0.3s;
+}
+
+button:nth-last-child(1):hover {
+  background-color: #fff;
+  color: #262626;
+}

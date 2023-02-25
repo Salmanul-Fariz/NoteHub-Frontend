@@ -29,6 +29,7 @@ export class ProjectWorkspaceComponent
   CreateContributorsDataTransfer: Subscription;
   RemoveContributorsDataTransfer: Subscription;
   RemoveRolesDataTransfer: Subscription;
+  CreateTaskDataTransfer: Subscription;
   PageWorkspaceNameSubject = new Subject<string>();
   isProjectSettingsModal: boolean;
   isCreateProjectModal: boolean;
@@ -36,10 +37,12 @@ export class ProjectWorkspaceComponent
   isCreateContributorsModal: boolean;
   isRemoveContributorsModal: { userId: string; projectId: string };
   isRemoveRolesModal: { roleName: string; projectId: string };
+  isCreateTaskModal: boolean;
   userDetails: any;
   BoardCreatingForm: FormGroup;
   RoleCreatingForm: FormGroup;
   ContributorsCreatingForm: FormGroup;
+  TaskCreatingForm: FormGroup;
   boardAlreadyExist: boolean;
   roleAlreadyExist: boolean;
   ContributorNotExist: boolean;
@@ -103,6 +106,22 @@ export class ProjectWorkspaceComponent
     this.RemoveRolesDataTransfer =
       this._projectService.RemoveRolesDataTransfer.subscribe((data) => {
         this.isRemoveRolesModal = data;
+      });
+
+    // Create task
+    this.CreateTaskDataTransfer =
+      this._projectService.CreateTaskDataTransfer.subscribe((data) => {
+        this.isCreateTaskModal = true;
+
+        this._projectService.GetBoardDetails(data).subscribe({
+          next: (response) => {
+            this._projectService.board_Details = response.data.boardDetails;
+            this._projectService.userDetails = response.data.userDetails;
+
+            this.boardDetails = this._projectService.board_Details;
+          },
+          error: (error) => {},
+        });
       });
 
     // Create a new contributors
@@ -198,6 +217,16 @@ export class ProjectWorkspaceComponent
         validators: [Validators.required],
       }),
     });
+
+    // Create Task Form
+    this.TaskCreatingForm = new FormGroup({
+      taskName: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+      roleName: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+    });
   }
 
   projectName(event: any) {
@@ -212,6 +241,7 @@ export class ProjectWorkspaceComponent
     this.isCreateContributorsModal = false;
     this.isRemoveContributorsModal = { userId: '', projectId: '' };
     this.isRemoveRolesModal = { roleName: '', projectId: '' };
+    this.isCreateTaskModal = false;
 
     this.boardAlreadyExist = false;
     this.roleAlreadyExist = false;
@@ -314,6 +344,29 @@ export class ProjectWorkspaceComponent
       });
   }
 
+  createTask(formData: any) {
+    const url = this.router.url.split('/');
+    this._projectService
+      .CreateProjectTask(formData, url[url.length - 1])
+      .subscribe({
+        next: (response) => {
+          this._projectService.board_Details = response.data;
+
+          this._projectService.BoardDataTransfer.emit(
+            this._projectService.board_Details
+          );
+
+          this.closeBoardModal();
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+  }
+
   successDeleteContributor() {
     this._projectService
       .RemoveProjectContributor(
@@ -359,5 +412,6 @@ export class ProjectWorkspaceComponent
     this.CreateContributorsDataTransfer.unsubscribe();
     this.RemoveContributorsDataTransfer.unsubscribe();
     this.RemoveRolesDataTransfer.unsubscribe();
+    this.CreateTaskDataTransfer.unsubscribe();
   }
 }

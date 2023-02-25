@@ -22,6 +22,7 @@ export class ProjectWorkspaceService {
     roleName: string;
     projectId: string;
   }>();
+  CreateTaskDataTransfer = new EventEmitter<string>();
   userDetails: any;
   boardsDetails: any[];
   board_Details: any[];
@@ -72,6 +73,36 @@ export class ProjectWorkspaceService {
         roleName: formData.roleName,
         contributorName: formData.contributorName,
         projectId: projectId,
+      }
+    );
+  }
+
+  // Create a new project Task
+  CreateProjectTask(formData: any, projectId: string) {
+    return this._http.post<any>(
+      `${environment.baseUrl}/workspaces/project-workspace/tasks`,
+      {
+        roleName: formData.roleName,
+        taskName: formData.taskName,
+        projectId: projectId,
+      }
+    );
+  }
+
+  // Update a new project Task list
+  UpdateProjectTask(
+    newTasks: string[],
+    projectId: string,
+    editedTaskId: string,
+    editedListName: string | undefined
+  ) {
+    return this._http.patch<any>(
+      `${environment.baseUrl}/workspaces/project-workspace/tasks`,
+      {
+        newTasks: newTasks,
+        projectId: projectId,
+        editedTaskId: editedTaskId,
+        editedListName: editedListName,
       }
     );
   }

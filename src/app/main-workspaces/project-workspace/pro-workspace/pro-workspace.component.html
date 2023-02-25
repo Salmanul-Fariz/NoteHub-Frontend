@@ -3,30 +3,9 @@
     <p class="text-lg md:text-xl">Projects / {{boardDetails?.boardName}}</p>
     <i class="fa-solid fa-trash"></i>
   </div>
-  <div class="boarder-contributors flex justify-between gap-5 w-10/12 md:w-5/12">
-    <div class="w-10/12 icons">
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      <i class="fa-solid fa-circle-user"></i>
-    </div>
-    <div class="w-2/12 items-center icons-list">
-      <i class="fa-solid fa-list"></i>
-    </div>
-  </div>
 
   <!-- search bar -->
-  <div class="board-filter-sort-container">
+  <div class="board-filter-sort-container mt-14">
     <div class="board-filter-sort-bar">
       <button class="board-filter-sort-button" mat-button [matMenuTriggerFor]="filter">Filter</button>
       <button class="ml-1 board-filter-sort-button" mat-button [matMenuTriggerFor]="sort">Sort</button>
@@ -99,10 +78,10 @@
         <div class="w-10/12 md:w-auto">
           <h2 class="board-workspace-drag-heading">TO DO TASK</h2>
 
-          <div cdkDropList [cdkDropListData]="todo" class="board-workspace-drag-list"
+          <div cdkDropList [cdkDropListData]="boardDetails?.tasks.todo" class="board-workspace-drag-list"
             (cdkDropListDropped)="drop($event)">
-            <div class="board-workspace-drag-box" *ngFor="let item of todo" cdkDrag>
-              <h5>{{item}}</h5>
+            <div class="board-workspace-drag-box" *ngFor="let item of boardDetails?.tasks.todo" cdkDrag>
+              <h5>{{item.taskName}}</h5>
               <p>Edited 2 min ago</p>
               <div class="board-workspace-drag-box-more">
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -120,7 +99,7 @@
             </div>
 
             <!-- Add New Button -->
-            <div class="board-workspace-drag-new">
+            <div class="board-workspace-drag-new" (click)="addNewTask(boardDetails._id)">
               <i class="fa-solid fa-plus"></i>
               <h2>Create task</h2>
             </div>
@@ -133,10 +112,10 @@
         <div class="w-10/12 md:w-auto">
           <h2 class="board-workspace-drag-heading">IN PROGRESS</h2>
 
-          <div cdkDropList [cdkDropListData]="progress" class="board-workspace-drag-list"
+          <div cdkDropList [cdkDropListData]="boardDetails?.tasks.progress" class="board-workspace-drag-list"
             (cdkDropListDropped)="drop($event)">
-            <div class="board-workspace-drag-box" *ngFor="let item of progress" cdkDrag>
-              <h5>{{item}}</h5>
+            <div class="board-workspace-drag-box" *ngFor="let item of boardDetails?.tasks.progress" cdkDrag>
+              <h5>{{item.taskName}}</h5>
               <p>Edited 2 min ago</p>
               <div class="board-workspace-drag-box-more">
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -161,10 +140,10 @@
         <div class="w-10/12 md:w-auto">
           <h2 class="board-workspace-drag-heading">DONE</h2>
 
-          <div cdkDropList [cdkDropListData]="done" class="board-workspace-drag-list"
+          <div cdkDropList [cdkDropListData]="boardDetails?.tasks.completed" class="board-workspace-drag-list"
             (cdkDropListDropped)="drop($event)">
-            <div class="board-workspace-drag-box" *ngFor="let item of done" cdkDrag>
-              <h5>{{item}}</h5>
+            <div class="board-workspace-drag-box" *ngFor="let item of boardDetails?.tasks.completed" cdkDrag>
+              <h5>{{item.taskName}}</h5>
               <p>Edited 2 min ago</p>
               <div class="board-workspace-drag-box-more">
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">

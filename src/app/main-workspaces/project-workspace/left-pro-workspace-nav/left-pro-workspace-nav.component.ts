@@ -64,6 +64,5 @@ export class LeftProWorkspaceNavComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.detailSubscribtion.unsubscribe();
-    this.BoardIDSubscribtion.unsubscribe();
   }
 }
