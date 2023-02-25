@@ -52,4 +52,11 @@ export class ProContributorsComponent implements OnInit {
       userId: userId,
     });
   }
+
+  removeRole(projectId: string, roleName: string) {
+    this._projectService.RemoveRolesDataTransfer.emit({
+      projectId: projectId,
+      roleName: roleName,
+    });
+  }
 }

@@ -18,6 +18,10 @@ export class ProjectWorkspaceService {
     userId: string;
     projectId: string;
   }>();
+  RemoveRolesDataTransfer = new EventEmitter<{
+    roleName: string;
+    projectId: string;
+  }>();
   userDetails: any;
   boardsDetails: any[];
   board_Details: any[];
@@ -63,7 +67,7 @@ export class ProjectWorkspaceService {
   // Create a new project contributors
   CreateProjectContributor(formData: any, projectId: string) {
     return this._http.post<any>(
-      `${environment.baseUrl}/workspaces/project-workspace/contributor`,
+      `${environment.baseUrl}/workspaces/project-workspace/contributors`,
       {
         roleName: formData.roleName,
         contributorName: formData.contributorName,
@@ -75,7 +79,14 @@ export class ProjectWorkspaceService {
   // Remove project contributors
   RemoveProjectContributor(projectId: string, userId: string) {
     return this._http.delete<any>(
-      `${environment.baseUrl}/workspaces/project-workspace/contributor?projectId=${projectId}&userId=${userId}`
+      `${environment.baseUrl}/workspaces/project-workspace/contributors?projectId=${projectId}&userId=${userId}`
+    );
+  }
+
+  // Remove project Role
+  RemoveProjectRole(projectId: string, roleName: string) {
+    return this._http.delete<any>(
+      `${environment.baseUrl}/workspaces/project-workspace/roles?projectId=${projectId}&roleName=${roleName}`
     );
   }
 

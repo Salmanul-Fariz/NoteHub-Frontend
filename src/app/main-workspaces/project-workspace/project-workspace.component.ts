@@ -28,12 +28,14 @@ export class ProjectWorkspaceComponent
   CreateRoleDataTransfer: Subscription;
   CreateContributorsDataTransfer: Subscription;
   RemoveContributorsDataTransfer: Subscription;
+  RemoveRolesDataTransfer: Subscription;
   PageWorkspaceNameSubject = new Subject<string>();
   isProjectSettingsModal: boolean;
   isCreateProjectModal: boolean;
   isCreateRoleModal: boolean;
   isCreateContributorsModal: boolean;
   isRemoveContributorsModal: { userId: string; projectId: string };
+  isRemoveRolesModal: { roleName: string; projectId: string };
   userDetails: any;
   BoardCreatingForm: FormGroup;
   RoleCreatingForm: FormGroup;
@@ -95,6 +97,12 @@ export class ProjectWorkspaceComponent
     this.RemoveContributorsDataTransfer =
       this._projectService.RemoveContributorsDataTransfer.subscribe((data) => {
         this.isRemoveContributorsModal = data;
+      });
+
+    // Remove Roles
+    this.RemoveRolesDataTransfer =
+      this._projectService.RemoveRolesDataTransfer.subscribe((data) => {
+        this.isRemoveRolesModal = data;
       });
 
     // Create a new contributors
@@ -203,6 +211,7 @@ export class ProjectWorkspaceComponent
     this.isCreateRoleModal = false;
     this.isCreateContributorsModal = false;
     this.isRemoveContributorsModal = { userId: '', projectId: '' };
+    this.isRemoveRolesModal = { roleName: '', projectId: '' };
 
     this.boardAlreadyExist = false;
     this.roleAlreadyExist = false;
@@ -324,10 +333,31 @@ export class ProjectWorkspaceComponent
       });
   }
 
+  successDeleteRoles() {
+    this._projectService
+      .RemoveProjectRole(
+        this.isRemoveRolesModal.projectId,
+        this.isRemoveRolesModal.roleName
+      )
+      .subscribe({
+        next: (response) => {
+          this._projectService.board_Details = response.data;
+          this._projectService.BoardDataTransfer.emit(
+            this._projectService.board_Details
+          );
+
+          this.closeBoardModal();
+        },
+        error: (error) => {},
+      });
+  }
+
   ngOnDestroy(): void {
     this.ProjectSettingsDataTransfer.unsubscribe();
     this.CreateProjectDataTransfer.unsubscribe();
     this.CreateRoleDataTransfer.unsubscribe();
     this.CreateContributorsDataTransfer.unsubscribe();
+    this.RemoveContributorsDataTransfer.unsubscribe();
+    this.RemoveRolesDataTransfer.unsubscribe();
   }
 }

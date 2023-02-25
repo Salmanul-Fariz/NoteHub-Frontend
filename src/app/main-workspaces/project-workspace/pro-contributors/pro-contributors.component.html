@@ -12,7 +12,7 @@
       <div class="roles w-4/12 sm:w-2/12 " *ngFor="let element of boardDetails.roles">
         <span [ngStyle]="{'background-color': element.color}"></span>
         <p>{{element.name}}</p>
-        <div class="w-full h-full">
+        <div class="w-full h-full" (click)="removeRole(boardDetails._id,element.name)">
           <i class="fa-solid fa-trash"></i>
         </div>
       </div>
