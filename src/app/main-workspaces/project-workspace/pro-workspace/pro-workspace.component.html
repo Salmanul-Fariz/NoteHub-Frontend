@@ -81,16 +81,15 @@
           <div cdkDropList [cdkDropListData]="boardDetails?.tasks.todo" class="board-workspace-drag-list"
             (cdkDropListDropped)="drop($event)">
             <div class="board-workspace-drag-box" *ngFor="let item of boardDetails?.tasks.todo" cdkDrag>
-              <h5>{{item.taskName}}</h5>
-              <p>Edited 2 min ago</p>
+              <div class="py-2" (click)="showTaskList(boardDetails._id,item,'todo')">
+                <h5>{{item.taskName}}</h5>
+                <p>{{item.updateTime | lastEditDate }}</p>
+              </div>
               <div class="board-workspace-drag-box-more">
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item>
-                    <span class="text-sm">Add Flag</span>
-                  </button>
                   <button mat-menu-item>
                     <span class="text-sm">Delete</span>
                   </button>
@@ -115,16 +114,15 @@
           <div cdkDropList [cdkDropListData]="boardDetails?.tasks.progress" class="board-workspace-drag-list"
             (cdkDropListDropped)="drop($event)">
             <div class="board-workspace-drag-box" *ngFor="let item of boardDetails?.tasks.progress" cdkDrag>
-              <h5>{{item.taskName}}</h5>
-              <p>Edited 2 min ago</p>
+              <div class="py-2" (click)="showTaskList(boardDetails._id,item,'progress')">
+                <h5>{{item.taskName}}</h5>
+                <p>{{item.updateTime | lastEditDate }}</p>
+              </div>
               <div class="board-workspace-drag-box-more">
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item>
-                    <span class="text-sm">Add Flag</span>
-                  </button>
                   <button mat-menu-item>
                     <span class="text-sm">Delete</span>
                   </button>
@@ -143,16 +141,15 @@
           <div cdkDropList [cdkDropListData]="boardDetails?.tasks.completed" class="board-workspace-drag-list"
             (cdkDropListDropped)="drop($event)">
             <div class="board-workspace-drag-box" *ngFor="let item of boardDetails?.tasks.completed" cdkDrag>
-              <h5>{{item.taskName}}</h5>
-              <p>Edited 2 min ago</p>
+              <div class="py-2" (click)="showTaskList(boardDetails._id,item,'progress')">
+                <h5>{{item.taskName}}</h5>
+                <p>{{item.updateTime | lastEditDate }}</p>
+              </div>
               <div class="board-workspace-drag-box-more">
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item>
-                    <span class="text-sm">Add Flag</span>
-                  </button>
                   <button mat-menu-item>
                     <span class="text-sm">Delete</span>
                   </button>

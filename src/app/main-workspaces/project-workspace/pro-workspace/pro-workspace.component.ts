@@ -39,14 +39,7 @@ export class ProWorkspaceComponent implements OnInit, OnDestroy {
     });
   }
 
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
-
-  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
-  progress = ['bat', 'cat', 'hat'];
-
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event);
-
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -75,9 +68,7 @@ export class ProWorkspaceComponent implements OnInit, OnDestroy {
       editedTaskId = this.boardDetails.tasks.completed[event.currentIndex]._id;
       editedListName = 'completed';
     }
-    console.log(editedTaskId);
 
-    console.log(this.boardDetails.tasks);
     this._projectService
       .UpdateProjectTask(
         this.boardDetails.tasks,
@@ -98,6 +89,14 @@ export class ProWorkspaceComponent implements OnInit, OnDestroy {
 
   addNewTask(id: string) {
     this._projectService.CreateTaskDataTransfer.emit(id);
+  }
+
+  showTaskList(projectId: string, taskDetails: any, taskList: string) {
+    this._projectService.WorkspaceDataTransfer.emit({
+      projectId: projectId,
+      taskDetails: taskDetails,
+      taskList: taskList,
+    });
   }
 
   ngOnDestroy(): void {}

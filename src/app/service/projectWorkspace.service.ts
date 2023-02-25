@@ -22,6 +22,11 @@ export class ProjectWorkspaceService {
     roleName: string;
     projectId: string;
   }>();
+  WorkspaceDataTransfer = new EventEmitter<{
+    taskList: string;
+    taskDetails: any;
+    projectId: string;
+  }>();
   CreateTaskDataTransfer = new EventEmitter<string>();
   userDetails: any;
   boardsDetails: any[];

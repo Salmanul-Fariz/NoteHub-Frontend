@@ -8,6 +8,7 @@ import { ProSettingsComponent } from './pro-settings/pro-settings.component';
 import { ProWorkspaceComponent } from './pro-workspace/pro-workspace.component';
 import { ProContributorsComponent } from './pro-contributors/pro-contributors.component';
 import { ProDetailsComponent } from './pro-details/pro-details.component';
+import { LastEditDatePipe } from 'src/app/pipe/last-edit-date.pipe';
 
 @NgModule({
   imports: [SharedModule, ProjectWorkspaceRouting],
@@ -17,6 +18,7 @@ import { ProDetailsComponent } from './pro-details/pro-details.component';
     ProWorkspaceComponent,
     ProContributorsComponent,
     ProDetailsComponent,
+    LastEditDatePipe,
   ],
   exports: [RouterModule],
 })

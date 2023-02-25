@@ -27,6 +27,7 @@ export class ProjectWorkspaceComponent
   CreateProjectDataTransfer: Subscription;
   CreateRoleDataTransfer: Subscription;
   CreateContributorsDataTransfer: Subscription;
+  ShowTaskDataTransfer: Subscription;
   RemoveContributorsDataTransfer: Subscription;
   RemoveRolesDataTransfer: Subscription;
   CreateTaskDataTransfer: Subscription;
@@ -37,6 +38,8 @@ export class ProjectWorkspaceComponent
   isCreateContributorsModal: boolean;
   isRemoveContributorsModal: { userId: string; projectId: string };
   isRemoveRolesModal: { roleName: string; projectId: string };
+  isShowTasksModal: { taskList: string; taskDetails: any; projectId: string } =
+    { taskDetails: null, taskList: '', projectId: '' };
   isCreateTaskModal: boolean;
   userDetails: any;
   BoardCreatingForm: FormGroup;
@@ -138,6 +141,12 @@ export class ProjectWorkspaceComponent
           },
           error: (error) => {},
         });
+      });
+
+    // Show the task details
+    this.ShowTaskDataTransfer =
+      this._projectService.WorkspaceDataTransfer.subscribe((data) => {
+        this.isShowTasksModal = data;
       });
 
     // update the data by debounceTime
@@ -242,6 +251,7 @@ export class ProjectWorkspaceComponent
     this.isRemoveContributorsModal = { userId: '', projectId: '' };
     this.isRemoveRolesModal = { roleName: '', projectId: '' };
     this.isCreateTaskModal = false;
+    this.isShowTasksModal = { taskList: '', taskDetails: null, projectId: '' };
 
     this.boardAlreadyExist = false;
     this.roleAlreadyExist = false;
@@ -413,5 +423,6 @@ export class ProjectWorkspaceComponent
     this.RemoveContributorsDataTransfer.unsubscribe();
     this.RemoveRolesDataTransfer.unsubscribe();
     this.CreateTaskDataTransfer.unsubscribe();
+    this.ShowTaskDataTransfer.unsubscribe();
   }
 }
