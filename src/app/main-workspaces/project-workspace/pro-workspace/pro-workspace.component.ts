@@ -99,5 +99,17 @@ export class ProWorkspaceComponent implements OnInit, OnDestroy {
     });
   }
 
+  removeTask(taskId: string, taskListName: string, projectId: string) {
+    this._projectService.RemoveTaskDataTransfer.emit({
+      taskId: taskId,
+      taskListName: taskListName,
+      projectId: projectId,
+    });
+  }
+
+  removeProject(projectId: string) {
+    this._projectService.RemoveProjectDataTransfer.emit(projectId);
+  }
+
   ngOnDestroy(): void {}
 }

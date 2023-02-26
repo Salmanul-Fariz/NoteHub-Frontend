@@ -28,6 +28,12 @@ export class ProjectWorkspaceService {
     projectId: string;
   }>();
   CreateTaskDataTransfer = new EventEmitter<string>();
+  RemoveTaskDataTransfer = new EventEmitter<{
+    taskId: string;
+    taskListName: string;
+    projectId: string;
+  }>();
+  RemoveProjectDataTransfer = new EventEmitter<string>();
   userDetails: any;
   boardsDetails: any[];
   board_Details: any[];
@@ -123,6 +129,20 @@ export class ProjectWorkspaceService {
   RemoveProjectRole(projectId: string, roleName: string) {
     return this._http.delete<any>(
       `${environment.baseUrl}/workspaces/project-workspace/roles?projectId=${projectId}&roleName=${roleName}`
+    );
+  }
+
+  // Remove project Task
+  RemoveProjectTask(taskId: string, taskListName: string, projectId: string) {
+    return this._http.delete<any>(
+      `${environment.baseUrl}/workspaces/project-workspace/tasks?projectId=${projectId}&taskId=${taskId}&taskListName=${taskListName}`
+    );
+  }
+
+  // Remove project Task
+  RemoveProject(projectId: string) {
+    return this._http.delete<any>(
+      `${environment.baseUrl}/workspaces/project-workspace?projectId=${projectId}`
     );
   }
 

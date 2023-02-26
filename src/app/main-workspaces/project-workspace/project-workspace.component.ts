@@ -31,11 +31,19 @@ export class ProjectWorkspaceComponent
   RemoveContributorsDataTransfer: Subscription;
   RemoveRolesDataTransfer: Subscription;
   CreateTaskDataTransfer: Subscription;
+  RemoveTaskDataTransfer: Subscription;
+  RemoveProjectDataTransfer: Subscription;
   PageWorkspaceNameSubject = new Subject<string>();
   isProjectSettingsModal: boolean;
   isCreateProjectModal: boolean;
   isCreateRoleModal: boolean;
   isCreateContributorsModal: boolean;
+  isRemoveTaskModal: {
+    taskId: string;
+    taskListName: string;
+    projectId: string;
+  };
+  isRemoveProjectModal: string;
   isRemoveContributorsModal: { userId: string; projectId: string };
   isRemoveRolesModal: { roleName: string; projectId: string };
   isShowTasksModal: { taskList: string; taskDetails: any; projectId: string } =
@@ -109,6 +117,18 @@ export class ProjectWorkspaceComponent
     this.RemoveRolesDataTransfer =
       this._projectService.RemoveRolesDataTransfer.subscribe((data) => {
         this.isRemoveRolesModal = data;
+      });
+
+    // Remove Project task
+    this.RemoveTaskDataTransfer =
+      this._projectService.RemoveTaskDataTransfer.subscribe((data) => {
+        this.isRemoveTaskModal = data;
+      });
+
+    // Remove project
+    this.RemoveProjectDataTransfer =
+      this._projectService.RemoveProjectDataTransfer.subscribe((data) => {
+        this.isRemoveProjectModal = data;
       });
 
     // Create task
@@ -252,6 +272,8 @@ export class ProjectWorkspaceComponent
     this.isRemoveRolesModal = { roleName: '', projectId: '' };
     this.isCreateTaskModal = false;
     this.isShowTasksModal = { taskList: '', taskDetails: null, projectId: '' };
+    this.isRemoveProjectModal = '';
+    this.isRemoveTaskModal = { taskId: '', taskListName: '', projectId: '' };
 
     this.boardAlreadyExist = false;
     this.roleAlreadyExist = false;
@@ -415,6 +437,42 @@ export class ProjectWorkspaceComponent
       });
   }
 
+  successDeleteTask() {
+    this._projectService
+      .RemoveProjectTask(
+        this.isRemoveTaskModal.taskId,
+        this.isRemoveTaskModal.taskListName,
+        this.isRemoveTaskModal.projectId
+      )
+      .subscribe({
+        next: (response) => {
+          this._projectService.board_Details = response.data;
+          this._projectService.BoardDataTransfer.emit(
+            this._projectService.board_Details
+          );
+
+          this.closeBoardModal();
+        },
+        error: (error) => {},
+      });
+  }
+
+  successDeleteProject() {
+    this._projectService.RemoveProject(this.isRemoveProjectModal).subscribe({
+      next: (response) => {
+        this.closeBoardModal();
+        this._projectService.boardsDetails = response.data;
+        this._projectService.DetailsDataTransfer.emit({
+          userDetails: this._projectService.userDetails,
+          boardDetails: this._projectService.boardsDetails,
+        });
+
+        this.router.navigate(['/workspaces/project-workspace']);
+      },
+      error: (error) => {},
+    });
+  }
+
   ngOnDestroy(): void {
     this.ProjectSettingsDataTransfer.unsubscribe();
     this.CreateProjectDataTransfer.unsubscribe();
@@ -424,5 +482,7 @@ export class ProjectWorkspaceComponent
     this.RemoveRolesDataTransfer.unsubscribe();
     this.CreateTaskDataTransfer.unsubscribe();
     this.ShowTaskDataTransfer.unsubscribe();
+    this.RemoveTaskDataTransfer.unsubscribe();
+    this.RemoveProjectDataTransfer.unsubscribe();
   }
 }
