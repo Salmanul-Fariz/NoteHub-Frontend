@@ -8,7 +8,7 @@ import { AuthComponent } from './auth/auth.component';
 import { ProjectWorkspaceComponent } from './main-workspaces/project-workspace/project-workspace.component';
 
 import { MainWorkspacesComponent } from './main-workspaces/main-workspaces.component';
-
+import { UserWorkspaceComponent } from './main-workspaces/user-workspace/user-workspace.component';
 
 const appRoutes: Routes = [
   // user pages
@@ -30,6 +30,7 @@ const appRoutes: Routes = [
         children: [
           {
             path: 'user-workspace',
+            component: UserWorkspaceComponent,
             // user Workspace Module,
             loadChildren: () =>
               import(

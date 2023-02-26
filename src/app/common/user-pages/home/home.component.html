@@ -11,7 +11,8 @@
           time Create a Work Space</h6>
       </div>
       <div class="mt-5">
-        <button>Try NoteHub</button>
+        <button [routerLink]="['/workspaces/user-workspace']" *ngIf="isAuth">Try NoteHub</button>
+        <button [routerLink]="['/auth/signup']" *ngIf="!isAuth">Try NoteHub</button>
       </div>
     </div>
 

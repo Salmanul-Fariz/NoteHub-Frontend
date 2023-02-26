@@ -11,9 +11,9 @@
     </div>
   </div>
   <hr>
-  <div class="workspace-pages-container" *ngIf="pagesEmpty">
-    <div class="workspace-pages-bar" *ngFor="let page of pagesDetails;let pgIndex=index"
-      (click)="sendPageDetails(pgIndex)">
+  <div class="workspace-pages-container" *ngIf="pagesDetails?.length > 0">
+    <div class="workspace-pages-bar" *ngFor="let page of pagesDetails"
+      [routerLink]="['/workspaces/user-workspace',page._id]">
       <ngx-emoji emoji="{{page.icon}}" size="24"></ngx-emoji>
       <p class="workspace-pages-name">{{page.title}}</p>
     </div>

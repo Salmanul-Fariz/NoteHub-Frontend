@@ -27,6 +27,13 @@ export class UserWorkspaceService {
     );
   }
 
+  // Get the workspace page details
+  GetWorkspacePage(pageId: string) {
+    return this.http.get<any>(
+      `${environment.baseUrl}/workspaces/user-workspace/${pageId}`
+    );
+  }
+
   // Update Workspace icon
   UpdateWorkspaceIcon(newIcon: string) {
     return this.http.patch<any>(

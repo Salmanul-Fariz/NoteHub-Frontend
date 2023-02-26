@@ -2,75 +2,74 @@
   <div class="boards-title">
     <p class="text-lg md:text-xl">Projects / {{boardDetails?.boardName}}</p>
     <i class="fa-solid fa-trash" (click)="removeProject(boardDetails._id)" *ngIf="accessAdmin"
-      [ngClass]="{'cursor-not-allowed':!accessAdmin,'cursor-pointer':accessAdmin}"
-      (click)="addNewTask(boardDetails._id)"></i>
+      [ngClass]="{'cursor-not-allowed':!accessAdmin,'cursor-pointer':accessAdmin}"></i>
   </div>
 
   <!--
    search bar 
-  <div class="board-filter-sort-container mt-14">
-    <div class="board-filter-sort-bar">
-      <button class="board-filter-sort-button" mat-button [matMenuTriggerFor]="filter">Filter</button>
-      <button class="ml-1 board-filter-sort-button" mat-button [matMenuTriggerFor]="sort">Sort</button>
+  <div class=" board-filter-sort-container mt-14">
+      <div class="board-filter-sort-bar">
+        <button class="board-filter-sort-button" mat-button [matMenuTriggerFor]="filter">Filter</button>
+        <button class="ml-1 board-filter-sort-button" mat-button [matMenuTriggerFor]="sort">Sort</button>
 
-       filter nodes 
-      <mat-menu #filter="matMenu">
-        <button mat-menu-item [matMenuTriggerFor]="filterStatus">Status</button>
-        <button mat-menu-item>Names</button>
-        <button mat-menu-item>Assign</button>
-      </mat-menu>
+        filter nodes
+        <mat-menu #filter="matMenu">
+          <button mat-menu-item [matMenuTriggerFor]="filterStatus">Status</button>
+          <button mat-menu-item>Names</button>
+          <button mat-menu-item>Assign</button>
+        </mat-menu>
 
-      filter => Status nodes
-      <mat-menu #filterStatus="matMenu">
-        <button mat-menu-item>To do</button>
-        <button mat-menu-item>Progress</button>
-        <button mat-menu-item>Completed</button>
-      </mat-menu>
+        filter => Status nodes
+        <mat-menu #filterStatus="matMenu">
+          <button mat-menu-item>To do</button>
+          <button mat-menu-item>Progress</button>
+          <button mat-menu-item>Completed</button>
+        </mat-menu>
 
-      sort nodes
-      <mat-menu #sort="matMenu">
-        <button mat-menu-item [matMenuTriggerFor]="sortStatus">Status</button>
-        <button mat-menu-item [matMenuTriggerFor]="sortNames">Names</button>
-        <button mat-menu-item [matMenuTriggerFor]="sortAssignTime">Assign Time</button>
-      </mat-menu>
+        sort nodes
+        <mat-menu #sort="matMenu">
+          <button mat-menu-item [matMenuTriggerFor]="sortStatus">Status</button>
+          <button mat-menu-item [matMenuTriggerFor]="sortNames">Names</button>
+          <button mat-menu-item [matMenuTriggerFor]="sortAssignTime">Assign Time</button>
+        </mat-menu>
 
-      sort => Status nodes
-      <mat-menu #sortStatus="matMenu">
-        <button mat-menu-item [matMenuTriggerFor]="sortStatusTodo">To do</button>
-        <button mat-menu-item [matMenuTriggerFor]="sortStatusProgress">Progress</button>
-        <button mat-menu-item [matMenuTriggerFor]="sortStatusCompleted">Completed</button>
-      </mat-menu>
+        sort => Status nodes
+        <mat-menu #sortStatus="matMenu">
+          <button mat-menu-item [matMenuTriggerFor]="sortStatusTodo">To do</button>
+          <button mat-menu-item [matMenuTriggerFor]="sortStatusProgress">Progress</button>
+          <button mat-menu-item [matMenuTriggerFor]="sortStatusCompleted">Completed</button>
+        </mat-menu>
 
-      sort => Status => To-do nodes
-      <mat-menu #sortStatusTodo="matMenu">
-        <button mat-menu-item>Ascending</button>
-        <button mat-menu-item>Descending</button>
-      </mat-menu>
+        sort => Status => To-do nodes
+        <mat-menu #sortStatusTodo="matMenu">
+          <button mat-menu-item>Ascending</button>
+          <button mat-menu-item>Descending</button>
+        </mat-menu>
 
-      sort => Status => Progress nodes
-      <mat-menu #sortStatusProgress="matMenu">
-        <button mat-menu-item>Ascending</button>
-        <button mat-menu-item>Descending</button>
-      </mat-menu>
+        sort => Status => Progress nodes
+        <mat-menu #sortStatusProgress="matMenu">
+          <button mat-menu-item>Ascending</button>
+          <button mat-menu-item>Descending</button>
+        </mat-menu>
 
-      sort => Status => Completed nodes
-      <mat-menu #sortStatusCompleted="matMenu">
-        <button mat-menu-item>Ascending</button>
-        <button mat-menu-item>Descending</button>
-      </mat-menu>
+        sort => Status => Completed nodes
+        <mat-menu #sortStatusCompleted="matMenu">
+          <button mat-menu-item>Ascending</button>
+          <button mat-menu-item>Descending</button>
+        </mat-menu>
 
-      sort => Name nodes
-      <mat-menu #sortNames="matMenu">
-        <button mat-menu-item>Ascending</button>
-        <button mat-menu-item>Descending</button>
-      </mat-menu>
+        sort => Name nodes
+        <mat-menu #sortNames="matMenu">
+          <button mat-menu-item>Ascending</button>
+          <button mat-menu-item>Descending</button>
+        </mat-menu>
 
-      sort => Assign Time nodes
-      <mat-menu #sortAssignTime="matMenu">
-        <button mat-menu-item>Ascending</button>
-        <button mat-menu-item>Descending</button>
-      </mat-menu>
-    </div>
+        sort => Assign Time nodes
+        <mat-menu #sortAssignTime="matMenu">
+          <button mat-menu-item>Ascending</button>
+          <button mat-menu-item>Descending</button>
+        </mat-menu>
+      </div>
   </div>
 
   -->

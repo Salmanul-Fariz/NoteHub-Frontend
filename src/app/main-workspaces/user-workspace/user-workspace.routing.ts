@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserWorkspaceComponent } from './user-workspace.component';
+
+import { EmptyWorkspaceComponent } from './empty-workspace/empty-workspace.component';
+import { WorkspaceComponent } from './workspace/workspace.component';
 
 const routes: Routes = [
-  { path: '', component: UserWorkspaceComponent },
+  { path: '', component: EmptyWorkspaceComponent },
+  { path: ':id', component: WorkspaceComponent },
 ];
 
 @NgModule({

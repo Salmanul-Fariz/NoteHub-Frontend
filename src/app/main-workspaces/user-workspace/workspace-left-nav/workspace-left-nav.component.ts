@@ -15,7 +15,6 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
   pagesDataTransfer: Subscription;
   isModal: boolean | unknown;
   pagesDetails: string[];
-  pagesEmpty: boolean;
 
   constructor(
     private workspaceService: UserWorkspaceService,
@@ -34,10 +33,6 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
         document.body.style.cursor = 'auto';
 
         this.pagesDetails = data;
-
-        if (data.length !== 0) {
-          this.pagesEmpty = true;
-        }
       }
     );
   }
@@ -65,8 +60,18 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
   }
 
   // Show Pages Details
-  sendPageDetails(index: number) {
-    this.workspaceService.pageDataTransfer.emit(this.pagesDetails[index]);
+  sendPageDetails(pageId: string) {
+    this.workspaceService.GetWorkspacePage(pageId).subscribe({
+      next: (response) => {
+        this.workspaceService.pageDataTransfer.emit(response.data);
+      },
+      error: (error) => {
+        if (error.status === 408 || 400) {
+          localStorage.clear();
+          this.router.navigate(['auth/signin']);
+        }
+      },
+    });
   }
 
   ngOnDestroy(): void {

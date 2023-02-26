@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, Subject, Subscription } from 'rxjs';
 import { jsPDF } from 'jspdf';
 
@@ -36,10 +36,33 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     private workspaceService: UserWorkspaceService,
     private treeService: WorkspaceTreeService,
     private s3Service: S3BucketService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    // take the data
+    this.route.params.subscribe((data) => {
+      this.workspaceService.GetWorkspacePage(data?.['id']).subscribe({
+        next: (response) => {
+          this.ArrageData(response.data);
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+    });
+
+    // Page Details
+    this.pageDataTransferSb = this.workspaceService.pageDataTransfer.subscribe(
+      (data: any) => {
+        this.ArrageData(data);
+      }
+    );
+
     this.deletePageSubscribtion =
       this.workspaceService.deleteDataTransfer.subscribe((data) => {
         if (data.bol === false) {
@@ -51,29 +74,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     this.savePageNameSubject.pipe(debounceTime(500)).subscribe((value) => {
       this.pageNameUpdate(value, this.pagesDetails._id);
     });
-
-    // Page Details
-    this.pageDataTransferSb = this.workspaceService.pageDataTransfer.subscribe(
-      (data: any) => {
-        // tree implementation
-        if (data.page) {
-          data.levelPage = null;
-          this.treeService.root = data.page;
-          data.levelPage = this.treeService.ChangeDatatolevel();
-        }
-
-        this.pagesDetails = data;
-
-        if (this.pagesDetails.coverImg.url) {
-          this.backgroundPositionY = `${this.pagesDetails.coverImg.positionY}%`;
-          this.backgroundImage = `url(${this.pagesDetails.coverImg.url})`;
-        }
-
-        if (data) {
-          this.pageEmpty = false;
-        }
-      }
-    );
 
     // change options to next options
     window.addEventListener('keydown', (event: any) => {
@@ -143,6 +143,26 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   // trackBy
   trackByFn(index: number, value: any) {
     return value._id;
+  }
+
+  ArrageData(data: any) {
+    // tree implementation
+    if (data.page) {
+      data.levelPage = null;
+      this.treeService.root = data.page;
+      data.levelPage = this.treeService.ChangeDatatolevel();
+    }
+
+    this.pagesDetails = data;
+
+    if (this.pagesDetails.coverImg.url) {
+      this.backgroundPositionY = `${this.pagesDetails.coverImg.positionY}%`;
+      this.backgroundImage = `url(${this.pagesDetails.coverImg.url})`;
+    }
+
+    if (data) {
+      this.pageEmpty = false;
+    }
   }
 
   // Change the options with arrow key

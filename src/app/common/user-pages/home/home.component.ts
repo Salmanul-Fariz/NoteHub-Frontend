@@ -8,6 +8,7 @@ import { UserService } from '../../../service/user.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  isAuth: boolean;
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
@@ -19,5 +20,8 @@ export class HomeComponent implements OnInit {
         }
       },
     });
+
+    this.isAuth = localStorage.getItem('jwt') !== ('' || null) ? true : false;
+    console.log(this.isAuth);
   }
 }

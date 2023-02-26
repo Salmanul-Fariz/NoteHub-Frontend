@@ -19,6 +19,8 @@ import { LeftProWorkspaceNavComponent } from './main-workspaces/project-workspac
 import { MainWorkspacesComponent } from './main-workspaces/main-workspaces.component';
 import { AuthComponent } from './auth/auth.component';
 import { userAccessProjectGuard } from './guards/userAccessProject.guard';
+import { UserWorkspaceComponent } from './main-workspaces/user-workspace/user-workspace.component';
+import { WorkspaceLeftNavComponent } from './main-workspaces/user-workspace/workspace-left-nav/workspace-left-nav.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +28,11 @@ import { userAccessProjectGuard } from './guards/userAccessProject.guard';
     HeaderComponent,
     FooterComponent,
     AuthComponent,
+    WorkspaceLeftNavComponent,
     UserPagesComponent,
     MainWorkspacesComponent,
     ProjectWorkspaceComponent,
+    UserWorkspaceComponent,
     LeftProWorkspaceNavComponent,
   ],
   imports: [
