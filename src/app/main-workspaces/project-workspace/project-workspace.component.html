@@ -109,7 +109,8 @@
       <button class="close-modal" (click)="closeBoardModal()">&times;</button>
     </div>
     <form [formGroup]="ContributorsCreatingForm" (ngSubmit)="createContributor(ContributorsCreatingForm.value)"
-      class="flex flex-col justify-start pt-2 pl-8 pr-8 pb-6 gap-y-4 boardSettings">
+      class="flex flex-col justify-start pt-2 pl-8 pr-8 pb-6 gap-y-4 boardSettings"
+      *ngIf="boardDetails?.roles.length > 0 ;else elseRole">
       <div class="w-full flex flex-col lg:flex-row justify-between gap-2">
         <label>Username</label>
         <input class="boardInput" formControlName="contributorName" type="text" placeholder="Enter username">
@@ -138,6 +139,9 @@
           [disabled]=" !ContributorsCreatingForm.valid" class="Board-Modal-Button bg-primary">Save</button>
       </div>
     </form>
+    <ng-template #elseRole>
+      <p class="text-center text-lg py-4 pb-8">Role is Empty first Create a Role !</p>
+    </ng-template>
   </div>
 </div>
 
@@ -187,7 +191,8 @@
       <button class="close-modal" (click)="closeBoardModal()">&times;</button>
     </div>
     <form [formGroup]="TaskCreatingForm" (ngSubmit)="createTask(TaskCreatingForm.value)"
-      class="flex flex-col justify-start pt-2 pl-8 pr-8 pb-6 gap-y-4 boardSettings">
+      class="flex flex-col justify-start pt-2 pl-8 pr-8 pb-6 gap-y-4 boardSettings"
+      *ngIf="boardDetails?.roles.length > 0 ;else elseRole">
       <div class="w-full flex flex-col lg:flex-row justify-between gap-2">
         <label>Task Name</label>
         <input class="boardInput" formControlName="taskName" type="text" placeholder="Enter task name">
@@ -215,6 +220,9 @@
           [disabled]=" !TaskCreatingForm.valid" class="Board-Modal-Button bg-primary">Save</button>
       </div>
     </form>
+    <ng-template #elseRole>
+      <p class="text-center text-lg py-4 pb-8">Role is Empty first Create a Role !</p>
+    </ng-template>
   </div>
 </div>
 
