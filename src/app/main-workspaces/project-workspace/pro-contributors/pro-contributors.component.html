@@ -2,14 +2,17 @@
   <div class="contributors-roles-container">
     <div class="contributors-roles-head">
       <h3 class="text-3xl sm:text-4xl">Roles</h3>
-      <i *ngIf="boardDetails?.roles.length > 0" class="fa-solid fa-circle-plus" (click)="addNewRole()"></i>
+      <i *ngIf="boardDetails?.roles.length > 0 && accessAdmin" class="fa-solid fa-circle-plus" (click)="addNewRole()"
+        [ngClass]="{'cursor-not-allowed':!accessAdmin,'cursor-pointer':accessAdmin}"></i>
     </div>
-    <div class="plus-icon" *ngIf="boardDetails?.roles.length === 0" (click)="addNewRole()">
+    <div class="plus-icon" *ngIf="boardDetails?.roles.length === 0 && accessAdmin" (click)="addNewRole()"
+      [ngClass]="{'cursor-not-allowed':!accessAdmin,'cursor-pointer':accessAdmin}">
       <button>Add role</button>
     </div>
     <div class="contributors-roles" *ngIf="boardDetails?.roles.length > 0">
 
-      <div class="roles w-4/12 sm:w-2/12 " *ngFor="let element of boardDetails.roles">
+      <div class="roles w-4/12 sm:w-2/12 " *ngFor="let element of boardDetails.roles"
+        [ngClass]="{'cursor-not-allowed':!accessAdmin,'cursor-pointer':accessAdmin}">
         <span [ngStyle]="{'background-color': element.color}"></span>
         <p>{{element.name}}</p>
         <div class="w-full h-full" (click)="removeRole(boardDetails._id,element.name)">
@@ -23,10 +26,12 @@
   <div class="contributors-container">
     <div class="contributors-head">
       <h3 class="text-3xl sm:text-4xl">Contributors</h3>
-      <i *ngIf="boardDetails?.roles.length > 0" class="fa-solid fa-circle-plus"
-        (click)="addNewContributors(boardDetails?._id)"></i>
+      <i *ngIf="boardDetails?.roles.length > 0 && accessAdmin" class="fa-solid fa-circle-plus"
+        (click)="addNewContributors(boardDetails?._id)"
+        [ngClass]="{'cursor-not-allowed':!accessAdmin,'cursor-pointer':accessAdmin}"></i>
     </div>
-    <div class="plus-icon" *ngIf="boardDetails?.contributors.length === 0">
+    <div class="plus-icon" *ngIf="boardDetails?.contributors.length === 0 && accessAdmin"
+      [ngClass]="{'cursor-not-allowed':!accessAdmin,'cursor-pointer':accessAdmin}">
       <button (click)="addNewContributors(boardDetails?._id)">Add Contributors</button>
     </div>
     <div class="contributors" *ngIf="boardDetails?.contributors.length > 0">
@@ -57,7 +62,8 @@
         <ng-container matColumnDef="remove">
           <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef></th>
           <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element">
-            <i (click)="removeContributor(boardDetails._id,element.userId._id)" class="fa-solid fa-user-slash"></i>
+            <i (click)="removeContributor(boardDetails._id,element.userId._id)" class="fa-solid fa-user-slash"
+              [ngClass]="{'cursor-not-allowed':!accessAdmin,'cursor-pointer':accessAdmin}"></i>
           </td>
         </ng-container>
 

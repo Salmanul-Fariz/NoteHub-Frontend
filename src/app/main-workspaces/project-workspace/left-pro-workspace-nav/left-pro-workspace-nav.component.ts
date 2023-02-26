@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProjectWorkspaceService } from 'src/app/service/projectWorkspace.service';
 
@@ -18,8 +18,7 @@ export class LeftProWorkspaceNavComponent implements OnInit, OnDestroy {
 
   constructor(
     private _projectService: ProjectWorkspaceService,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {}
 
   ngOnInit(): void {

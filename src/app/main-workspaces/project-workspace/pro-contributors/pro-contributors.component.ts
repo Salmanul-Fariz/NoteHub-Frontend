@@ -12,6 +12,7 @@ export class ProContributorsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'userName', 'role', 'remove'];
   ContributorsDataSource = new MatTableDataSource<any>();
   boardDetails: any;
+  accessAdmin: boolean;
 
   constructor(
     private _projectService: ProjectWorkspaceService,
@@ -19,7 +20,19 @@ export class ProContributorsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this._projectService.AccessAdminDataTransfer.subscribe((data) => {
+      this.accessAdmin = data;
+    });
+
     this.route.params.subscribe((data) => {
+      // Access to admin
+      this._projectService.isAccessProjectAdmin(data?.['id']).subscribe({
+        next: (response) => {
+          this.accessAdmin = response.data;
+        },
+        error: () => {},
+      });
+
       this._projectService.GetBoardDetails(data?.['id']).subscribe({
         next: (response) => {
           this._projectService.board_Details = response.data.boardDetails;
@@ -39,24 +52,32 @@ export class ProContributorsComponent implements OnInit {
   }
 
   addNewRole() {
-    this._projectService.CreateRoleDataTransfer.emit(true);
+    if (this.accessAdmin) {
+      this._projectService.CreateRoleDataTransfer.emit(true);
+    }
   }
 
   addNewContributors(id: string) {
-    this._projectService.CreateContributorsDataTransfer.emit(id);
+    if (this.accessAdmin) {
+      this._projectService.CreateContributorsDataTransfer.emit(id);
+    }
   }
 
   removeContributor(projectId: string, userId: string) {
-    this._projectService.RemoveContributorsDataTransfer.emit({
-      projectId: projectId,
-      userId: userId,
-    });
+    if (this.accessAdmin) {
+      this._projectService.RemoveContributorsDataTransfer.emit({
+        projectId: projectId,
+        userId: userId,
+      });
+    }
   }
 
   removeRole(projectId: string, roleName: string) {
-    this._projectService.RemoveRolesDataTransfer.emit({
-      projectId: projectId,
-      roleName: roleName,
-    });
+    if (this.accessAdmin) {
+      this._projectService.RemoveRolesDataTransfer.emit({
+        projectId: projectId,
+        roleName: roleName,
+      });
+    }
   }
 }

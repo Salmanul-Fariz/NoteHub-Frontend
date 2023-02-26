@@ -1,7 +1,9 @@
 <section *ngIf="boardDetails?._id;else elseBoard_details">
   <div class="boards-title">
     <p class="text-lg md:text-xl">Projects / {{boardDetails?.boardName}}</p>
-    <i class="fa-solid fa-trash" (click)="removeProject(boardDetails._id)"></i>
+    <i class="fa-solid fa-trash" (click)="removeProject(boardDetails._id)" *ngIf="accessAdmin"
+      [ngClass]="{'cursor-not-allowed':!accessAdmin,'cursor-pointer':accessAdmin}"
+      (click)="addNewTask(boardDetails._id)"></i>
   </div>
 
   <!--
@@ -73,22 +75,29 @@
 
   -->
 
-  <div class="board-workspace-container">
-    <div cdkDropListGroup class="md:flex block md:flex-row w-full gap-2 justify-center">
+  <div class="board-workspace-container py-12">
+    <div cdkDropListGroup class="overflow-x-auto flex px-2 pb-3 w-full gap-2">
 
       <!-- To do -->
-      <div class="board-workspace-drag-container flex md:block justify-center w-full  md:w-1/3 mt-4 ">
+      <div class="board-workspace-drag-container flex md:block justify-center w-full  md:w-1/3 mt-4 px-0 py-3 md:p-3">
         <div class="w-10/12 md:w-auto">
           <h2 class="board-workspace-drag-heading">TO DO TASK</h2>
 
           <div cdkDropList [cdkDropListData]="boardDetails?.tasks.todo" class="board-workspace-drag-list"
             (cdkDropListDropped)="drop($event)">
-            <div class="board-workspace-drag-box" *ngFor="let item of boardDetails?.tasks.todo" cdkDrag>
+            <div class="board-workspace-drag-box"
+              [ngClass]="{'cursor-no-drop':!taskAccesData?.includes(item._id) && !accessAdmin}"
+              *ngFor="let item of boardDetails?.tasks.todo" cdkDrag>
+
               <div class="py-2" (click)="showTaskList(boardDetails._id,item,'todo')">
+                <mat-icon *ngIf="taskAccesData?.includes(item._id) || accessAdmin"
+                  [ngStyle]="{'color':'#007419'}">check_circle</mat-icon>
+                <mat-icon *ngIf="!taskAccesData?.includes(item._id) && !accessAdmin"
+                  [ngStyle]="{'color':'rgb(217 79 79)'}">block</mat-icon>
                 <h5>{{item.taskName}}</h5>
                 <p>{{item.updateTime | lastEditDate }}</p>
               </div>
-              <div class="board-workspace-drag-box-more">
+              <div class="board-workspace-drag-box-more" *ngIf="accessAdmin">
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                   <mat-icon>more_vert</mat-icon>
                 </button>
@@ -98,10 +107,12 @@
                   </button>
                 </mat-menu>
               </div>
+
             </div>
 
             <!-- Add New Button -->
-            <div class="board-workspace-drag-new" (click)="addNewTask(boardDetails._id)">
+            <div *ngIf="accessAdmin" class="board-workspace-drag-new " [ngClass]="{'cursor-not-allowed':!accessAdmin}"
+              (click)="addNewTask(boardDetails._id)">
               <i class="fa-solid fa-plus"></i>
               <h2>Create task</h2>
             </div>
@@ -110,14 +121,21 @@
       </div>
 
       <!-- Progress -->
-      <div class="board-workspace-drag-container flex md:block justify-center w-full  md:w-1/3 mt-4">
+      <div class="board-workspace-drag-container flex md:block justify-center w-full  md:w-1/3 mt-4 px-0 py-3 md:p-3">
         <div class="w-10/12 md:w-auto">
           <h2 class="board-workspace-drag-heading">IN PROGRESS</h2>
 
           <div cdkDropList [cdkDropListData]="boardDetails?.tasks.progress" class="board-workspace-drag-list"
             (cdkDropListDropped)="drop($event)">
-            <div class="board-workspace-drag-box" *ngFor="let item of boardDetails?.tasks.progress" cdkDrag>
+            <div class="board-workspace-drag-box"
+              [ngClass]="{'cursor-no-drop':!taskAccesData?.includes(item._id) && !accessAdmin}" cdkDrag
+              *ngFor="let item of boardDetails?.tasks.progress">
+
               <div class="py-2" (click)="showTaskList(boardDetails._id,item,'progress')">
+                <mat-icon *ngIf="taskAccesData?.includes(item._id) || accessAdmin"
+                  [ngStyle]="{'color':'#007419'}">check_circle</mat-icon>
+                <mat-icon *ngIf="!taskAccesData?.includes(item._id) && !accessAdmin"
+                  [ngStyle]="{'color':'rgb(217 79 79)'}">block</mat-icon>
                 <h5>{{item.taskName}}</h5>
                 <p>{{item.updateTime | lastEditDate }}</p>
               </div>
@@ -131,20 +149,28 @@
                   </button>
                 </mat-menu>
               </div>
+
             </div>
           </div>
         </div>
       </div>
 
       <!-- Compled -->
-      <div class="board-workspace-drag-container flex md:block justify-center w-full  md:w-1/3 mt-4">
+      <div class="board-workspace-drag-container flex md:block justify-center w-full  md:w-1/3 mt-4 px-0 py-3 md:p-3">
         <div class="w-10/12 md:w-auto">
           <h2 class="board-workspace-drag-heading">DONE</h2>
 
           <div cdkDropList [cdkDropListData]="boardDetails?.tasks.completed" class="board-workspace-drag-list"
             (cdkDropListDropped)="drop($event)">
-            <div class="board-workspace-drag-box" *ngFor="let item of boardDetails?.tasks.completed" cdkDrag>
+            <div class="board-workspace-drag-box" cdkDrag
+              [ngClass]="{'cursor-no-drop':!taskAccesData?.includes(item._id) && !accessAdmin}"
+              *ngFor="let item of boardDetails?.tasks.completed">
+
               <div class="py-2" (click)="showTaskList(boardDetails._id,item,'completed')">
+                <mat-icon *ngIf="taskAccesData?.includes(item._id) || accessAdmin"
+                  [ngStyle]="{'color':'#007419'}">check_circle</mat-icon>
+                <mat-icon *ngIf="!taskAccesData?.includes(item._id) && !accessAdmin"
+                  [ngStyle]="{'color':'rgb(217 79 79)'}">block</mat-icon>
                 <h5>{{item.taskName}}</h5>
                 <p>{{item.updateTime | lastEditDate }}</p>
               </div>
@@ -158,6 +184,7 @@
                   </button>
                 </mat-menu>
               </div>
+
             </div>
           </div>
         </div>

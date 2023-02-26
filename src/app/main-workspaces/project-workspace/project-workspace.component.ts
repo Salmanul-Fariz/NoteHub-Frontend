@@ -16,7 +16,6 @@ import { ProjectWorkspaceService } from 'src/app/service/projectWorkspace.servic
   selector: 'app-project-workspace',
   templateUrl: './project-workspace.component.html',
   styleUrls: ['./project-workspace.component.css'],
-  providers: [ProjectWorkspaceService],
 })
 export class ProjectWorkspaceComponent
   implements AfterViewInit, OnInit, OnDestroy
@@ -378,6 +377,19 @@ export class ProjectWorkspaceComponent
 
   createTask(formData: any) {
     const url = this.router.url.split('/');
+
+    // Access contributor to task
+    this._projectService
+      .isAccessProjectContributorsTask(url[url.length - 1])
+      .subscribe({
+        next: (response) => {
+          this._projectService.AccessContributorDataTransfer.emit(
+            response.data
+          );
+        },
+        error: () => {},
+      });
+
     this._projectService
       .CreateProjectTask(formData, url[url.length - 1])
       .subscribe({
@@ -438,6 +450,18 @@ export class ProjectWorkspaceComponent
   }
 
   successDeleteTask() {
+    // Access contributor to task
+    this._projectService
+      .isAccessProjectContributorsTask(this.isRemoveTaskModal.projectId)
+      .subscribe({
+        next: (response) => {
+          this._projectService.AccessContributorDataTransfer.emit(
+            response.data
+          );
+        },
+        error: () => {},
+      });
+
     this._projectService
       .RemoveProjectTask(
         this.isRemoveTaskModal.taskId,

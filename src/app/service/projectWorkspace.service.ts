@@ -3,12 +3,14 @@ import { EventEmitter, Injectable } from '@angular/core';
 
 import { environment } from '../environments/environment.dev';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ProjectWorkspaceService {
   DetailsDataTransfer = new EventEmitter<{
     userDetails: any;
     boardDetails: any;
   }>();
+  AccessAdminDataTransfer = new EventEmitter<boolean>();
+  AccessContributorDataTransfer = new EventEmitter<string[]>();
   BoardDataTransfer = new EventEmitter<any>();
   ProjectSettingsDataTransfer = new EventEmitter<boolean>();
   CreateProjectDataTransfer = new EventEmitter<boolean>();
@@ -40,6 +42,27 @@ export class ProjectWorkspaceService {
   boardSelectedId: string;
 
   constructor(private _http: HttpClient) {}
+
+  // is user can Access the projct workSpaces
+  isCanAccessProject(projectId: string) {
+    return this._http.get<any>(
+      `${environment.baseUrl}/workspaces/project-workspace/access?projectId=${projectId}`
+    )
+  }
+
+  // is Access to Admin
+  isAccessProjectAdmin(projectId: string) {
+    return this._http.get<any>(
+      `${environment.baseUrl}/workspaces/project-workspace/access/admin?projectId=${projectId}`
+    );
+  }
+
+  // is Access contributor to task
+  isAccessProjectContributorsTask(projectId: string) {
+    return this._http.get<any>(
+      `${environment.baseUrl}/workspaces/project-workspace/access/contributors?projectId=${projectId}`
+    );
+  }
 
   // View Project Management
   viewProjectWorspacePage() {

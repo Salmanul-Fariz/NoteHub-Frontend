@@ -18,6 +18,7 @@ import { ProjectWorkspaceComponent } from './main-workspaces/project-workspace/p
 import { LeftProWorkspaceNavComponent } from './main-workspaces/project-workspace/left-pro-workspace-nav/left-pro-workspace-nav.component';
 import { MainWorkspacesComponent } from './main-workspaces/main-workspaces.component';
 import { AuthComponent } from './auth/auth.component';
+import { userAccessProjectGuard } from './guards/userAccessProject.guard';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AuthComponent } from './auth/auth.component';
     VerifyEmailGuard,
     AuthenticationGuard,
     UserAutherizationGuard,
+    userAccessProjectGuard,
   ],
   bootstrap: [AppComponent],
 })
