@@ -81,6 +81,14 @@ mat-menu > button {
   display: none;
 }
 
+.workspace-cover-img:hover .workspace-cover-img-reposition {
+  display: flex;
+}
+
+.workspace-cover-img-reposition {
+  display: none;
+}
+
 .workspace-page-icon {
   width: 62px;
   padding: 10px 9px;

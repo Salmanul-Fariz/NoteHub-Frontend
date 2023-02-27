@@ -1,1 +1,41 @@
-<p>your-projects works!</p>
+<section>
+  <div class="page-title-container">
+    <button [routerLink]="['/workspaces/project-workspace']">Project Space</button>
+  </div>
+  <div class="pages-table-container">
+    <table mat-table [dataSource]="ProjectDataSource" class="mat-elevation-z8"
+      *ngIf="ProjectDataSource.data.length > 0 ; else elseBoard">
+
+      <!--board Name Column -->
+      <ng-container matColumnDef="boardName">
+        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Project Name</th>
+        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element">{{element.boardName}}</td>
+      </ng-container>
+
+      <!--project Type Column -->
+      <ng-container matColumnDef="projectType">
+        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Projet Type</th>
+        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element.projectType}} </td>
+      </ng-container>
+
+      <!-- Project Id Column -->
+      <ng-container matColumnDef="Id">
+        <th class="w-1/4 text-xs md:text-sm" mat-header-cell *matHeaderCellDef>Project ID</th>
+        <td class="w-1/4 text-xs md:text-sm" mat-cell *matCellDef="let element"> {{element._id}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        [routerLink]="['/workspaces/project-workspace/boards',row._id]"></tr>
+    </table>
+
+    <ng-template #elseBoard>
+      <div class="empty-page-container">
+        <div class="empty-page">
+          <i class="fa-regular fa-file"></i>
+          <h3>Empty</h3>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</section>

@@ -1,0 +1,75 @@
+.pages-table-container {
+  width: 100%;
+  padding: 18px 10px;
+}
+
+table {
+  width: 100%;
+}
+
+td button {
+  font-size: 18px;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+tr * {
+  line-break: anywhere;
+}
+
+tr[mat-row]:hover {
+  background-color: rgb(235, 234, 234);
+  cursor: pointer;
+}
+
+/* empty page */
+.empty-page-container {
+  width: 100%;
+  height: calc(100vh - 129px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 90px 0px;
+}
+
+.empty-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.empty-page > i {
+  font-size: 50px;
+  color: #6e6e6e;
+}
+
+.empty-page > h3 {
+  font-family: 'JosefinSans-Bold';
+  font-size: 30px;
+  align-self: flex-end;
+  color: #6e6e6e;
+}
+
+/* Table */
+td > ngx-emoji {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+.page-title-container {
+  display: flex;
+  justify-content: end;
+  padding: 18px 10px;
+}
+
+.page-title-container button {
+  background-color: #0053a6;
+  color: #fff;
+  padding: 6px 16px;
+  font-size: 17px;
+  border-radius: 7px;
+}

@@ -10,6 +10,7 @@ export class ProfileService {
   UserDetailsDataTransfer = new EventEmitter<any>();
   UserDetails: any;
   PagesDetails: any;
+  ProjectDetails: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -38,6 +39,11 @@ export class ProfileService {
   // Pages details in Profile Pages
   ProfilePageDetailsGet() {
     return this.http.get<any>(`${environment.baseUrl}/profile/pages`);
+  }
+
+  // Project details in Profile Pages
+  ProfileProjectDetailsGet() {
+    return this.http.get<any>(`${environment.baseUrl}/profile/project`);
   }
 
   logout() {

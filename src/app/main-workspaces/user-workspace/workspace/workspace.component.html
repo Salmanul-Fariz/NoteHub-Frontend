@@ -36,7 +36,7 @@
         'background-image': backgroundImage,
         cursor: cursor
       }">
-      <div class="flex justify-between gap-1" *ngIf="!isbackgroundPositionY">
+      <div class="workspace-cover-img-reposition justify-between gap-1" *ngIf="!isbackgroundPositionY">
         <form action="">
           <input (input)="uploadCover($event, pagesDetails._id)" id="files" type="file" accept="image/*" />
           <label for="files">Change Cover</label>
