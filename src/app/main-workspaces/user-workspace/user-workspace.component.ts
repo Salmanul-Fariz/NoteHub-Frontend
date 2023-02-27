@@ -20,7 +20,7 @@ import { WorkspaceTreeService } from 'src/app/service/workspace-tree.service';
   selector: 'app-user-workspace',
   templateUrl: './user-workspace.component.html',
   styleUrls: ['./user-workspace.component.css'],
-  providers: [S3BucketService, UserWorkspaceService, WorkspaceTreeService],
+  providers: [S3BucketService, WorkspaceTreeService],
 })
 export class UserWorkspaceComponent
   implements OnInit, AfterViewInit, OnDestroy
@@ -169,7 +169,6 @@ export class UserWorkspaceComponent
       .UpdateWorkspacePageIcon(event.emoji.id, id)
       .subscribe({
         next: (response) => {
-          this.workspaceService.updatePageArray(id, response.data);
           this.workspaceService.pageDataTransfer.emit(response.data);
           this.isEmojiBar = false;
           this.isWorkSpaceNameUpdate = false;
@@ -256,10 +255,6 @@ export class UserWorkspaceComponent
               )
               .subscribe({
                 next: (response) => {
-                  this.workspaceService.updatePageArray(
-                    this.isImageUpload.pageId,
-                    response.data
-                  );
                   this.workspaceService.pageDataTransfer.emit(response.data);
 
                   this.closeImageUploadModal();

@@ -390,7 +390,7 @@
             <i id="toggle-{{element._id}}" class="toggleOption fa-solid fa-angle-right"
               (click)="toggleOption(i,element._id)"
               [ngStyle]="{transform:element.isToggle?'rotate(90deg)':'rotate(0)'}"></i>
-            <div id=" {{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
+            <div id="{{element._id}}" class="workspace-content" contenteditable="true" spellcheck="true"
               placeholder="Toggle" (input)="inputPage($event,element._id,i)"
               (keydown)="onKeydown($event,element._id,'toggle')">{{
               element.content

@@ -13,6 +13,7 @@ import { WorkspaceTreeService } from 'src/app/service/workspace-tree.service';
   styleUrls: ['./workspace.component.css'],
 })
 export class WorkspaceComponent implements OnInit, OnDestroy {
+  CallFunction: Function;
   isOpenOptionTab: boolean;
   pageDataTransferSb: Subscription;
   deletePageSubscribtion: Subscription;
@@ -29,7 +30,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   savePageNameSubject = new Subject<string>();
   savePageContentSubject = new Subject<string>();
   setTimerUpdateContent: ReturnType<typeof setTimeout>;
-  setUpdateContent: any;
+  setUpdateContent: any = null;
   array = [1];
 
   constructor(
@@ -204,7 +205,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     });
   }
 
-  inputPage(event: any, pageSecId: string, index: number) {
+  inputPage(event: any, pageSecId: string) {
     this.isChangeOptionClass = false;
     this.closeActiveOption();
 
@@ -265,12 +266,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         this.setUpdateContent = null;
         this.updateSecContent(value, this.pagesDetails._id, pageSecId);
       }, 300);
-
-      // this.savePageContentSubject.pipe(debounceTime(1000)).subscribe((el) => {
-      //   this.updateSecContent(value, this.pagesDetails._id, pageSecId);
-      // });
-
-      // this.savePageContentSubject.next('true');
     }
   }
 
@@ -279,17 +274,20 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       event.preventDefault();
       if (!this.isChangeOptionClass) {
         if (this.setUpdateContent !== null) {
-          this.updateSecContent(
+          this.updateSecContentQueue(
             this.setUpdateContent.value,
             this.pagesDetails._id,
-            this.setUpdateContent.pageSecId
+            this.setUpdateContent.pageSecId,
+            pageType
           );
-          this.setUpdateContent = null;
+          this.CallFunction = this.addNewNodeWithChild;
+        } else {
+          this.addNewNodeWithChild(pageSecId, pageType);
         }
-        this.addNewNodeWithChild(pageSecId, pageType);
       }
     } else if (event.key === 'Backspace') {
       const sel = window.getSelection();
+
       if (sel) {
         const range = sel.getRangeAt(0);
         const currentIndex = range.startOffset;
@@ -304,35 +302,85 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     // Remove a node without child (ctrl + shift + e)
     else if (event.ctrlKey && event.shiftKey && event.keyCode === 69) {
       if (!this.isChangeOptionClass) {
-        this.removeNodeWithOutChild(pageSecId, pageType);
+        if (this.setUpdateContent !== null) {
+          this.updateSecContentQueue(
+            this.setUpdateContent.value,
+            this.pagesDetails._id,
+            this.setUpdateContent.pageSecId,
+            pageType
+          );
+          this.CallFunction = this.removeNodeWithOutChild;
+        } else {
+          this.removeNodeWithOutChild(pageSecId, pageType);
+        }
       }
     }
 
     // Remove a node with child (ctrl + shift + a)
     else if (event.ctrlKey && event.shiftKey && event.keyCode === 65) {
       if (!this.isChangeOptionClass) {
-        this.removeNodeWithChild(pageSecId, pageType);
+        if (this.setUpdateContent !== null) {
+          this.updateSecContentQueue(
+            this.setUpdateContent.value,
+            this.pagesDetails._id,
+            this.setUpdateContent.pageSecId,
+            pageType
+          );
+          this.CallFunction = this.removeNodeWithChild;
+        } else {
+          this.removeNodeWithChild(pageSecId, pageType);
+        }
       }
     }
 
     // Change the node to parent node (shift + tab)
     else if (event.shiftKey && event.key === 'Tab') {
       if (!this.isChangeOptionClass) {
-        this.changeParentNode(pageSecId, pageType);
+        if (this.setUpdateContent !== null) {
+          this.updateSecContentQueue(
+            this.setUpdateContent.value,
+            this.pagesDetails._id,
+            this.setUpdateContent.pageSecId,
+            pageType
+          );
+          this.CallFunction = this.changeParentNode;
+        } else {
+          this.changeParentNode(pageSecId, pageType);
+        }
       }
     }
 
     // Change to new child with it's own child
     else if (event.key === 'Tab') {
       if (!this.isChangeOptionClass) {
-        this.changeToChild(pageSecId, pageType);
+        if (this.setUpdateContent !== null) {
+          this.updateSecContentQueue(
+            this.setUpdateContent.value,
+            this.pagesDetails._id,
+            this.setUpdateContent.pageSecId,
+            pageType
+          );
+          this.CallFunction = this.changeToChild;
+        } else {
+          this.changeToChild(pageSecId, pageType);
+        }
       }
     }
 
     // Add new node Without child (ctrl + shift + Q)
     else if (event.ctrlKey && event.shiftKey && event.keyCode === 81) {
       if (!this.isChangeOptionClass) {
-        this.addNewNode(pageSecId, pageType);
+        if (this.setUpdateContent !== null) {
+          this.updateSecContentQueue(
+            this.setUpdateContent.value,
+            this.pagesDetails._id,
+            this.setUpdateContent.pageSecId,
+            pageType
+          );
+          this.CallFunction = this.addNewNode;
+        } else {
+          this.addNewNode(pageSecId, pageType);
+        }
       }
     }
   }
@@ -383,7 +431,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
               .UpdateWorkspaceCoverImage(imageUrl, pageId)
               .subscribe({
                 next: (response) => {
-                  this.workspaceService.updatePageArray(pageId, response.data);
                   this.workspaceService.pageDataTransfer.emit(response.data);
                   document.body.style.cursor = 'auto';
                 },
@@ -436,7 +483,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       next: (response) => {
         this.cursor = 'auto';
         this.isbackgroundPositionY = false;
-        this.workspaceService.updatePageArray(pageId, response.data);
         this.workspaceService.pageDataTransfer.emit(response.data);
         document.body.style.cursor = 'auto';
       },
@@ -466,7 +512,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
           optionTab.style.display = 'none';
 
-          this.workspaceService.updatePageArray(pageId, response.data);
           this.workspaceService.pageDataTransfer.emit(response.data);
 
           // For focus the cursor
@@ -498,28 +543,32 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           this.isSavingContent = false;
-          const currentDiv = document.getElementById(pageSecId) as HTMLElement;
-          currentDiv.innerHTML = '';
-          currentDiv.innerText = pageContent;
+        },
+        error: (error) => {
+          if (error.status === 408 || 400) {
+            localStorage.clear();
+            document.body.style.cursor = 'auto';
+            this.router.navigate(['auth/signin']);
+          }
+        },
+      });
+  }
 
-          this.workspaceService.updatePageArray(pageId, response.data);
+  // update user Workspace page content In queue
+  updateSecContentQueue(
+    pageContent: string,
+    pageId: string,
+    pageSecId: string,
+    pageType: string
+  ) {
+    this.isSavingContent = true;
 
-          // For focus the cursor
-          setTimeout(() => {
-            const range = document.createRange();
-            const sel = window.getSelection();
-            if (currentDiv && sel) {
-              if (currentDiv.innerText.length !== 0) {
-                range.setStart(
-                  currentDiv.childNodes[0],
-                  currentDiv.innerText.length
-                );
-                range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
-              }
-            }
-          }, 0);
+    this.workspaceService
+      .UpdateWorkspaceSecContent(pageContent, pageSecId, pageId)
+      .subscribe({
+        next: (response) => {
+          this.isSavingContent = false;
+          this.CallFunction(pageSecId, pageType);
         },
         error: (error) => {
           if (error.status === 408 || 400) {
@@ -557,10 +606,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response) => {
-          this.workspaceService.updatePageArray(
-            this.pagesDetails._id,
-            response.data
-          );
           this.workspaceService.pageDataTransfer.emit(response.data);
 
           document.body.style.cursor = 'auto';
@@ -589,10 +634,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response) => {
-          this.workspaceService.updatePageArray(
-            this.pagesDetails._id,
-            response.data.data
-          );
           this.workspaceService.pageDataTransfer.emit(response.data.data);
           document.body.style.cursor = 'auto';
 
@@ -628,10 +669,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response) => {
-          this.workspaceService.updatePageArray(
-            this.pagesDetails._id,
-            response.data.data
-          );
           this.workspaceService.pageDataTransfer.emit(response.data.data);
           document.body.style.cursor = 'auto';
 
@@ -667,10 +704,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response) => {
-          this.workspaceService.updatePageArray(
-            this.pagesDetails._id,
-            response.data.data
-          );
           this.workspaceService.pageDataTransfer.emit(response.data.data);
           document.body.style.cursor = 'auto';
           // Put caret cursor
@@ -705,10 +738,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response) => {
-          this.workspaceService.updatePageArray(
-            this.pagesDetails._id,
-            response.data.data
-          );
           this.workspaceService.pageDataTransfer.emit(response.data.data);
           document.body.style.cursor = 'auto';
           // Put caret cursor
@@ -743,10 +772,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response) => {
-          this.workspaceService.updatePageArray(
-            this.pagesDetails._id,
-            response.data.data
-          );
           this.workspaceService.pageDataTransfer.emit(response.data.data);
           document.body.style.cursor = 'auto';
           // Put caret cursor
@@ -781,10 +806,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response) => {
-          this.workspaceService.updatePageArray(
-            this.pagesDetails._id,
-            response.data.data
-          );
           this.workspaceService.pageDataTransfer.emit(response.data.data);
           document.body.style.cursor = 'auto';
           // Put caret cursor
@@ -869,10 +890,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response) => {
-          this.workspaceService.updatePageArray(
-            this.pagesDetails._id,
-            response.data
-          );
           this.workspaceService.pageDataTransfer.emit(response.data);
 
           document.body.style.cursor = 'auto';
@@ -960,10 +977,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       .AddNewSection(this.pagesDetails._id, '', '', '', 'InsertFirstNode')
       .subscribe({
         next: (response) => {
-          this.workspaceService.updatePageArray(
-            this.pagesDetails._id,
-            response.data.data
-          );
           this.workspaceService.pageDataTransfer.emit(response.data.data);
           document.body.style.cursor = 'auto';
         },

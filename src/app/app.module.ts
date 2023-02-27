@@ -21,6 +21,7 @@ import { AuthComponent } from './auth/auth.component';
 import { userAccessProjectGuard } from './guards/userAccessProject.guard';
 import { UserWorkspaceComponent } from './main-workspaces/user-workspace/user-workspace.component';
 import { WorkspaceLeftNavComponent } from './main-workspaces/user-workspace/workspace-left-nav/workspace-left-nav.component';
+import { userAccessPageGuard } from './guards/userAccessPage.guard';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { WorkspaceLeftNavComponent } from './main-workspaces/user-workspace/work
     AuthenticationGuard,
     UserAutherizationGuard,
     userAccessProjectGuard,
+    userAccessPageGuard,
   ],
   bootstrap: [AppComponent],
 })

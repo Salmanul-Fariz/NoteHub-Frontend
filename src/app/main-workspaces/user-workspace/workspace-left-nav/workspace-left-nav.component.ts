@@ -14,7 +14,7 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
   modalSubscribtion: Subscription;
   pagesDataTransfer: Subscription;
   isModal: boolean | unknown;
-  pagesDetails: string[];
+  pagesDetails: any[];
 
   constructor(
     private workspaceService: UserWorkspaceService,

@@ -4,7 +4,7 @@ import { switchMap } from 'rxjs';
 
 import { environment } from '../environments/environment.dev';
 
-@Injectable()
+@Injectable({providedIn:'root'})
 export class UserWorkspaceService {
   pagesDataTransfer = new EventEmitter<string[]>();
   isModalDataTransfer = new EventEmitter<boolean>();
@@ -19,6 +19,13 @@ export class UserWorkspaceService {
   pages: any[];
 
   constructor(private http: HttpClient) {}
+
+  // is user have access to page
+  isCanAccessPage(pageId: string) {
+    return this.http.get<any>(
+      `${environment.baseUrl}/workspaces/user-workspace/access?pageId=${pageId}`
+    );
+  }
 
   // View User Workspace Page
   viewWorspacePage() {
