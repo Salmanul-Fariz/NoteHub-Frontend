@@ -10,8 +10,9 @@
         <h6 class="text-base md:text-xl">For every minute spent organizing, an hour is earned. Without Spending
           time Create a Work Space</h6>
       </div>
-      <div class="mt-5">
-        <button [routerLink]="['/workspaces/user-workspace']" *ngIf="isAuth">Try NoteHub</button>
+      <div class="mt-5 gap-3">
+        <button [routerLink]="['/workspaces/user-workspace']" *ngIf="isAuth">Notepage Making</button>
+        <button [routerLink]="['/workspaces/project-workspace']" *ngIf="isAuth">Project Management</button>
         <button [routerLink]="['/auth/signup']" *ngIf="!isAuth">Try NoteHub</button>
       </div>
     </div>
@@ -31,12 +32,10 @@
     </div>
 
     <!-- Project Space -->
-    <div class="section-4-container">
+    <div class="section-4-container py-10 md:py-28">
       <div class="flex flex-col md:flex-row items-start md:items-center justify-center">
         <div class="flex justify-center items-center md:block w-12/12 md:w-6/12">
-          <div class="image">
-            Photo
-          </div>
+          <img class="image" src="https://notehub0.s3.ap-south-1.amazonaws.com/resorces/project--img.png" alt="">
         </div>
         <div class="right-bar w-12/12 md:w-6/12">
           <div>
@@ -52,7 +51,7 @@
     </div>
 
     <!-- User Workspace -->
-    <div class="section-5-container">
+    <div class="section-5-container py-10 md:py-28">
       <div class="flex flex-col md:flex-row items-start md:items-center justify-center">
         <div class="right-bar w-12/12 md:w-6/12">
           <div>
@@ -64,9 +63,7 @@
           </div>
         </div>
         <div class="flex justify-center items-center md:block w-12/12 md:w-6/12">
-          <div class="image">
-            Photo
-          </div>
+          <img class="image" src="https://notehub0.s3.ap-south-1.amazonaws.com/resorces/workspace-img.png" alt="">
         </div>
       </div>
     </div>
