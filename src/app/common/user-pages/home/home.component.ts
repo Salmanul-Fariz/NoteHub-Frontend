@@ -22,6 +22,5 @@ export class HomeComponent implements OnInit {
     });
 
     this.isAuth = localStorage.getItem('jwt') !== ('' || null) ? true : false;
-    console.log(this.isAuth);
   }
 }

@@ -1,117 +1,84 @@
-<section *ngIf="boardDetails?._id;else elseBoard_details">
+<section *ngIf="boardDetails?._id; else elseBoard_details">
   <div class="boards-title">
-    <p class="text-lg md:text-xl">Projects / {{boardDetails?.boardName}}</p>
-    <i class="fa-solid fa-trash" (click)="removeProject(boardDetails._id)" *ngIf="accessAdmin"
-      [ngClass]="{'cursor-not-allowed':!accessAdmin,'cursor-pointer':accessAdmin}"></i>
+    <p class="text-lg md:text-xl">Projects / {{ boardDetails?.boardName }}</p>
+    <i
+      class="fa-solid fa-trash"
+      (click)="removeProject(boardDetails._id)"
+      *ngIf="accessAdmin"
+      [ngClass]="{
+        'cursor-not-allowed': !accessAdmin,
+        'cursor-pointer': accessAdmin
+      }"
+    ></i>
   </div>
-
-  <!--
-   search bar 
-  <div class=" board-filter-sort-container mt-14">
-      <div class="board-filter-sort-bar">
-        <button class="board-filter-sort-button" mat-button [matMenuTriggerFor]="filter">Filter</button>
-        <button class="ml-1 board-filter-sort-button" mat-button [matMenuTriggerFor]="sort">Sort</button>
-
-        filter nodes
-        <mat-menu #filter="matMenu">
-          <button mat-menu-item [matMenuTriggerFor]="filterStatus">Status</button>
-          <button mat-menu-item>Names</button>
-          <button mat-menu-item>Assign</button>
-        </mat-menu>
-
-        filter => Status nodes
-        <mat-menu #filterStatus="matMenu">
-          <button mat-menu-item>To do</button>
-          <button mat-menu-item>Progress</button>
-          <button mat-menu-item>Completed</button>
-        </mat-menu>
-
-        sort nodes
-        <mat-menu #sort="matMenu">
-          <button mat-menu-item [matMenuTriggerFor]="sortStatus">Status</button>
-          <button mat-menu-item [matMenuTriggerFor]="sortNames">Names</button>
-          <button mat-menu-item [matMenuTriggerFor]="sortAssignTime">Assign Time</button>
-        </mat-menu>
-
-        sort => Status nodes
-        <mat-menu #sortStatus="matMenu">
-          <button mat-menu-item [matMenuTriggerFor]="sortStatusTodo">To do</button>
-          <button mat-menu-item [matMenuTriggerFor]="sortStatusProgress">Progress</button>
-          <button mat-menu-item [matMenuTriggerFor]="sortStatusCompleted">Completed</button>
-        </mat-menu>
-
-        sort => Status => To-do nodes
-        <mat-menu #sortStatusTodo="matMenu">
-          <button mat-menu-item>Ascending</button>
-          <button mat-menu-item>Descending</button>
-        </mat-menu>
-
-        sort => Status => Progress nodes
-        <mat-menu #sortStatusProgress="matMenu">
-          <button mat-menu-item>Ascending</button>
-          <button mat-menu-item>Descending</button>
-        </mat-menu>
-
-        sort => Status => Completed nodes
-        <mat-menu #sortStatusCompleted="matMenu">
-          <button mat-menu-item>Ascending</button>
-          <button mat-menu-item>Descending</button>
-        </mat-menu>
-
-        sort => Name nodes
-        <mat-menu #sortNames="matMenu">
-          <button mat-menu-item>Ascending</button>
-          <button mat-menu-item>Descending</button>
-        </mat-menu>
-
-        sort => Assign Time nodes
-        <mat-menu #sortAssignTime="matMenu">
-          <button mat-menu-item>Ascending</button>
-          <button mat-menu-item>Descending</button>
-        </mat-menu>
-      </div>
-  </div>
-
-  -->
 
   <div class="board-workspace-container py-12">
     <div cdkDropListGroup class="overflow-x-auto flex px-2 pb-3 w-full gap-2">
-
       <!-- To do -->
-      <div class="board-workspace-drag-container flex md:block justify-center w-full  md:w-1/3 mt-4 px-0 py-3 md:p-3">
+      <div
+        class="board-workspace-drag-container flex md:block justify-center w-full md:w-1/3 mt-4 px-0 py-3 md:p-3"
+      >
         <div class="w-10/12 md:w-auto">
           <h2 class="board-workspace-drag-heading">TO DO TASK</h2>
 
-          <div cdkDropList [cdkDropListData]="boardDetails?.tasks.todo" class="board-workspace-drag-list"
-            (cdkDropListDropped)="drop($event)">
-            <div class="board-workspace-drag-box"
-              [ngClass]="{'cursor-no-drop':!taskAccesData?.includes(item._id) && !accessAdmin}"
-              *ngFor="let item of boardDetails?.tasks.todo" cdkDrag>
-
-              <div class="py-2" (click)="showTaskList(boardDetails._id,item,'todo')">
-                <mat-icon *ngIf="taskAccesData?.includes(item._id) || accessAdmin"
-                  [ngStyle]="{'color':'#007419'}">check_circle</mat-icon>
-                <mat-icon *ngIf="!taskAccesData?.includes(item._id) && !accessAdmin"
-                  [ngStyle]="{'color':'rgb(217 79 79)'}">block</mat-icon>
-                <h5>{{item.taskName}}</h5>
-                <p>{{item.updateTime | lastEditDate }}</p>
+          <div
+            cdkDropList
+            [cdkDropListData]="boardDetails?.tasks.todo"
+            class="board-workspace-drag-list"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <div
+              class="board-workspace-drag-box"
+              [ngClass]="{
+                'cursor-no-drop':
+                  !taskAccesData?.includes(item._id) && !accessAdmin
+              }"
+              *ngFor="let item of boardDetails?.tasks.todo"
+              cdkDrag
+            >
+              <div
+                class="py-2"
+                (click)="showTaskList(boardDetails._id, item, 'todo')"
+              >
+                <mat-icon
+                  *ngIf="taskAccesData?.includes(item._id) || accessAdmin"
+                  [ngStyle]="{ color: '#007419' }"
+                  >check_circle</mat-icon
+                >
+                <mat-icon
+                  *ngIf="!taskAccesData?.includes(item._id) && !accessAdmin"
+                  [ngStyle]="{ color: 'rgb(217 79 79)' }"
+                  >block</mat-icon
+                >
+                <h5>{{ item.taskName }}</h5>
+                <p>{{ item.updateTime | lastEditDate }}</p>
               </div>
               <div class="board-workspace-drag-box-more" *ngIf="accessAdmin">
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="Example icon-button with a menu"
+                >
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="removeTask(item._id,'todo',boardDetails._id)">
+                  <button
+                    mat-menu-item
+                    (click)="removeTask(item._id, 'todo', boardDetails._id)"
+                  >
                     <span class="text-sm">Delete</span>
                   </button>
                 </mat-menu>
               </div>
-
             </div>
 
             <!-- Add New Button -->
-            <div *ngIf="accessAdmin" class="board-workspace-drag-new " [ngClass]="{'cursor-not-allowed':!accessAdmin}"
-              (click)="addNewTask(boardDetails._id)">
+            <div
+              *ngIf="accessAdmin"
+              class="board-workspace-drag-new"
+              [ngClass]="{ 'cursor-not-allowed': !accessAdmin }"
+              (click)="addNewTask(boardDetails._id)"
+            >
               <i class="fa-solid fa-plus"></i>
               <h2>Create task</h2>
             </div>
@@ -120,70 +87,124 @@
       </div>
 
       <!-- Progress -->
-      <div class="board-workspace-drag-container flex md:block justify-center w-full  md:w-1/3 mt-4 px-0 py-3 md:p-3">
+      <div
+        class="board-workspace-drag-container flex md:block justify-center w-full md:w-1/3 mt-4 px-0 py-3 md:p-3"
+      >
         <div class="w-10/12 md:w-auto">
           <h2 class="board-workspace-drag-heading">IN PROGRESS</h2>
 
-          <div cdkDropList [cdkDropListData]="boardDetails?.tasks.progress" class="board-workspace-drag-list"
-            (cdkDropListDropped)="drop($event)">
-            <div class="board-workspace-drag-box"
-              [ngClass]="{'cursor-no-drop':!taskAccesData?.includes(item._id) && !accessAdmin}" cdkDrag
-              *ngFor="let item of boardDetails?.tasks.progress">
-
-              <div class="py-2" (click)="showTaskList(boardDetails._id,item,'progress')">
-                <mat-icon *ngIf="taskAccesData?.includes(item._id) || accessAdmin"
-                  [ngStyle]="{'color':'#007419'}">check_circle</mat-icon>
-                <mat-icon *ngIf="!taskAccesData?.includes(item._id) && !accessAdmin"
-                  [ngStyle]="{'color':'rgb(217 79 79)'}">block</mat-icon>
-                <h5>{{item.taskName}}</h5>
-                <p>{{item.updateTime | lastEditDate }}</p>
+          <div
+            cdkDropList
+            [cdkDropListData]="boardDetails?.tasks.progress"
+            class="board-workspace-drag-list"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <div
+              class="board-workspace-drag-box"
+              [ngClass]="{
+                'cursor-no-drop':
+                  !taskAccesData?.includes(item._id) && !accessAdmin
+              }"
+              cdkDrag
+              *ngFor="let item of boardDetails?.tasks.progress"
+            >
+              <div
+                class="py-2"
+                (click)="showTaskList(boardDetails._id, item, 'progress')"
+              >
+                <mat-icon
+                  *ngIf="taskAccesData?.includes(item._id) || accessAdmin"
+                  [ngStyle]="{ color: '#007419' }"
+                  >check_circle</mat-icon
+                >
+                <mat-icon
+                  *ngIf="!taskAccesData?.includes(item._id) && !accessAdmin"
+                  [ngStyle]="{ color: 'rgb(217 79 79)' }"
+                  >block</mat-icon
+                >
+                <h5>{{ item.taskName }}</h5>
+                <p>{{ item.updateTime | lastEditDate }}</p>
               </div>
               <div class="board-workspace-drag-box-more">
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="Example icon-button with a menu"
+                >
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="removeTask(item._id,'progress',boardDetails._id)">
+                  <button
+                    mat-menu-item
+                    (click)="removeTask(item._id, 'progress', boardDetails._id)"
+                  >
                     <span class="text-sm">Delete</span>
                   </button>
                 </mat-menu>
               </div>
-
             </div>
           </div>
         </div>
       </div>
 
       <!-- Compled -->
-      <div class="board-workspace-drag-container flex md:block justify-center w-full  md:w-1/3 mt-4 px-0 py-3 md:p-3">
+      <div
+        class="board-workspace-drag-container flex md:block justify-center w-full md:w-1/3 mt-4 px-0 py-3 md:p-3"
+      >
         <div class="w-10/12 md:w-auto">
           <h2 class="board-workspace-drag-heading">DONE</h2>
 
-          <div cdkDropList [cdkDropListData]="boardDetails?.tasks.completed" class="board-workspace-drag-list"
-            (cdkDropListDropped)="drop($event)">
-            <div class="board-workspace-drag-box" cdkDrag
-              [ngClass]="{'cursor-no-drop':!taskAccesData?.includes(item._id) && !accessAdmin}"
-              *ngFor="let item of boardDetails?.tasks.completed">
-
-              <div class="py-2" (click)="showTaskList(boardDetails._id,item,'completed')">
-                <mat-icon *ngIf="taskAccesData?.includes(item._id) || accessAdmin"
-                  [ngStyle]="{'color':'#007419'}">check_circle</mat-icon>
-                <mat-icon *ngIf="!taskAccesData?.includes(item._id) && !accessAdmin"
-                  [ngStyle]="{'color':'rgb(217 79 79)'}">block</mat-icon>
-                <h5>{{item.taskName}}</h5>
-                <p>{{item.updateTime | lastEditDate }}</p>
+          <div
+            cdkDropList
+            [cdkDropListData]="boardDetails?.tasks.completed"
+            class="board-workspace-drag-list"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <div
+              class="board-workspace-drag-box"
+              cdkDrag
+              [ngClass]="{
+                'cursor-no-drop':
+                  !taskAccesData?.includes(item._id) && !accessAdmin
+              }"
+              *ngFor="let item of boardDetails?.tasks.completed"
+            >
+              <div
+                class="py-2"
+                (click)="showTaskList(boardDetails._id, item, 'completed')"
+              >
+                <mat-icon
+                  *ngIf="taskAccesData?.includes(item._id) || accessAdmin"
+                  [ngStyle]="{ color: '#007419' }"
+                  >check_circle</mat-icon
+                >
+                <mat-icon
+                  *ngIf="!taskAccesData?.includes(item._id) && !accessAdmin"
+                  [ngStyle]="{ color: 'rgb(217 79 79)' }"
+                  >block</mat-icon
+                >
+                <h5>{{ item.taskName }}</h5>
+                <p>{{ item.updateTime | lastEditDate }}</p>
               </div>
               <div class="board-workspace-drag-box-more">
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="Example icon-button with a menu"
+                >
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="removeTask(item._id,'completed',boardDetails._id)">
+                  <button
+                    mat-menu-item
+                    (click)="
+                      removeTask(item._id, 'completed', boardDetails._id)
+                    "
+                  >
                     <span class="text-sm">Delete</span>
                   </button>
                 </mat-menu>
               </div>
-
             </div>
           </div>
         </div>

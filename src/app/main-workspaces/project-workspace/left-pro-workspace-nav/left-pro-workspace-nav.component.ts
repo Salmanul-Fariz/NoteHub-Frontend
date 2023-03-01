@@ -47,10 +47,8 @@ export class LeftProWorkspaceNavComponent implements OnInit, OnDestroy {
 
   routerColor(url: string[]) {
     this.projectRouteColor = '';
-    if (url[url.length - 1] === 'settings') this.projectRouteColor = 'settings';
-    else if (url[url.length - 1] === 'details')
-      this.projectRouteColor = 'details';
-    else if (url[url.length - 1] === 'contributors')
+
+    if (url[url.length - 1] === 'contributors')
       this.projectRouteColor = 'contributors';
     else if (url[url.length - 2] === 'boards')
       this.projectRouteColor = 'boards';

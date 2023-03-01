@@ -38,7 +38,6 @@ export class ProWorkspaceComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.accessAdmin = response.data;
         },
-        error: () => {},
       });
 
       // Access contributor to task
@@ -48,7 +47,6 @@ export class ProWorkspaceComponent implements OnInit, OnDestroy {
           next: (response) => {
             this.taskAccesData = response.data;
           },
-          error: () => {},
         });
 
       this._projectService.GetBoardDetails(data?.['id']).subscribe({
@@ -58,7 +56,6 @@ export class ProWorkspaceComponent implements OnInit, OnDestroy {
 
           this.boardDetails = this._projectService.board_Details;
         },
-        error: (error) => {},
       });
     });
 
@@ -115,7 +112,6 @@ export class ProWorkspaceComponent implements OnInit, OnDestroy {
               this._projectService.board_Details
             );
           },
-          error: (error) => {},
         });
     }
   }

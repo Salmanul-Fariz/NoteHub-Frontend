@@ -50,25 +50,20 @@ export class SigninComponent implements OnInit {
           this.isLoading = true;
           this.authService.signinWithGoogle(user).subscribe({
             next: (response) => {
-              setTimeout(() => {
+              if (response.status === 'Email-Error') {
+                this.googleEmailExist = true;
+                // Remove the Validation Message From template
+                setTimeout(() => {
+                  this.googleEmailExist = false;
+                }, 1500);
+              } else {
                 this.isLoading = false;
                 // Register Success
                 localStorage.setItem('jwt', response.data.token);
 
                 this.router.navigate(['/']);
-              }, 1500);
-            },
-            error: (error) => {
-              setTimeout(() => {
-                this.isLoading = false;
-                if (error.status === 400) {
-                  this.googleEmailExist = true;
-                  // Remove the Validation Message From template
-                  setTimeout(() => {
-                    this.googleEmailExist = false;
-                  }, 1500);
-                }
-              }, 1500);
+              }
+              this.isLoading = false;
             },
           });
         }
@@ -89,28 +84,22 @@ export class SigninComponent implements OnInit {
 
     this.authService.signin(formData).subscribe({
       next: (response) => {
-        setTimeout(() => {
+        if (response.status === 'Password-Error') {
+          this.passwordErr = true;
+        } else if (response.status === 'Username-Or-Email') {
+          this.userOrMailErr = true;
+        } else {
           this.isLoading = false;
 
           // Signin Success
           localStorage.setItem('jwt', response.data.token);
           this.router.navigate(['/']);
-        }, 1500);
-      },
-      error: (error) => {
-        setTimeout(() => {
-          this.isLoading = false;
-          if (error.error.status === 'Password-Error') {
-            this.passwordErr = true;
-          } else if (error.error.status === 'Username-Or-Email') {
-            this.userOrMailErr = true;
-          }
+        }
 
-          // Remove the Validation Message From template
-          setTimeout(() => {
-            this.passwordErr = false;
-            this.userOrMailErr = false;
-          }, 1500);
+        // Remove the Validation Message From template
+        setTimeout(() => {
+          this.passwordErr = false;
+          this.userOrMailErr = false;
         }, 1500);
       },
     });

@@ -22,6 +22,8 @@ import { userAccessProjectGuard } from './guards/userAccessProject.guard';
 import { UserWorkspaceComponent } from './main-workspaces/user-workspace/user-workspace.component';
 import { WorkspaceLeftNavComponent } from './main-workspaces/user-workspace/workspace-left-nav/workspace-left-nav.component';
 import { userAccessPageGuard } from './guards/userAccessPage.guard';
+import { ErrorCatchingInterceptor } from './Intercepter/error-interceptor.service';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { userAccessPageGuard } from './guards/userAccessPage.guard';
     ProjectWorkspaceComponent,
     UserWorkspaceComponent,
     LeftProWorkspaceNavComponent,
+    ErrorPageComponent,
   ],
   imports: [
     SharedModule,
@@ -46,6 +49,11 @@ import { userAccessPageGuard } from './guards/userAccessPage.guard';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenIntercepterService,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorCatchingInterceptor,
       multi: true,
     },
     VerifyEmailGuard,

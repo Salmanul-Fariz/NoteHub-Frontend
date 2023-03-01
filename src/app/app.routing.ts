@@ -9,6 +9,7 @@ import { ProjectWorkspaceComponent } from './main-workspaces/project-workspace/p
 
 import { MainWorkspacesComponent } from './main-workspaces/main-workspaces.component';
 import { UserWorkspaceComponent } from './main-workspaces/user-workspace/user-workspace.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 const appRoutes: Routes = [
   // user pages
@@ -56,6 +57,14 @@ const appRoutes: Routes = [
         loadChildren: () => import('./auth/auth.module').then((m) => m.default),
       },
     ],
+  },
+  {
+    path: 'not-found',
+    component: ErrorPageComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '/not-found',
   },
 ];
 

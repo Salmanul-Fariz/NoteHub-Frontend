@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
-import { debounceTime, delay, filter, map } from 'rxjs/operators';
+import { debounceTime, delay, filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -67,12 +67,6 @@ export class UserWorkspaceComponent
 
         // Data Transer event
         this.workspaceService.pagesDataTransfer.emit(response.data.pageDetails);
-      },
-      error: (error) => {
-        if (error.status === 408 || 400) {
-          localStorage.clear();
-          this.router.navigate(['auth/signin']);
-        }
       },
     });
 
@@ -152,12 +146,6 @@ export class UserWorkspaceComponent
         this.closeModal();
         this.isWorkSpaceNameUpdate = false;
       },
-      error: (error) => {
-        if (error.status === 408 || 400) {
-          localStorage.clear();
-          this.router.navigate(['auth/signin']);
-        }
-      },
     });
   }
 
@@ -173,12 +161,6 @@ export class UserWorkspaceComponent
           this.isEmojiBar = false;
           this.isWorkSpaceNameUpdate = false;
           document.body.style.cursor = 'auto';
-        },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
   }
@@ -205,12 +187,6 @@ export class UserWorkspaceComponent
 
           this.workSpaceNameUpdate = data.data;
           this.workspace.name = data.data;
-        },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
   }
@@ -261,24 +237,8 @@ export class UserWorkspaceComponent
 
                   document.body.style.cursor = 'auto';
                 },
-                error: (error) => {
-                  document.body.style.cursor = 'auto';
-                  if (error.status === 408 || 400) {
-                    localStorage.clear();
-                    document.body.style.cursor = 'auto';
-                    this.router.navigate(['auth/signin']);
-                  }
-                },
               });
           });
-        },
-        error: (error) => {
-          document.body.style.cursor = 'auto';
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
     }
@@ -296,14 +256,6 @@ export class UserWorkspaceComponent
         this.cancelPageDelete();
 
         document.body.style.cursor = 'auto';
-      },
-      error: (error) => {
-        document.body.style.cursor = 'auto';
-        if (error.status === 408 || 400) {
-          localStorage.clear();
-          document.body.style.cursor = 'auto';
-          this.router.navigate(['auth/signin']);
-        }
       },
     });
   }

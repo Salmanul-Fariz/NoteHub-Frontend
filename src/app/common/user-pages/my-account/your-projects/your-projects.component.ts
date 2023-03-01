@@ -18,18 +18,10 @@ export class YourProjectsComponent {
 
     this._profileService.ProfileProjectDetailsGet().subscribe({
       next: (response) => {
-        console.log(response.data);
-
         this._profileService.ProjectDetails =
           response.data.workSpaces.projectWorkspace.boards;
 
         this.ProjectDataSource.data = this._profileService.ProjectDetails;
-      },
-      error: (error) => {
-        // if (error.status === 408 || 400) {
-        //   localStorage.clear();
-        //   this.router.navigate(['auth/signin']);
-        // }
       },
     });
   }

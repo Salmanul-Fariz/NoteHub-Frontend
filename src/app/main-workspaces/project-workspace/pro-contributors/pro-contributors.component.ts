@@ -30,7 +30,6 @@ export class ProContributorsComponent implements OnInit {
         next: (response) => {
           this.accessAdmin = response.data;
         },
-        error: () => {},
       });
 
       this._projectService.GetBoardDetails(data?.['id']).subscribe({
@@ -41,7 +40,6 @@ export class ProContributorsComponent implements OnInit {
           this.boardDetails = this._projectService.board_Details;
           this.ContributorsDataSource.data = this.boardDetails?.contributors;
         },
-        error: (error) => {},
       });
 
       this._projectService.BoardDataTransfer.subscribe((data) => {

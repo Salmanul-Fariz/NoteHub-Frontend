@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { debounceTime, Subscription, switchMap } from 'rxjs';
+import { debounceTime, Subscription } from 'rxjs';
 import { ProfileService } from 'src/app/service/profile.service';
 import { S3BucketService } from 'src/app/service/s3-bucket.service';
 
@@ -20,7 +19,6 @@ export class YourProfileComponent implements OnInit, OnDestroy {
 
   constructor(
     private _profileService: ProfileService,
-    private router: Router,
     private s3Service: S3BucketService
   ) {}
 
@@ -31,12 +29,6 @@ export class YourProfileComponent implements OnInit, OnDestroy {
 
         this._profileService.UserDetails = response.data;
         this.userDetails = this._profileService.UserDetails;
-      },
-      error: (error) => {
-        if (error.status === 408 || 400) {
-          localStorage.clear();
-          this.router.navigate(['auth/signin']);
-        }
       },
     });
 
@@ -67,14 +59,6 @@ export class YourProfileComponent implements OnInit, OnDestroy {
               }
               document.body.style.cursor = 'auto';
             },
-            error: (error) => {
-              document.body.style.cursor = 'auto';
-              if (error.status === 408 || 400) {
-                localStorage.clear();
-                document.body.style.cursor = 'auto';
-                this.router.navigate(['auth/signin']);
-              }
-            },
           });
         } else {
           this.requiredData = true;
@@ -91,7 +75,6 @@ export class YourProfileComponent implements OnInit, OnDestroy {
         if (changedValue.length > 4) {
           this._profileService.ProfileUserNameUpdate(changedValue).subscribe({
             next: (response) => {
-              console.log(response);
 
               if (response.status === 'Null data') {
                 this.requiredData = true;
@@ -106,14 +89,6 @@ export class YourProfileComponent implements OnInit, OnDestroy {
                 );
               }
               document.body.style.cursor = 'auto';
-            },
-            error: (error) => {
-              document.body.style.cursor = 'auto';
-              if (error.status === 408 || 400) {
-                localStorage.clear();
-                document.body.style.cursor = 'auto';
-                this.router.navigate(['auth/signin']);
-              }
             },
           });
         } else {
@@ -147,24 +122,8 @@ export class YourProfileComponent implements OnInit, OnDestroy {
                 );
                 document.body.style.cursor = 'auto';
               },
-              error: (error) => {
-                document.body.style.cursor = 'auto';
-                if (error.status === 408 || 400) {
-                  localStorage.clear();
-                  document.body.style.cursor = 'auto';
-                  this.router.navigate(['auth/signin']);
-                }
-              },
             });
           });
-        },
-        error: (error) => {
-          document.body.style.cursor = 'auto';
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
     }

@@ -53,26 +53,20 @@ export class SignupComponent implements OnInit, OnDestroy {
           this.isLoading = true;
           this.authService.signinWithGoogle(user).subscribe({
             next: (response) => {
-              setTimeout(() => {
-                this.isLoading = false;
+              if (response.status === 'Email-Error') {
+                this.googleEmailExist = true;
+
+                // Remove the Validation Message From template
+                setTimeout(() => {
+                  this.googleEmailExist = false;
+                }, 1500);
+              } else {
                 // Register Success
                 localStorage.setItem('jwt', response.data.token);
 
                 this.router.navigate(['/']);
-              }, 1500);
-            },
-            error: (error) => {
-              setTimeout(() => {
-                this.isLoading = false;
-                if (error.status === 400) {
-                  this.googleEmailExist = true;
-
-                  // Remove the Validation Message From template
-                  setTimeout(() => {
-                    this.googleEmailExist = false;
-                  }, 1500);
-                }
-              }, 1500);
+              }
+              this.isLoading = false;
             },
           });
         }
@@ -95,18 +89,18 @@ export class SignupComponent implements OnInit, OnDestroy {
 
       this.authService.checkUsernameExist(value).subscribe({
         next: (responce) => {
-          setTimeout(() => {
-            this.isUserLoading = false;
-            this.isUsernameExist = false;
-          }, 500);
-        },
-        error: (error) => {
-          if (error.status === 400) {
+          if (responce.status === 'Fail') {
             setTimeout(() => {
               this.isUserLoading = false;
               this.isUsernameExist = true;
             }, 500);
+          } else {
+            setTimeout(() => {
+              this.isUserLoading = false;
+              this.isUsernameExist = false;
+            }, 500);
           }
+          this.isLoading = false;
         },
       });
     }
@@ -118,31 +112,22 @@ export class SignupComponent implements OnInit, OnDestroy {
 
     this.authService.signup(formData).subscribe({
       next: (response) => {
-        console.log(response);
-
-        setTimeout(() => {
+        if (response.status === 'Email-Error') {
+          this.authEmailFail = true;
+        } else if (response.status === 'Email-exist-Error') {
+          this.authEmailExist = true;
+        } else {
           this.isLoading = false;
           // Register Success
           localStorage.setItem('jwt', response.data.token);
 
           this.router.navigate(['/']);
-        }, 1500);
-      },
-      error: (error) => {
-        setTimeout(() => {
-          this.isLoading = false;
-          // Check Validation
-          if (error.error.status === 'Email-Error') {
-            this.authEmailFail = true;
-          } else if (error.error.status === 'Email-exist-Error') {
-            this.authEmailExist = true;
-          }
+        }
 
-          // Remove the Validation Message From template
-          setTimeout(() => {
-            this.authEmailFail = false;
-            this.authEmailExist = false;
-          }, 1500);
+        // Remove the Validation Message From template
+        setTimeout(() => {
+          this.authEmailFail = false;
+          this.authEmailExist = false;
         }, 1500);
       },
     });

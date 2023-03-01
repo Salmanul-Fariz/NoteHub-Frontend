@@ -80,12 +80,6 @@ export class ProjectWorkspaceComponent
           boardDetails: this._projectService.boardsDetails,
         });
       },
-      error: (error) => {
-        if (error.status === 408 || 400) {
-          localStorage.clear();
-          this.router.navigate(['auth/signin']);
-        }
-      },
     });
 
     // Open modal of Settings Subscription
@@ -142,7 +136,6 @@ export class ProjectWorkspaceComponent
 
             this.boardDetails = this._projectService.board_Details;
           },
-          error: (error) => {},
         });
       });
 
@@ -158,7 +151,6 @@ export class ProjectWorkspaceComponent
 
             this.boardDetails = this._projectService.board_Details;
           },
-          error: (error) => {},
         });
       });
 
@@ -180,12 +172,6 @@ export class ProjectWorkspaceComponent
               userDetails: this._projectService.userDetails,
               boardDetails: this._projectService.boardsDetails,
             });
-          },
-          error: (error) => {
-            if (error.status === 408 || 400) {
-              localStorage.clear();
-              this.router.navigate(['auth/signin']);
-            }
           },
         });
       }
@@ -302,12 +288,6 @@ export class ProjectWorkspaceComponent
           this.closeBoardModal();
         }
       },
-      error: (error) => {
-        if (error.status === 408 || 400) {
-          localStorage.clear();
-          this.router.navigate(['auth/signin']);
-        }
-      },
     });
   }
 
@@ -329,12 +309,6 @@ export class ProjectWorkspaceComponent
             );
 
             this.closeBoardModal();
-          }
-        },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            this.router.navigate(['auth/signin']);
           }
         },
       });
@@ -366,12 +340,6 @@ export class ProjectWorkspaceComponent
             this.closeBoardModal();
           }
         },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            this.router.navigate(['auth/signin']);
-          }
-        },
       });
   }
 
@@ -387,7 +355,6 @@ export class ProjectWorkspaceComponent
             response.data
           );
         },
-        error: () => {},
       });
 
     this._projectService
@@ -401,12 +368,6 @@ export class ProjectWorkspaceComponent
           );
 
           this.closeBoardModal();
-        },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
   }
@@ -426,7 +387,6 @@ export class ProjectWorkspaceComponent
 
           this.closeBoardModal();
         },
-        error: (error) => {},
       });
   }
 
@@ -445,7 +405,6 @@ export class ProjectWorkspaceComponent
 
           this.closeBoardModal();
         },
-        error: (error) => {},
       });
   }
 
@@ -459,7 +418,6 @@ export class ProjectWorkspaceComponent
             response.data
           );
         },
-        error: () => {},
       });
 
     this._projectService
@@ -477,7 +435,6 @@ export class ProjectWorkspaceComponent
 
           this.closeBoardModal();
         },
-        error: (error) => {},
       });
   }
 
@@ -493,7 +450,6 @@ export class ProjectWorkspaceComponent
 
         this.router.navigate(['/workspaces/project-workspace']);
       },
-      error: (error) => {},
     });
   }
 

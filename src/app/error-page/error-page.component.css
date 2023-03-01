@@ -1,0 +1,17 @@
+button {
+  padding: 8px 22px;
+  color: #fff;
+  background-color: #0053a6;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #fff;
+  color: #262626;
+}
+
+main {
+  user-select: none;
+}

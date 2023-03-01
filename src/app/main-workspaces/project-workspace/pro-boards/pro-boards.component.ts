@@ -43,10 +43,6 @@ export class ProBoardsComponent implements OnInit, OnDestroy {
     }
   }
 
-  boardsItems(data: any) {
-    console.log(data);
-  }
-
   createProject() {
     this._projectService.CreateProjectDataTransfer.emit(true);
   }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/service/profile.service';
 
 @Component({
@@ -23,12 +22,6 @@ export class YourPagesComponent implements OnInit {
           response.data.workSpaces.userWorkspace.pages;
 
         this.PagesDataSource.data = this._profileService.PagesDetails;
-      },
-      error: (error) => {
-        // if (error.status === 408 || 400) {
-        //   localStorage.clear();
-        //   this.router.navigate(['auth/signin']);
-        // }
       },
     });
   }

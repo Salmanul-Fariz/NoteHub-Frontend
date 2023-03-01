@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { debounceTime, Subject, Subscription } from 'rxjs';
 import { jsPDF } from 'jspdf';
 
@@ -37,7 +37,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     private workspaceService: UserWorkspaceService,
     private treeService: WorkspaceTreeService,
     private s3Service: S3BucketService,
-    private router: Router,
     private route: ActivatedRoute
   ) {}
 
@@ -47,12 +46,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       this.workspaceService.GetWorkspacePage(data?.['id']).subscribe({
         next: (response) => {
           this.ArrageData(response.data);
-        },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
     });
@@ -400,13 +393,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           this.pagesDetails.title = value;
           document.body.style.cursor = 'auto';
         },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
-        },
       });
     }
   }
@@ -434,24 +420,8 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
                   this.workspaceService.pageDataTransfer.emit(response.data);
                   document.body.style.cursor = 'auto';
                 },
-                error: (error) => {
-                  document.body.style.cursor = 'auto';
-                  if (error.status === 408 || 400) {
-                    localStorage.clear();
-                    document.body.style.cursor = 'auto';
-                    this.router.navigate(['auth/signin']);
-                  }
-                },
               });
           });
-        },
-        error: (error) => {
-          document.body.style.cursor = 'auto';
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
     }
@@ -486,14 +456,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         this.workspaceService.pageDataTransfer.emit(response.data);
         document.body.style.cursor = 'auto';
       },
-      error: (error) => {
-        document.body.style.cursor = 'auto';
-        if (error.status === 408 || 400) {
-          localStorage.clear();
-          document.body.style.cursor = 'auto';
-          this.router.navigate(['auth/signin']);
-        }
-      },
     });
   }
 
@@ -524,13 +486,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
           document.body.style.cursor = 'auto';
         },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
-        },
       });
   }
 
@@ -543,13 +498,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           this.isSavingContent = false;
-        },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
   }
@@ -569,13 +517,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.isSavingContent = false;
           this.CallFunction(pageSecId, pageType);
-        },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
   }
@@ -610,13 +551,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
           document.body.style.cursor = 'auto';
         },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
-        },
       });
   }
 
@@ -644,13 +578,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
               newDiv.focus();
             }
           }, 0);
-        },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
   }
@@ -680,13 +607,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
             }
           }, 0);
         },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
-        },
       });
   }
 
@@ -713,13 +633,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
               newDiv.focus();
             }
           }, 0);
-        },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
   }
@@ -748,13 +661,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
             }
           }, 0);
         },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
-        },
       });
   }
 
@@ -781,13 +687,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
               newDiv.focus();
             }
           }, 0);
-        },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
   }
@@ -816,20 +715,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
             }
           }, 0);
         },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
-        },
       });
   }
 
   // Add div section color globally
   globalClickColor() {
-    console.log('global');
-
     const allDivs = document.querySelectorAll('.handleHover') as any;
     for (const div of allDivs) {
       div.classList.add('divClick');
@@ -854,7 +744,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   }
 
   showDivBar(id: string) {
-    console.log('Login');
     const div = document.querySelectorAll(`.showDivBar-${id}`) as any;
     div[0].classList.add('divClick');
     setTimeout(() => {
@@ -893,14 +782,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
           this.workspaceService.pageDataTransfer.emit(response.data);
 
           document.body.style.cursor = 'auto';
-        },
-        error: (error) => {
-          document.body.style.cursor = 'auto';
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
   }
@@ -979,13 +860,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.workspaceService.pageDataTransfer.emit(response.data.data);
           document.body.style.cursor = 'auto';
-        },
-        error: (error) => {
-          if (error.status === 408 || 400) {
-            localStorage.clear();
-            document.body.style.cursor = 'auto';
-            this.router.navigate(['auth/signin']);
-          }
         },
       });
   }

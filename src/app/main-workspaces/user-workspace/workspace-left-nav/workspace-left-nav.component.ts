@@ -1,5 +1,4 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserWorkspaceService } from 'src/app/service/userWorkspace.service';
 
@@ -16,10 +15,7 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
   isModal: boolean | unknown;
   pagesDetails: any[];
 
-  constructor(
-    private workspaceService: UserWorkspaceService,
-    private router: Router
-  ) {}
+  constructor(private workspaceService: UserWorkspaceService) {}
 
   ngOnInit(): void {
     this.modalSubscribtion =
@@ -50,12 +46,6 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
           this.workspaceService.pages
         );
       },
-      error: (error) => {
-        if (error.status === 408 || 400) {
-          localStorage.clear();
-          this.router.navigate(['auth/signin']);
-        }
-      },
     });
   }
 
@@ -64,12 +54,6 @@ export class WorkspaceLeftNavComponent implements OnInit, OnDestroy {
     this.workspaceService.GetWorkspacePage(pageId).subscribe({
       next: (response) => {
         this.workspaceService.pageDataTransfer.emit(response.data);
-      },
-      error: (error) => {
-        if (error.status === 408 || 400) {
-          localStorage.clear();
-          this.router.navigate(['auth/signin']);
-        }
       },
     });
   }
