@@ -4,7 +4,7 @@ import { switchMap } from 'rxjs';
 
 import { environment } from '../environments/environment.dev';
 
-@Injectable({providedIn:'root'})
+@Injectable({ providedIn: 'root' })
 export class UserWorkspaceService {
   pagesDataTransfer = new EventEmitter<string[]>();
   isModalDataTransfer = new EventEmitter<boolean>();
